@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Calendar, Tag } from "lucide-react";
+import { ArrowLeft, Calendar } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { NewsRow } from "@/lib/supabase";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -37,7 +37,7 @@ async function getAdjacentNews(id: number): Promise<{ prev: NewsRow | null; next
     try {
       const { data: all } = await supabase
         .from("news")
-        .select("id, title, date")
+        .select("*")
         .eq("published", true)
         .order("date", { ascending: false });
       if (all) {
