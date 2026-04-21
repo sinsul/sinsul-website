@@ -1,0 +1,32 @@
+{
+  "nav": {
+    "home": "홈",
+    "about": "회사소개",
+    "services": "사업분야",
+    "projects": "납품실적",
+    "news": "공지사항",
+    "contact": "문의하기"
+  },
+  "hero": {
+    "badge": "제주 교육 IT 전문기업",
+    "title": "미래 교육 환경을\n함께 만들어 갑니다",
+    "subtitle": "학교 네트워크 구축부터 디바이스 관리까지\n주식회사 신설이 함께합니다",
+    "cta_primary": "사업분야 보기",
+    "cta_secondary": "문의하기"
+  },
+  "sections": {
+    "services": "사업분야",
+    "services_sub": "다양한 IT 전문 서비스를 제공합니다",
+    "projects": "납품실적",
+    "projects_sub": "신뢰할 수 있는 실적으로 증명합니다",
+    "news": "공지사항",
+    "news_sub": "최신 소식을 전달드립니다",
+    "contact": "문의하기",
+    "contact_sub": "언제든지 연락주세요"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "privacy": "개인정보처리방침",
+    "terms": "이용약관"
+  }
+}
