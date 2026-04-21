@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 function isAuthed(req: NextRequest) {
   const token = req.cookies.get("admin-token")?.value;
@@ -7,9 +8,9 @@ function isAuthed(req: NextRequest) {
   return token === expected;
 }
 
-const db = () => {
+const db = (): SupabaseClient => {
   if (!supabaseAdmin) throw new Error("Supabase 미설정");
-  return supabaseAdmin;
+  return supabaseAdmin as SupabaseClient;
 };
 
 export async function GET(req: NextRequest) {
