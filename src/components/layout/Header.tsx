@@ -65,7 +65,7 @@ export default function Header() {
             ))}
             <Link
               href="/contact"
-              className="ml-4 px-5 py-2 bg-brand-accent text-white text-sm font-semibold rounded-lg hover:bg-blue-500 transition-colors"
+              className="ml-4 px-5 py-2 bg-brand-accent text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors"
             >
               무료 상담
             </Link>

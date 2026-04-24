@@ -64,10 +64,10 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 }
 
 const categoryColor: Record<string, string> = {
-  공지: "bg-blue-500/20 text-blue-300 border-blue-500/30",
-  소식: "bg-green-500/20 text-green-300 border-green-500/30",
-  채용: "bg-purple-500/20 text-purple-300 border-purple-500/30",
-  이벤트: "bg-orange-500/20 text-orange-300 border-orange-500/30",
+  공지: "bg-green-500/20 text-green-300 border-green-500/30",
+  소식: "bg-lime-500/20 text-lime-300 border-lime-500/30",
+  채용: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+  이벤트: "bg-teal-500/20 text-teal-300 border-teal-500/30",
 };
 
 export default async function NewsDetailPage({ params }: { params: Promise<{ id: string }> }) {

@@ -10,11 +10,11 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          primary: "#003F7F",   // 딥 블루 (메인)
-          accent: "#0096FF",    // 밝은 블루 (강조)
-          dark: "#0A0E1A",      // 다크 배경
-          darker: "#060912",    // 더 어두운 배경
-          light: "#F0F6FF",     // 라이트 배경
+          primary: "#0d5c2e",   // 딥 그린 (메인)
+          accent: "#3fae36",    // 밝은 그린 (강조)
+          dark: "#070d08",      // 다크 배경
+          darker: "#040a05",    // 더 어두운 배경
+          light: "#f0f7f0",     // 라이트 배경
           gray: "#64748B",      // 서브 텍스트
         },
       },
@@ -38,7 +38,7 @@ const config: Config = {
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "hero-pattern": "linear-gradient(135deg, #0A0E1A 0%, #003F7F 50%, #0096FF 100%)",
+        "hero-pattern": "linear-gradient(135deg, #070d08 0%, #0d5c2e 50%, #3fae36 100%)",
       },
     },
   },

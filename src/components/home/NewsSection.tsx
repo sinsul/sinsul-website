@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Calendar, Tag } from "lucide-react";
+import { ArrowRight, Calendar } from "lucide-react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { supabase } from "@/lib/supabase";
 import type { NewsRow } from "@/lib/supabase";
@@ -26,10 +26,10 @@ async function getLatestNews(): Promise<NewsRow[]> {
 }
 
 const categoryColor: Record<string, string> = {
-  공지: "bg-blue-500/20 text-blue-300",
-  소식: "bg-green-500/20 text-green-300",
-  채용: "bg-purple-500/20 text-purple-300",
-  이벤트: "bg-orange-500/20 text-orange-300",
+  공지: "bg-green-500/20 text-green-300",
+  소식: "bg-lime-500/20 text-lime-300",
+  채용: "bg-emerald-500/20 text-emerald-300",
+  이벤트: "bg-teal-500/20 text-teal-300",
 };
 
 export default async function NewsSection() {

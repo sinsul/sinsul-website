@@ -146,7 +146,7 @@ function Field({ label, required, children }: { label: string; required?: boolea
 function ModalButtons({ saving, onClose }: { saving: boolean; onClose: () => void }) {
   return (
     <div className="flex gap-2 pt-2">
-      <button type="submit" disabled={saving} className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-brand-accent text-white text-sm font-semibold rounded-lg hover:bg-blue-500 transition-colors disabled:opacity-50">
+      <button type="submit" disabled={saving} className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-brand-accent text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50">
         <Check size={15} />{saving ? "저장 중..." : "저장"}
       </button>
       <button type="button" onClick={onClose} className="px-4 py-2.5 border border-white/20 text-white/60 text-sm rounded-lg hover:bg-white/5 transition-colors">
@@ -296,7 +296,7 @@ export default function AdminDashboard() {
         <div className="flex justify-end mb-4">
           <button
             onClick={() => setModal({ type: tab })}
-            className="flex items-center gap-2 px-4 py-2 bg-brand-accent text-white text-sm font-semibold rounded-lg hover:bg-blue-500 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-brand-accent text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors"
           >
             <Plus size={16} />
             {tab === "projects" ? "납품실적 추가" : "공지사항 작성"}

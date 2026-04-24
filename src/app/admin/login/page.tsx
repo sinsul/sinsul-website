@@ -56,7 +56,7 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-brand-accent text-white font-semibold rounded-xl hover:bg-blue-500 transition-colors disabled:opacity-50"
+              className="w-full py-3 bg-brand-accent text-white font-semibold rounded-xl hover:bg-green-600 transition-colors disabled:opacity-50"
             >
               {loading ? "확인 중..." : "로그인"}
             </button>

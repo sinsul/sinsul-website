@@ -88,7 +88,7 @@ export default function ContactPage() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-4 bg-brand-accent text-white font-semibold rounded-xl hover:bg-blue-500 transition-colors"
+                  className="w-full py-4 bg-brand-accent text-white font-semibold rounded-xl hover:bg-green-600 transition-colors"
                 >
                   문의 보내기
                 </button>

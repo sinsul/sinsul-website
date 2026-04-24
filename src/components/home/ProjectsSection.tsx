@@ -7,11 +7,11 @@ import { projects as staticProjects } from "@/data/projects";
 import type { ProjectRow } from "@/lib/supabase";
 
 const categoryColor: Record<string, string> = {
-  network:    "bg-blue-500/15 text-blue-300",
-  device:     "bg-cyan-500/15 text-cyan-300",
-  security:   "bg-green-500/15 text-green-300",
-  smart:      "bg-purple-500/15 text-purple-300",
-  consulting: "bg-orange-500/15 text-orange-300",
+  network:    "bg-green-500/15 text-green-300",
+  device:     "bg-lime-500/15 text-lime-300",
+  security:   "bg-emerald-500/15 text-emerald-300",
+  smart:      "bg-teal-500/15 text-teal-300",
+  consulting: "bg-green-700/15 text-green-400",
   기타:       "bg-white/10 text-white/50",
 };
 

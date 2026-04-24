@@ -47,7 +47,7 @@ function NetworkCanvas() {
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 160) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(0, 150, 255, ${0.18 * (1 - dist / 160)})`;
+            ctx.strokeStyle = `rgba(63, 174, 54, ${0.18 * (1 - dist / 160)})`;
             ctx.lineWidth = 0.8;
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -60,13 +60,13 @@ function NetworkCanvas() {
       nodes.forEach((n) => {
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(0, 150, 255, 0.6)";
+        ctx.fillStyle = "rgba(63, 174, 54, 0.6)";
         ctx.fill();
 
         // 글로우
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r * 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(0, 150, 255, 0.08)";
+        ctx.fillStyle = "rgba(63, 174, 54, 0.08)";
         ctx.fill();
 
         n.x += n.vx;
@@ -94,7 +94,7 @@ export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-brand-dark">
       {/* 다층 배경 */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#060912] via-brand-dark to-[#001a40]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#040a05] via-brand-dark to-[#0a2e10]" />
 
       {/* 네트워크 캔버스 */}
       <NetworkCanvas />
@@ -102,13 +102,13 @@ export default function HeroSection() {
       {/* 빛나는 원형 오브젝트 */}
       <motion.div
         className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(0,96,255,0.12) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(13,92,46,0.18) 0%, transparent 70%)" }}
         animate={{ scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
         className="absolute bottom-1/4 left-1/6 w-[300px] h-[300px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(0,150,255,0.1) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(63,174,54,0.1) 0%, transparent 70%)" }}
         animate={{ scale: [1.1, 1, 1.1], opacity: [0.4, 0.8, 0.4] }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -150,7 +150,7 @@ export default function HeroSection() {
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight"
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-cyan-400 to-blue-300">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-lime-400 to-green-300">
                 함께 만들어 갑니다
               </span>
             </motion.h1>
@@ -180,12 +180,12 @@ export default function HeroSection() {
               href="/services"
               className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-accent text-white font-semibold rounded-xl overflow-hidden transition-all hover:-translate-y-0.5"
             >
-              <span className="absolute inset-0 bg-gradient-to-r from-brand-accent to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <span className="absolute inset-0 bg-gradient-to-r from-brand-accent to-lime-400 opacity-0 group-hover:opacity-100 transition-opacity" />
               <span className="relative flex items-center gap-2">
                 사업분야 보기
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </span>
-              <span className="absolute inset-0 rounded-xl shadow-[0_0_30px_rgba(0,150,255,0.5)] opacity-0 group-hover:opacity-100 transition-opacity" />
+              <span className="absolute inset-0 rounded-xl shadow-[0_0_30px_rgba(63,174,54,0.5)] opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
             <Link
               href="/contact"
