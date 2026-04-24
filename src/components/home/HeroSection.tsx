@@ -94,7 +94,7 @@ export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-brand-dark">
       {/* 다층 배경 */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#040a05] via-brand-dark to-[#0a2e10]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0a1a0d] via-brand-dark to-[#1a4a20]" />
 
       {/* 네트워크 캔버스 */}
       <NetworkCanvas />
@@ -102,7 +102,7 @@ export default function HeroSection() {
       {/* 빛나는 원형 오브젝트 */}
       <motion.div
         className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(13,92,46,0.18) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(63,174,54,0.22) 0%, transparent 70%)" }}
         animate={{ scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       />

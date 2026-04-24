@@ -10,12 +10,12 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          primary: "#0d5c2e",   // 딥 그린 (메인)
+          primary: "#1a6b3a",   // 딥 그린 (메인)
           accent: "#3fae36",    // 밝은 그린 (강조)
-          dark: "#070d08",      // 다크 배경
-          darker: "#040a05",    // 더 어두운 배경
+          dark: "#0f2313",      // 다크 배경 (초록 계열)
+          darker: "#0a1a0d",    // 더 어두운 배경
           light: "#f0f7f0",     // 라이트 배경
-          gray: "#64748B",      // 서브 텍스트
+          gray: "#94a3a0",      // 서브 텍스트
         },
       },
       fontFamily: {
@@ -38,7 +38,7 @@ const config: Config = {
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "hero-pattern": "linear-gradient(135deg, #070d08 0%, #0d5c2e 50%, #3fae36 100%)",
+        "hero-pattern": "linear-gradient(135deg, #0a1a0d 0%, #1a6b3a 50%, #3fae36 100%)",
       },
     },
   },
