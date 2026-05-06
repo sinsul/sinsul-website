@@ -140,7 +140,7 @@ export default function HeroSection() {
               transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-tight"
             >
-              미래 교육 환경을
+              신뢰할 수 있는
             </motion.h1>
           </div>
           <div className="overflow-hidden mb-6">
@@ -151,7 +151,7 @@ export default function HeroSection() {
               className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight"
             >
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-lime-400 to-green-300">
-                함께 만들어 갑니다
+                통신 네트워크 파트너
               </span>
             </motion.h1>
           </div>
@@ -163,10 +163,11 @@ export default function HeroSection() {
             transition={{ duration: 0.7, delay: 0.35 }}
             className="text-white/55 text-lg sm:text-xl leading-relaxed mb-10 max-w-xl"
           >
-            학교{" "}
+            정보통신 인프라 구축 기술을 기반으로<br className="hidden sm:block" />
+            고객 맞춤형{" "}
             <RotatingWord words={words} />{" "}
-            구축부터 유지보수까지<br className="hidden sm:block" />
-            주식회사 신설이 제주의 교육 IT를 책임집니다.
+            솔루션을 제안하고,<br className="hidden sm:block" />
+            지속 가능한 IT 생태계를 함께 만들어 갑니다.
           </motion.p>
 
           {/* CTA 버튼 */}
