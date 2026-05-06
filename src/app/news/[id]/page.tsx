@@ -64,10 +64,10 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 }
 
 const categoryColor: Record<string, string> = {
-  공지: "bg-green-500/20 text-green-300 border-green-500/30",
-  소식: "bg-lime-500/20 text-lime-300 border-lime-500/30",
-  채용: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
-  이벤트: "bg-teal-500/20 text-teal-300 border-teal-500/30",
+  공지: "bg-green-100 text-green-700 border-green-300",
+  소식: "bg-lime-100 text-lime-700 border-lime-300",
+  채용: "bg-emerald-100 text-emerald-700 border-emerald-300",
+  이벤트: "bg-teal-100 text-teal-700 border-teal-300",
 };
 
 export default async function NewsDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -80,13 +80,13 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
   return (
     <div className="min-h-screen bg-brand-dark pt-20">
       {/* 헤더 배경 */}
-      <section className="py-16 bg-gradient-to-b from-brand-primary/20 to-brand-dark">
+      <section className="py-16 bg-gradient-to-b from-brand-primary/10 to-brand-dark">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             {/* 뒤로 가기 */}
             <Link
               href="/news"
-              className="inline-flex items-center gap-2 text-white/40 hover:text-white text-sm transition-colors mb-8"
+              className="inline-flex items-center gap-2 text-gray-400 hover:text-brand-accent text-sm transition-colors mb-8"
             >
               <ArrowLeft size={16} />
               공지사항 목록
@@ -94,17 +94,17 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
 
             {/* 메타 */}
             <div className="flex items-center gap-3 mb-5">
-              <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${categoryColor[item.category] ?? "bg-brand-accent/20 text-brand-accent border-brand-accent/30"}`}>
+              <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${categoryColor[item.category] ?? "bg-brand-accent/15 text-brand-accent border-brand-accent/30"}`}>
                 {item.category}
               </span>
-              <span className="flex items-center gap-1.5 text-white/40 text-sm">
+              <span className="flex items-center gap-1.5 text-gray-400 text-sm">
                 <Calendar size={13} />
                 {item.date}
               </span>
             </div>
 
             {/* 제목 */}
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-snug">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-snug">
               {item.title}
             </h1>
           </ScrollReveal>
@@ -115,15 +115,15 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
       <section className="py-12">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <div className="p-8 rounded-2xl border border-white/10 bg-white/[0.03]">
+            <div className="p-8 rounded-2xl border border-gray-200 bg-white shadow-sm">
               {item.content ? (
-                <div className="text-white/75 leading-relaxed text-base whitespace-pre-line">
+                <div className="text-gray-600 leading-relaxed text-base whitespace-pre-line">
                   {item.content}
                 </div>
               ) : item.excerpt ? (
-                <p className="text-white/75 leading-relaxed text-base">{item.excerpt}</p>
+                <p className="text-gray-600 leading-relaxed text-base">{item.excerpt}</p>
               ) : (
-                <p className="text-white/30 text-sm">내용이 없습니다.</p>
+                <p className="text-gray-400 text-sm">내용이 없습니다.</p>
               )}
             </div>
           </ScrollReveal>
@@ -134,12 +134,12 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
               {prev ? (
                 <Link
                   href={`/news/${prev.id}`}
-                  className="group flex flex-col gap-1 p-5 rounded-xl border border-white/10 hover:border-brand-accent/40 hover:bg-white/5 transition-all"
+                  className="group flex flex-col gap-1 p-5 rounded-xl border border-gray-200 bg-white hover:border-brand-accent/40 hover:bg-brand-darker transition-all"
                 >
-                  <span className="text-white/30 text-xs flex items-center gap-1">
+                  <span className="text-gray-400 text-xs flex items-center gap-1">
                     <ArrowLeft size={12} /> 이전 글
                   </span>
-                  <span className="text-white/70 text-sm group-hover:text-white transition-colors line-clamp-1">
+                  <span className="text-gray-600 text-sm group-hover:text-brand-accent transition-colors line-clamp-1">
                     {prev.title}
                   </span>
                 </Link>
@@ -148,12 +148,12 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
               {next ? (
                 <Link
                   href={`/news/${next.id}`}
-                  className="group flex flex-col gap-1 p-5 rounded-xl border border-white/10 hover:border-brand-accent/40 hover:bg-white/5 transition-all text-right"
+                  className="group flex flex-col gap-1 p-5 rounded-xl border border-gray-200 bg-white hover:border-brand-accent/40 hover:bg-brand-darker transition-all text-right"
                 >
-                  <span className="text-white/30 text-xs flex items-center justify-end gap-1">
+                  <span className="text-gray-400 text-xs flex items-center justify-end gap-1">
                     다음 글 <ArrowLeft size={12} className="rotate-180" />
                   </span>
-                  <span className="text-white/70 text-sm group-hover:text-white transition-colors line-clamp-1">
+                  <span className="text-gray-600 text-sm group-hover:text-brand-accent transition-colors line-clamp-1">
                     {next.title}
                   </span>
                 </Link>
@@ -165,7 +165,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
           <div className="mt-8 text-center">
             <Link
               href="/news"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 text-white/60 rounded-xl hover:border-brand-accent hover:text-brand-accent transition-all text-sm"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 text-gray-500 rounded-xl hover:border-brand-accent hover:text-brand-accent transition-all text-sm"
             >
               목록으로
             </Link>

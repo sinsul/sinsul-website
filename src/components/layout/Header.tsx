@@ -30,7 +30,7 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-brand-dark/95 backdrop-blur-md shadow-lg shadow-black/20"
+          ? "bg-white/95 backdrop-blur-md shadow-sm shadow-brand-primary/10 border-b border-gray-200"
           : "bg-transparent"
       }`}
     >
@@ -50,6 +50,8 @@ export default function Header() {
                 className={`relative px-4 py-2 text-sm font-medium transition-colors rounded-lg ${
                   pathname === item.href
                     ? "text-brand-accent"
+                    : scrolled
+                    ? "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                     : "text-white/80 hover:text-white hover:bg-white/10"
                 }`}
               >
@@ -64,7 +66,7 @@ export default function Header() {
             ))}
             <Link
               href="/contact"
-              className="ml-4 px-5 py-2 bg-brand-accent text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors"
+              className="ml-4 px-5 py-2 bg-brand-accent text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors shadow-sm"
             >
               문의하기
             </Link>
@@ -72,7 +74,7 @@ export default function Header() {
 
           {/* 모바일 메뉴 버튼 */}
           <button
-            className="lg:hidden text-white p-2"
+            className={`lg:hidden p-2 transition-colors ${scrolled ? "text-gray-700" : "text-white"}`}
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -87,7 +89,7 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-brand-dark/98 backdrop-blur-md border-t border-white/10"
+            className="lg:hidden bg-white/98 backdrop-blur-md border-t border-gray-200"
           >
             <nav className="px-4 py-4 flex flex-col gap-1">
               {navItems.map((item) => (
@@ -97,13 +99,20 @@ export default function Header() {
                   onClick={() => setMobileOpen(false)}
                   className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                     pathname === item.href
-                      ? "bg-brand-accent/20 text-brand-accent"
-                      : "text-white/80 hover:bg-white/10 hover:text-white"
+                      ? "bg-brand-accent/10 text-brand-accent"
+                      : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                   }`}
                 >
                   {item.label}
                 </Link>
               ))}
+              <Link
+                href="/contact"
+                onClick={() => setMobileOpen(false)}
+                className="mt-2 px-4 py-3 bg-brand-accent text-white rounded-lg text-sm font-semibold text-center"
+              >
+                문의하기
+              </Link>
             </nav>
           </motion.div>
         )}

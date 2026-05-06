@@ -26,26 +26,26 @@ async function getLatestNews(): Promise<NewsRow[]> {
 }
 
 const categoryColor: Record<string, string> = {
-  공지: "bg-green-500/20 text-green-300",
-  소식: "bg-lime-500/20 text-lime-300",
-  채용: "bg-emerald-500/20 text-emerald-300",
-  이벤트: "bg-teal-500/20 text-teal-300",
+  공지: "bg-green-100 text-green-700",
+  소식: "bg-lime-100 text-lime-700",
+  채용: "bg-emerald-100 text-emerald-700",
+  이벤트: "bg-teal-100 text-teal-700",
 };
 
 export default async function NewsSection() {
   const news = await getLatestNews();
 
   return (
-    <section className="py-24 bg-brand-dark relative overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    <section className="py-24 bg-brand-darker relative overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-primary/20 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="flex items-end justify-between mb-12">
             <div>
               <span className="text-brand-accent text-sm font-semibold tracking-widest uppercase">News</span>
-              <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-white">공지사항</h2>
-              <p className="mt-2 text-white/50">최신 소식을 전달드립니다</p>
+              <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-gray-900">공지사항</h2>
+              <p className="mt-2 text-gray-500">최신 소식을 전달드립니다</p>
             </div>
             <Link href="/news" className="hidden sm:flex items-center gap-1.5 text-brand-accent text-sm font-medium hover:gap-3 transition-all">
               전체 보기 <ArrowRight size={15} />
@@ -58,30 +58,30 @@ export default async function NewsSection() {
             <ScrollReveal key={item.id} delay={i * 0.12}>
               <Link
                 href="/news"
-                className="group relative flex flex-col h-full p-7 rounded-2xl border border-white/10 bg-white/[0.03] hover:border-brand-accent/40 hover:bg-white/[0.07] transition-all duration-300 hover:-translate-y-1.5 overflow-hidden"
+                className="group relative flex flex-col h-full p-7 rounded-2xl border border-gray-200 bg-white hover:border-brand-accent/40 hover:shadow-lg hover:shadow-brand-accent/8 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden"
               >
                 {/* 상단 라인 강조 */}
                 <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-accent/0 via-brand-accent/60 to-brand-accent/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                 {/* 메타 */}
                 <div className="flex items-center gap-2 mb-5">
-                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${categoryColor[item.category] ?? "bg-brand-accent/20 text-brand-accent"}`}>
+                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${categoryColor[item.category] ?? "bg-brand-accent/15 text-brand-accent"}`}>
                     {item.category}
                   </span>
-                  <span className="flex items-center gap-1 text-white/25 text-xs">
+                  <span className="flex items-center gap-1 text-gray-400 text-xs">
                     <Calendar size={11} />
                     {item.date}
                   </span>
                 </div>
 
                 {/* 제목 */}
-                <h3 className="text-white font-semibold text-base leading-snug mb-3 group-hover:text-brand-accent transition-colors duration-200 line-clamp-2 flex-1">
+                <h3 className="text-gray-900 font-semibold text-base leading-snug mb-3 group-hover:text-brand-accent transition-colors duration-200 line-clamp-2 flex-1">
                   {item.title}
                 </h3>
 
                 {/* 요약 */}
                 {item.excerpt && (
-                  <p className="text-white/35 text-sm leading-relaxed line-clamp-2 mb-5">{item.excerpt}</p>
+                  <p className="text-gray-400 text-sm leading-relaxed line-clamp-2 mb-5">{item.excerpt}</p>
                 )}
 
                 <div className="flex items-center gap-1 text-brand-accent/50 text-xs group-hover:text-brand-accent transition-colors mt-auto">

@@ -41,17 +41,17 @@ export default function AboutPage() {
 
       {/* ── 히어로 ── */}
       <section className="relative pt-32 pb-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-darker via-brand-dark to-[#1a4a20]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(63,174,54,0.15),transparent)]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-darker via-brand-dark to-brand-dark" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(63,174,54,0.12),transparent)]" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <ScrollReveal>
             <span className="inline-block text-brand-accent text-sm font-semibold tracking-widest uppercase mb-4">
               About Us
             </span>
-            <h1 className="text-5xl sm:text-6xl font-extrabold text-white leading-tight mb-6">
+            <h1 className="text-5xl sm:text-6xl font-extrabold text-gray-900 leading-tight mb-6">
               회사소개
             </h1>
-            <p className="text-white/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+            <p className="text-gray-500 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
               {company.tagline}
             </p>
           </ScrollReveal>
@@ -66,13 +66,13 @@ export default function AboutPage() {
             {/* 좌: 소개 텍스트 */}
             <ScrollReveal direction="left">
               <span className="text-brand-accent text-sm font-semibold tracking-widest uppercase">Company Overview</span>
-              <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-white leading-snug mb-6">
+              <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-gray-900 leading-snug mb-6">
                 정보통신 인프라 구축의<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-lime-400">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-lime-500">
                   현장 중심 전문기업
                 </span>
               </h2>
-              <div className="space-y-4 text-white/60 leading-relaxed">
+              <div className="space-y-4 text-gray-500 leading-relaxed">
                 <p>
                   주식회사 신설은 정보통신 인프라 구축 기술을 기반으로 출범하여,
                   초기 네트워크 설계와 시스템 통합 사업을 시작으로 꾸준히 성장해 온 기업입니다.
@@ -93,7 +93,7 @@ export default function AboutPage() {
                 {stats.map((s) => (
                   <div key={s.label} className="p-5 rounded-2xl border border-brand-accent/20 bg-brand-accent/5">
                     <p className="text-brand-accent text-3xl font-extrabold">{s.value}{s.suffix}</p>
-                    <p className="text-white/45 text-xs mt-1">{s.label}</p>
+                    <p className="text-gray-400 text-xs mt-1">{s.label}</p>
                   </div>
                 ))}
               </div>
@@ -101,20 +101,20 @@ export default function AboutPage() {
 
             {/* 우: 회사 정보 카드 */}
             <ScrollReveal direction="right">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-                <div className="px-6 py-5 border-b border-white/10 bg-white/[0.03]">
-                  <p className="text-white font-semibold">{company.name}</p>
-                  <p className="text-white/40 text-sm mt-0.5">{company.nameEn}</p>
+              <div className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm">
+                <div className="px-6 py-5 border-b border-gray-100 bg-gray-50">
+                  <p className="text-gray-900 font-semibold">{company.name}</p>
+                  <p className="text-gray-400 text-sm mt-0.5">{company.nameEn}</p>
                 </div>
-                <div className="divide-y divide-white/[0.07]">
+                <div className="divide-y divide-gray-100">
                   {companyInfo.map(({ icon: Icon, label, value }) => (
                     <div key={label} className="flex items-start gap-4 px-6 py-4">
                       <div className="p-2 rounded-lg bg-brand-accent/10 text-brand-accent shrink-0 mt-0.5">
                         <Icon size={15} />
                       </div>
                       <div>
-                        <p className="text-white/40 text-xs mb-0.5">{label}</p>
-                        <p className="text-white text-sm font-medium">{value}</p>
+                        <p className="text-gray-400 text-xs mb-0.5">{label}</p>
+                        <p className="text-gray-900 text-sm font-medium">{value}</p>
                       </div>
                     </div>
                   ))}
@@ -126,23 +126,23 @@ export default function AboutPage() {
       </section>
 
       {/* ── 핵심 역량 ── */}
-      <section className="py-20 bg-white/[0.02] border-y border-white/[0.06]">
+      <section className="py-20 bg-brand-darker border-y border-brand-primary/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div className="text-center mb-14">
               <span className="text-brand-accent text-sm font-semibold tracking-widest uppercase">Core Values</span>
-              <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-white">핵심 역량</h2>
+              <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-gray-900">핵심 역량</h2>
             </div>
           </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {coreValues.map((v, i) => (
               <ScrollReveal key={v.title} delay={i * 0.12}>
-                <div className="group p-8 rounded-2xl border border-white/10 bg-white/[0.03] hover:border-brand-accent/40 hover:bg-brand-accent/5 transition-all duration-300">
+                <div className="group p-8 rounded-2xl border border-gray-200 bg-white hover:border-brand-accent/40 hover:shadow-md hover:shadow-brand-accent/10 transition-all duration-300">
                   <div className="inline-flex p-3 rounded-xl bg-brand-accent/15 text-brand-accent mb-5 group-hover:bg-brand-accent group-hover:text-white transition-all duration-300">
                     <v.icon size={24} />
                   </div>
-                  <h3 className="text-white font-bold text-lg mb-3">{v.title}</h3>
-                  <p className="text-white/55 text-sm leading-relaxed">{v.desc}</p>
+                  <h3 className="text-gray-900 font-bold text-lg mb-3">{v.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{v.desc}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -156,12 +156,12 @@ export default function AboutPage() {
           <ScrollReveal>
             <div className="text-center mb-14">
               <span className="text-brand-accent text-sm font-semibold tracking-widest uppercase">History</span>
-              <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-white">회사 연혁</h2>
-              <p className="mt-3 text-white/40">2015년 설립부터 현재까지의 발자취</p>
+              <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-gray-900">회사 연혁</h2>
+              <p className="mt-3 text-gray-400">2015년 설립부터 현재까지의 발자취</p>
             </div>
           </ScrollReveal>
           <div className="max-w-3xl mx-auto relative">
-            <div className="absolute left-[19px] top-0 bottom-0 w-px bg-white/10" />
+            <div className="absolute left-[19px] top-0 bottom-0 w-px bg-brand-primary/20" />
             <div className="space-y-6">
               {history.map((item, i) => (
                 <ScrollReveal key={item.year} delay={i * 0.07}>
@@ -169,9 +169,9 @@ export default function AboutPage() {
                     <div className="relative z-10 w-10 h-10 rounded-full border-2 border-brand-accent bg-brand-dark flex items-center justify-center shrink-0">
                       <div className="w-2.5 h-2.5 rounded-full bg-brand-accent" />
                     </div>
-                    <div className="flex-1 p-5 rounded-xl border border-white/10 bg-white/[0.03] hover:border-brand-accent/30 hover:bg-white/[0.06] transition-all">
+                    <div className="flex-1 p-5 rounded-xl border border-gray-200 bg-white hover:border-brand-accent/40 hover:shadow-sm transition-all">
                       <span className="text-brand-accent font-bold text-sm">{item.year}</span>
-                      <p className="text-white/80 mt-1 text-sm leading-relaxed">{item.event}</p>
+                      <p className="text-gray-600 mt-1 text-sm leading-relaxed">{item.event}</p>
                     </div>
                   </div>
                 </ScrollReveal>

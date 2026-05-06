@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply bg-brand-dark text-white;
+    @apply bg-brand-dark text-gray-900;
     font-family: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont,
       "Apple SD Gothic Neo", sans-serif;
   }

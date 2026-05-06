@@ -92,9 +92,9 @@ const words = ["네트워크", "디바이스", "전기공사", "소프트웨어"
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-brand-dark">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#0f2313]">
       {/* 다층 배경 */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0a1a0d] via-brand-dark to-[#1a4a20]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0a1a0d] via-[#0f2313] to-[#1a4a20]" />
 
       {/* 네트워크 캔버스 */}
       <NetworkCanvas />

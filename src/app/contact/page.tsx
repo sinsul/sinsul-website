@@ -11,14 +11,14 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-brand-dark pt-20">
-      <section className="py-20 bg-gradient-to-b from-brand-primary/20 to-brand-dark">
+      <section className="py-20 bg-gradient-to-b from-brand-primary/10 to-brand-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <ScrollReveal>
             <span className="text-brand-accent text-sm font-semibold tracking-widest uppercase">
               Contact
             </span>
-            <h1 className="mt-3 text-4xl sm:text-5xl font-bold text-white">문의하기</h1>
-            <p className="mt-4 text-white/50 text-lg">언제든지 연락주세요</p>
+            <h1 className="mt-3 text-4xl sm:text-5xl font-bold text-gray-900">문의하기</h1>
+            <p className="mt-4 text-gray-500 text-lg">언제든지 연락주세요</p>
           </ScrollReveal>
         </div>
       </section>
@@ -29,7 +29,7 @@ export default function ContactPage() {
             {/* 연락처 정보 */}
             <ScrollReveal direction="left">
               <div className="space-y-6">
-                <h2 className="text-2xl font-bold text-white">연락처 정보</h2>
+                <h2 className="text-2xl font-bold text-gray-900">연락처 정보</h2>
                 {[
                   { icon: Phone, label: "대표전화", value: company.phone },
                   { icon: Mail, label: "이메일", value: company.email },
@@ -41,8 +41,8 @@ export default function ContactPage() {
                       <item.icon size={20} />
                     </div>
                     <div>
-                      <p className="text-white/40 text-sm">{item.label}</p>
-                      <p className="text-white font-medium mt-0.5">{item.value}</p>
+                      <p className="text-gray-400 text-sm">{item.label}</p>
+                      <p className="text-gray-900 font-medium mt-0.5">{item.value}</p>
                     </div>
                   </div>
                 ))}
@@ -54,41 +54,41 @@ export default function ContactPage() {
               <form className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-white/60 text-sm mb-2">이름</label>
+                    <label className="block text-gray-600 text-sm mb-2">이름</label>
                     <input
                       type="text"
                       placeholder="홍길동"
-                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-brand-accent transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-300 focus:outline-none focus:border-brand-accent transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="block text-white/60 text-sm mb-2">기관명</label>
+                    <label className="block text-gray-600 text-sm mb-2">기관명</label>
                     <input
                       type="text"
                       placeholder="○○학교"
-                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-brand-accent transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-300 focus:outline-none focus:border-brand-accent transition-colors"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-white/60 text-sm mb-2">연락처</label>
+                  <label className="block text-gray-600 text-sm mb-2">연락처</label>
                   <input
                     type="tel"
                     placeholder="010-0000-0000"
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-brand-accent transition-colors"
+                    className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-300 focus:outline-none focus:border-brand-accent transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="block text-white/60 text-sm mb-2">문의 내용</label>
+                  <label className="block text-gray-600 text-sm mb-2">문의 내용</label>
                   <textarea
                     rows={5}
                     placeholder="문의하실 내용을 입력해 주세요."
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-brand-accent transition-colors resize-none"
+                    className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-300 focus:outline-none focus:border-brand-accent transition-colors resize-none"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-4 bg-brand-accent text-white font-semibold rounded-xl hover:bg-green-600 transition-colors"
+                  className="w-full py-4 bg-brand-accent text-white font-semibold rounded-xl hover:bg-green-600 transition-colors shadow-sm"
                 >
                   문의 보내기
                 </button>

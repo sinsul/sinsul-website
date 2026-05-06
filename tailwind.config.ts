@@ -12,10 +12,10 @@ const config: Config = {
         brand: {
           primary: "#1a6b3a",   // 딥 그린 (메인)
           accent: "#3fae36",    // 밝은 그린 (강조)
-          dark: "#0f2313",      // 다크 배경 (초록 계열)
-          darker: "#0a1a0d",    // 더 어두운 배경
-          light: "#f0f7f0",     // 라이트 배경
-          gray: "#94a3a0",      // 서브 텍스트
+          dark: "#f4faf4",      // 라이트 메인 배경
+          darker: "#edf6ed",    // 라이트 서브 배경
+          light: "#ffffff",     // 흰색
+          gray: "#5a7a60",      // 서브 텍스트
         },
       },
       fontFamily: {

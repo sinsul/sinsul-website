@@ -51,8 +51,8 @@ export default function ServicesSection() {
         <ScrollReveal>
           <div className="text-center mb-16">
             <span className="text-brand-accent text-sm font-semibold tracking-widest uppercase">Services</span>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-white">사업분야</h2>
-            <p className="mt-4 text-white/50 text-lg">다양한 IT 전문 서비스를 제공합니다</p>
+            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-gray-900">사업분야</h2>
+            <p className="mt-4 text-gray-500 text-lg">다양한 IT 전문 서비스를 제공합니다</p>
           </div>
         </ScrollReveal>
 
@@ -65,10 +65,10 @@ export default function ServicesSection() {
                 <TiltCard>
                   <Link
                     href={`/services#${service.id}`}
-                    className="group relative flex flex-col h-full p-8 rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent hover:border-brand-accent/50 transition-all duration-300 overflow-hidden"
+                    className="group relative flex flex-col h-full p-8 rounded-2xl border border-gray-200 bg-white hover:border-brand-accent/50 hover:shadow-lg hover:shadow-brand-accent/10 transition-all duration-300 overflow-hidden"
                   >
                     {/* 호버 배경 글로우 */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                    <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
                     <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-brand-accent/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                     {/* 아이콘 */}
@@ -76,8 +76,8 @@ export default function ServicesSection() {
                       <Icon size={26} className="text-white" />
                     </div>
 
-                    <h3 className="text-white font-bold text-xl mb-3">{service.title}</h3>
-                    <p className="text-white/50 text-sm leading-relaxed mb-6 flex-1">{service.description}</p>
+                    <h3 className="text-gray-900 font-bold text-xl mb-3">{service.title}</h3>
+                    <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-1">{service.description}</p>
 
                     <div className="flex items-center gap-2 text-brand-accent text-sm font-medium">
                       자세히 보기
@@ -95,7 +95,7 @@ export default function ServicesSection() {
           <div className="text-center mt-12">
             <Link
               href="/services"
-              className="group inline-flex items-center gap-2 px-6 py-3 border border-white/20 text-white/70 rounded-xl hover:border-brand-accent hover:text-brand-accent transition-all"
+              className="group inline-flex items-center gap-2 px-6 py-3 border border-gray-300 text-gray-600 rounded-xl hover:border-brand-accent hover:text-brand-accent transition-all"
             >
               전체 사업분야 보기
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
