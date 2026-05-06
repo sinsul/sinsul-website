@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { company, stats } from "@/data/company";
+import { company, stats, history } from "@/data/company";
 import { Network, Zap, Users, Award, MapPin, Phone, Mail, Hash } from "lucide-react";
-import HistoryTimeline from "./HistoryTimeline";
 
 export const metadata: Metadata = {
   title: "회사소개",
@@ -161,7 +160,24 @@ export default function AboutPage() {
               <p className="mt-3 text-white/40">2015년 설립부터 현재까지의 발자취</p>
             </div>
           </ScrollReveal>
-          <HistoryTimeline />
+          <div className="max-w-3xl mx-auto relative">
+            <div className="absolute left-[19px] top-0 bottom-0 w-px bg-white/10" />
+            <div className="space-y-6">
+              {history.map((item, i) => (
+                <ScrollReveal key={item.year} delay={i * 0.07}>
+                  <div className="flex items-start gap-6">
+                    <div className="relative z-10 w-10 h-10 rounded-full border-2 border-brand-accent bg-brand-dark flex items-center justify-center shrink-0">
+                      <div className="w-2.5 h-2.5 rounded-full bg-brand-accent" />
+                    </div>
+                    <div className="flex-1 p-5 rounded-xl border border-white/10 bg-white/[0.03] hover:border-brand-accent/30 hover:bg-white/[0.06] transition-all">
+                      <span className="text-brand-accent font-bold text-sm">{item.year}</span>
+                      <p className="text-white/80 mt-1 text-sm leading-relaxed">{item.event}</p>
+                    </div>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
