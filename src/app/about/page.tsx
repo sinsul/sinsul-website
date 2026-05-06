@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { company, history } from "@/data/company";
+import { company, history, stats } from "@/data/company";
 
 export const metadata: Metadata = {
   title: "회사소개",
@@ -33,21 +33,29 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <ScrollReveal direction="left">
               <h2 className="text-3xl font-bold text-white mb-6">
-                제주 교육의 디지털 미래를
+                제주 교육 IT의
                 <br />
-                <span className="text-gradient">함께 만들어 갑니다</span>
+                <span className="text-gradient">신뢰할 수 있는 파트너</span>
               </h2>
-              <p className="text-white/60 leading-relaxed">
+              <p className="text-white/60 leading-relaxed mb-6">
                 {company.description}
               </p>
+              <div className="grid grid-cols-2 gap-4">
+                {stats.map((s) => (
+                  <div key={s.label} className="p-4 rounded-xl border border-brand-accent/20 bg-brand-accent/5">
+                    <p className="text-brand-accent text-2xl font-extrabold">{s.value}{s.suffix}</p>
+                    <p className="text-white/50 text-xs mt-0.5">{s.label}</p>
+                  </div>
+                ))}
+              </div>
             </ScrollReveal>
             <ScrollReveal direction="right">
               <div className="grid grid-cols-2 gap-4">
                 {[
                   { label: "설립연도", value: company.founded },
-                  { label: "사업지역", value: company.location },
-                  { label: "이메일", value: company.email },
+                  { label: "대표이사", value: company.ceo },
                   { label: "대표번호", value: company.phone },
+                  { label: "사업지역", value: company.location },
                 ].map((item) => (
                   <div key={item.label} className="p-5 rounded-xl border border-white/10 bg-white/5">
                     <p className="text-brand-accent text-xs font-semibold uppercase mb-1">

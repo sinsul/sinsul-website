@@ -88,7 +88,7 @@ function NetworkCanvas() {
   return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-60" />;
 }
 
-const words = ["네트워크", "디바이스", "스마트교실", "IT 인프라"];
+const words = ["네트워크", "디바이스", "전기공사", "소프트웨어"];
 
 export default function HeroSection() {
   return (
@@ -165,7 +165,7 @@ export default function HeroSection() {
           >
             학교{" "}
             <RotatingWord words={words} />{" "}
-            구축부터 관리까지<br className="hidden sm:block" />
+            구축부터 유지보수까지<br className="hidden sm:block" />
             주식회사 신설이 제주의 교육 IT를 책임집니다.
           </motion.p>
 
@@ -203,9 +203,9 @@ export default function HeroSection() {
             className="mt-14 flex gap-8"
           >
             {[
+              { value: "11년+", label: "사업 경력" },
               { value: "50+", label: "구축 학교" },
-              { value: "3,000+", label: "공급 디바이스" },
-              { value: "98%", label: "고객 만족도" },
+              { value: "19.5억", label: "2024 매출" },
             ].map((s) => (
               <div key={s.label}>
                 <p className="text-2xl font-bold text-white">{s.value}</p>

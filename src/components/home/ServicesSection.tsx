@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Network, Laptop, LineChart, Monitor, Shield } from "lucide-react";
+import { ArrowRight, Network, Monitor, Zap, Settings } from "lucide-react";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { services } from "@/data/services";
 import { useRef, MouseEvent } from "react";
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
-  Network, Laptop, LineChart, Monitor, Shield,
+  Network, Monitor, Zap, Settings,
 };
 
 function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -57,7 +57,7 @@ export default function ServicesSection() {
         </ScrollReveal>
 
         {/* 카드 그리드 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {featured.map((service, i) => {
             const Icon = iconMap[service.icon] || Network;
             return (

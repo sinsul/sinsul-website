@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Network, Laptop, LineChart, Monitor, Shield } from "lucide-react";
+import { Network, Monitor, Zap, Settings } from "lucide-react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { services } from "@/data/services";
 
@@ -10,10 +10,9 @@ export const metadata: Metadata = {
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   Network,
-  Laptop,
-  LineChart,
   Monitor,
-  Shield,
+  Zap,
+  Settings,
 };
 
 export default function ServicesPage() {
