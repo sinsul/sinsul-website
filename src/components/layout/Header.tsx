@@ -13,7 +13,6 @@ const navItems = [
   { href: "/services", label: "사업분야" },
   { href: "/projects", label: "납품실적" },
   { href: "/news", label: "공지사항" },
-  { href: "/contact", label: "문의하기" },
 ];
 
 export default function Header() {
@@ -67,7 +66,7 @@ export default function Header() {
               href="/contact"
               className="ml-4 px-5 py-2 bg-brand-accent text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors"
             >
-              무료 상담
+              문의하기
             </Link>
           </nav>
 

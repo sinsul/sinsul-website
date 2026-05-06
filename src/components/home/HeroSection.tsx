@@ -191,7 +191,7 @@ export default function HeroSection() {
               href="/contact"
               className="group inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/20 text-white font-semibold rounded-xl hover:bg-white/10 hover:border-white/40 transition-all"
             >
-              무료 상담 신청
+              문의하기
             </Link>
           </motion.div>
 
