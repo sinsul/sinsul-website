@@ -86,7 +86,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
             {/* 뒤로 가기 */}
             <Link
               href="/news"
-              className="inline-flex items-center gap-2 text-gray-400 hover:text-brand-accent text-sm transition-colors mb-8"
+              className="inline-flex items-center gap-2 text-gray-600 hover:text-brand-accent text-sm transition-colors mb-8"
             >
               <ArrowLeft size={16} />
               공지사항 목록
@@ -97,7 +97,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
               <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${categoryColor[item.category] ?? "bg-brand-accent/15 text-brand-accent border-brand-accent/30"}`}>
                 {item.category}
               </span>
-              <span className="flex items-center gap-1.5 text-gray-400 text-sm">
+              <span className="flex items-center gap-1.5 text-gray-600 text-sm">
                 <Calendar size={13} />
                 {item.date}
               </span>
@@ -123,7 +123,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
               ) : item.excerpt ? (
                 <p className="text-gray-600 leading-relaxed text-base">{item.excerpt}</p>
               ) : (
-                <p className="text-gray-400 text-sm">내용이 없습니다.</p>
+                <p className="text-gray-600 text-sm">내용이 없습니다.</p>
               )}
             </div>
           </ScrollReveal>
@@ -136,7 +136,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
                   href={`/news/${prev.id}`}
                   className="group flex flex-col gap-1 p-5 rounded-xl border border-gray-200 bg-white hover:border-brand-accent/40 hover:bg-brand-darker transition-all"
                 >
-                  <span className="text-gray-400 text-xs flex items-center gap-1">
+                  <span className="text-gray-600 text-xs flex items-center gap-1">
                     <ArrowLeft size={12} /> 이전 글
                   </span>
                   <span className="text-gray-600 text-sm group-hover:text-brand-accent transition-colors line-clamp-1">
@@ -150,7 +150,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
                   href={`/news/${next.id}`}
                   className="group flex flex-col gap-1 p-5 rounded-xl border border-gray-200 bg-white hover:border-brand-accent/40 hover:bg-brand-darker transition-all text-right"
                 >
-                  <span className="text-gray-400 text-xs flex items-center justify-end gap-1">
+                  <span className="text-gray-600 text-xs flex items-center justify-end gap-1">
                     다음 글 <ArrowLeft size={12} className="rotate-180" />
                   </span>
                   <span className="text-gray-600 text-sm group-hover:text-brand-accent transition-colors line-clamp-1">
@@ -165,7 +165,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
           <div className="mt-8 text-center">
             <Link
               href="/news"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 text-gray-500 rounded-xl hover:border-brand-accent hover:text-brand-accent transition-all text-sm"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 text-gray-600 rounded-xl hover:border-brand-accent hover:text-brand-accent transition-all text-sm"
             >
               목록으로
             </Link>

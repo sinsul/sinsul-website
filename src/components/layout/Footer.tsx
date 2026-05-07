@@ -13,7 +13,7 @@ export default function Footer() {
             <div className="mb-4">
               <SinsulLogo size="sm" />
             </div>
-            <p className="text-gray-500 text-sm leading-relaxed">
+            <p className="text-gray-600 text-sm leading-relaxed">
               {company.description}
             </p>
           </div>
@@ -32,7 +32,7 @@ export default function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-gray-500 hover:text-brand-accent text-sm transition-colors"
+                    className="text-gray-600 hover:text-brand-accent text-sm transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -45,15 +45,15 @@ export default function Footer() {
           <div>
             <h3 className="text-gray-900 font-semibold mb-4">연락처</h3>
             <ul className="space-y-3">
-              <li className="flex items-center gap-3 text-gray-500 text-sm">
+              <li className="flex items-center gap-3 text-gray-600 text-sm">
                 <Phone size={16} className="text-brand-accent shrink-0" />
                 {company.phone}
               </li>
-              <li className="flex items-center gap-3 text-gray-500 text-sm">
+              <li className="flex items-center gap-3 text-gray-600 text-sm">
                 <Mail size={16} className="text-brand-accent shrink-0" />
                 {company.email}
               </li>
-              <li className="flex items-start gap-3 text-gray-500 text-sm">
+              <li className="flex items-start gap-3 text-gray-600 text-sm">
                 <MapPin size={16} className="text-brand-accent shrink-0 mt-0.5" />
                 {company.address}
               </li>
@@ -62,19 +62,19 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-brand-primary/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-gray-400 text-xs">
+          <p className="text-gray-600 text-xs">
             © {new Date().getFullYear()} {company.name}. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-            <Link href="/privacy" className="text-gray-400 hover:text-gray-600 text-xs transition-colors">
+            <Link href="/privacy" className="text-gray-600 hover:text-gray-600 text-xs transition-colors">
               개인정보처리방침
             </Link>
-            <Link href="/terms" className="text-gray-400 hover:text-gray-600 text-xs transition-colors">
+            <Link href="/terms" className="text-gray-600 hover:text-gray-600 text-xs transition-colors">
               이용약관
             </Link>
             <Link
               href="/admin/login"
-              className="flex items-center gap-1.5 text-gray-300 hover:text-gray-500 text-xs transition-colors"
+              className="flex items-center gap-1.5 text-gray-500 hover:text-gray-600 text-xs transition-colors"
             >
               <Lock size={11} />
               관리자

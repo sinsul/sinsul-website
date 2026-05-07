@@ -52,7 +52,7 @@ export default function ServicesSection() {
           <div className="text-center mb-16">
             <span className="text-brand-accent text-sm font-semibold tracking-widest uppercase">Services</span>
             <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-gray-900">사업분야</h2>
-            <p className="mt-4 text-gray-500 text-lg">다양한 IT 전문 서비스를 제공합니다</p>
+            <p className="mt-4 text-gray-600 text-lg">다양한 IT 전문 서비스를 제공합니다</p>
           </div>
         </ScrollReveal>
 
@@ -77,7 +77,7 @@ export default function ServicesSection() {
                     </div>
 
                     <h3 className="text-gray-900 font-bold text-xl mb-3">{service.title}</h3>
-                    <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-1">{service.description}</p>
+                    <p className="text-gray-600 text-sm leading-relaxed mb-6 flex-1">{service.description}</p>
 
                     <div className="flex items-center gap-2 text-brand-accent text-sm font-medium">
                       자세히 보기

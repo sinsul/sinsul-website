@@ -14,7 +14,7 @@ const categoryColor: Record<string, string> = {
   security:   "bg-emerald-100 text-emerald-700",
   smart:      "bg-teal-100 text-teal-700",
   consulting: "bg-green-50 text-green-700",
-  기타:       "bg-gray-100 text-gray-500",
+  기타:       "bg-gray-100 text-gray-600",
 };
 
 export default function ProjectsTable({ projects }: { projects: ProjectRow[] }) {
@@ -35,7 +35,7 @@ export default function ProjectsTable({ projects }: { projects: ProjectRow[] }) 
             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
               active === f
                 ? "bg-brand-accent text-white"
-                : "border border-gray-300 text-gray-500 hover:border-brand-accent hover:text-brand-accent"
+                : "border border-gray-300 text-gray-600 hover:border-brand-accent hover:text-brand-accent"
             }`}
           >
             {f === ALL ? "전체" : (categoryLabel[f as keyof typeof categoryLabel] ?? f)}
@@ -66,15 +66,15 @@ export default function ProjectsTable({ projects }: { projects: ProjectRow[] }) 
               {/* 기관명 + 사업내용 */}
               <div className="flex-1 min-w-0">
                 <p className="text-gray-900 font-semibold text-sm sm:text-base truncate">{p.client}</p>
-                <p className="text-gray-400 text-xs sm:text-sm mt-0.5 truncate">{p.service}</p>
+                <p className="text-gray-600 text-xs sm:text-sm mt-0.5 truncate">{p.service}</p>
               </div>
 
               {/* 규모 + 분류 */}
               <div className="flex items-center gap-2 shrink-0">
-                <span className="px-3 py-1 rounded-lg bg-gray-100 text-gray-500 text-xs font-medium whitespace-nowrap">
+                <span className="px-3 py-1 rounded-lg bg-gray-100 text-gray-600 text-xs font-medium whitespace-nowrap">
                   {p.count}
                 </span>
-                <span className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap ${categoryColor[p.category] ?? "bg-gray-100 text-gray-500"}`}>
+                <span className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap ${categoryColor[p.category] ?? "bg-gray-100 text-gray-600"}`}>
                   {categoryLabel[p.category as keyof typeof categoryLabel] ?? p.category}
                 </span>
               </div>
@@ -83,7 +83,7 @@ export default function ProjectsTable({ projects }: { projects: ProjectRow[] }) 
         </AnimatePresence>
 
         {filtered.length === 0 && (
-          <div className="py-20 text-center text-gray-400 rounded-2xl border border-gray-200 bg-white">
+          <div className="py-20 text-center text-gray-600 rounded-2xl border border-gray-200 bg-white">
             해당 분류의 실적이 없습니다.
           </div>
         )}

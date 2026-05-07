@@ -51,7 +51,7 @@ export default function AboutPage() {
             <h1 className="text-5xl sm:text-6xl font-extrabold text-gray-900 leading-tight mb-6">
               회사소개
             </h1>
-            <p className="text-gray-500 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+            <p className="text-gray-600 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
               {company.tagline}
             </p>
           </ScrollReveal>
@@ -72,7 +72,7 @@ export default function AboutPage() {
                   현장 중심 전문기업
                 </span>
               </h2>
-              <div className="space-y-4 text-gray-500 leading-relaxed">
+              <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
                   주식회사 신설은 정보통신 인프라 구축 기술을 기반으로 출범하여,
                   초기 네트워크 설계와 시스템 통합 사업을 시작으로 꾸준히 성장해 온 기업입니다.
@@ -93,7 +93,7 @@ export default function AboutPage() {
                 {stats.map((s) => (
                   <div key={s.label} className="p-5 rounded-2xl border border-brand-accent/20 bg-brand-accent/5">
                     <p className="text-brand-accent text-3xl font-extrabold">{s.value}{s.suffix}</p>
-                    <p className="text-gray-400 text-xs mt-1">{s.label}</p>
+                    <p className="text-gray-600 text-xs mt-1">{s.label}</p>
                   </div>
                 ))}
               </div>
@@ -104,7 +104,7 @@ export default function AboutPage() {
               <div className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm">
                 <div className="px-6 py-5 border-b border-gray-100 bg-gray-50">
                   <p className="text-gray-900 font-semibold">{company.name}</p>
-                  <p className="text-gray-400 text-sm mt-0.5">{company.nameEn}</p>
+                  <p className="text-gray-600 text-sm mt-0.5">{company.nameEn}</p>
                 </div>
                 <div className="divide-y divide-gray-100">
                   {companyInfo.map(({ icon: Icon, label, value }) => (
@@ -113,7 +113,7 @@ export default function AboutPage() {
                         <Icon size={15} />
                       </div>
                       <div>
-                        <p className="text-gray-400 text-xs mb-0.5">{label}</p>
+                        <p className="text-gray-600 text-xs mb-0.5">{label}</p>
                         <p className="text-gray-900 text-sm font-medium">{value}</p>
                       </div>
                     </div>
@@ -142,7 +142,7 @@ export default function AboutPage() {
                     <v.icon size={24} />
                   </div>
                   <h3 className="text-gray-900 font-bold text-lg mb-3">{v.title}</h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">{v.desc}</p>
+                  <p className="text-gray-600 text-sm leading-relaxed">{v.desc}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -157,7 +157,7 @@ export default function AboutPage() {
             <div className="text-center mb-14">
               <span className="text-brand-accent text-sm font-semibold tracking-widest uppercase">History</span>
               <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-gray-900">회사 연혁</h2>
-              <p className="mt-3 text-gray-400">2015년 설립부터 현재까지의 발자취</p>
+              <p className="mt-3 text-gray-600">2015년 설립부터 현재까지의 발자취</p>
             </div>
           </ScrollReveal>
           <div className="max-w-3xl mx-auto relative">

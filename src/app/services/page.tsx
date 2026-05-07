@@ -28,7 +28,7 @@ export default function ServicesPage() {
             <h1 className="mt-3 text-4xl sm:text-5xl font-bold text-gray-900">
               사업분야
             </h1>
-            <p className="mt-4 text-gray-500 text-lg max-w-2xl mx-auto">
+            <p className="mt-4 text-gray-600 text-lg max-w-2xl mx-auto">
               주식회사 신설이 제공하는 다양한 IT 전문 서비스를 소개합니다.
             </p>
           </ScrollReveal>
@@ -55,7 +55,7 @@ export default function ServicesPage() {
                         <h2 className="text-2xl font-bold text-gray-900 mb-3">
                           {service.title}
                         </h2>
-                        <p className="text-gray-500 mb-6">{service.description}</p>
+                        <p className="text-gray-600 mb-6">{service.description}</p>
                         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                           {service.details.map((detail) => (
                             <li

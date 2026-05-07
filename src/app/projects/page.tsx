@@ -36,25 +36,25 @@ export default async function ProjectsPage() {
           <ScrollReveal>
             <span className="text-brand-accent text-sm font-semibold tracking-widest uppercase">Projects</span>
             <h1 className="mt-3 text-4xl sm:text-5xl font-bold text-gray-900">납품실적</h1>
-            <p className="mt-4 text-gray-500 text-lg">신뢰할 수 있는 실적으로 증명합니다</p>
+            <p className="mt-4 text-gray-600 text-lg">신뢰할 수 있는 실적으로 증명합니다</p>
           </ScrollReveal>
           <ScrollReveal delay={0.15}>
             <div className="mt-10 inline-flex gap-8 sm:gap-16">
               <div>
                 <p className="text-3xl font-bold text-gray-900">{projects.length}<span className="text-brand-accent">+</span></p>
-                <p className="text-gray-400 text-sm mt-1">총 프로젝트</p>
+                <p className="text-gray-600 text-sm mt-1">총 프로젝트</p>
               </div>
               <div>
                 <p className="text-3xl font-bold text-gray-900">
                   {new Set(projects.map((p) => p.year)).size}<span className="text-brand-accent">년</span>
                 </p>
-                <p className="text-gray-400 text-sm mt-1">사업 연혁</p>
+                <p className="text-gray-600 text-sm mt-1">사업 연혁</p>
               </div>
               <div>
                 <p className="text-3xl font-bold text-gray-900">
                   {new Set(projects.map((p) => p.client)).size}<span className="text-brand-accent">+</span>
                 </p>
-                <p className="text-gray-400 text-sm mt-1">고객 기관</p>
+                <p className="text-gray-600 text-sm mt-1">고객 기관</p>
               </div>
             </div>
           </ScrollReveal>
@@ -64,7 +64,7 @@ export default async function ProjectsPage() {
       <section className="py-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <ProjectsTable projects={projects} />
-          <p className="mt-6 text-center text-gray-400 text-sm">
+          <p className="mt-6 text-center text-gray-600 text-sm">
             * 기관 정보는 일부 비공개 처리되었습니다.
           </p>
         </div>

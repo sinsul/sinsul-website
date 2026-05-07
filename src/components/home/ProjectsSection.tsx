@@ -12,7 +12,7 @@ const categoryColor: Record<string, string> = {
   security:   "bg-emerald-100 text-emerald-700",
   smart:      "bg-teal-100 text-teal-700",
   consulting: "bg-green-50 text-green-700",
-  기타:       "bg-gray-100 text-gray-500",
+  기타:       "bg-gray-100 text-gray-600",
 };
 
 async function getFeaturedProjects(): Promise<ProjectRow[]> {
@@ -45,7 +45,7 @@ export default async function ProjectsSection() {
             <div>
               <span className="text-brand-accent text-sm font-semibold tracking-widest uppercase">Projects</span>
               <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-gray-900">납품실적</h2>
-              <p className="mt-2 text-gray-500">신뢰할 수 있는 실적으로 증명합니다</p>
+              <p className="mt-2 text-gray-600">신뢰할 수 있는 실적으로 증명합니다</p>
             </div>
             <Link href="/projects" className="hidden sm:flex items-center gap-1.5 text-brand-accent text-sm font-medium hover:gap-2.5 transition-all">
               전체 보기 <ArrowRight size={15} />
@@ -66,15 +66,15 @@ export default async function ProjectsSection() {
                 {/* 기관명 + 사업내용 */}
                 <div className="flex-1 min-w-0">
                   <p className="text-gray-900 font-semibold text-sm sm:text-base truncate">{p.client}</p>
-                  <p className="text-gray-400 text-xs sm:text-sm mt-0.5 truncate">{p.service}</p>
+                  <p className="text-gray-600 text-xs sm:text-sm mt-0.5 truncate">{p.service}</p>
                 </div>
 
                 {/* 규모 + 분류 */}
                 <div className="flex items-center gap-2 shrink-0">
-                  <span className="px-3 py-1 rounded-lg bg-gray-100 text-gray-500 text-xs font-medium whitespace-nowrap">
+                  <span className="px-3 py-1 rounded-lg bg-gray-100 text-gray-600 text-xs font-medium whitespace-nowrap">
                     {p.count}
                   </span>
-                  <span className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap ${categoryColor[p.category] ?? "bg-gray-100 text-gray-500"}`}>
+                  <span className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap ${categoryColor[p.category] ?? "bg-gray-100 text-gray-600"}`}>
                     {categoryLabel[p.category as keyof typeof categoryLabel] ?? p.category}
                   </span>
                 </div>

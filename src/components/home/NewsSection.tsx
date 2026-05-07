@@ -45,7 +45,7 @@ export default async function NewsSection() {
             <div>
               <span className="text-brand-accent text-sm font-semibold tracking-widest uppercase">News</span>
               <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-gray-900">공지사항</h2>
-              <p className="mt-2 text-gray-500">최신 소식을 전달드립니다</p>
+              <p className="mt-2 text-gray-600">최신 소식을 전달드립니다</p>
             </div>
             <Link href="/news" className="hidden sm:flex items-center gap-1.5 text-brand-accent text-sm font-medium hover:gap-3 transition-all">
               전체 보기 <ArrowRight size={15} />
@@ -68,7 +68,7 @@ export default async function NewsSection() {
                   <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${categoryColor[item.category] ?? "bg-brand-accent/15 text-brand-accent"}`}>
                     {item.category}
                   </span>
-                  <span className="flex items-center gap-1 text-gray-400 text-xs">
+                  <span className="flex items-center gap-1 text-gray-600 text-xs">
                     <Calendar size={11} />
                     {item.date}
                   </span>
@@ -81,7 +81,7 @@ export default async function NewsSection() {
 
                 {/* 요약 */}
                 {item.excerpt && (
-                  <p className="text-gray-400 text-sm leading-relaxed line-clamp-2 mb-5">{item.excerpt}</p>
+                  <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-5">{item.excerpt}</p>
                 )}
 
                 <div className="flex items-center gap-1 text-brand-accent/50 text-xs group-hover:text-brand-accent transition-colors mt-auto">

@@ -18,7 +18,7 @@ export default function ContactPage() {
               Contact
             </span>
             <h1 className="mt-3 text-4xl sm:text-5xl font-bold text-gray-900">문의하기</h1>
-            <p className="mt-4 text-gray-500 text-lg">언제든지 연락주세요</p>
+            <p className="mt-4 text-gray-600 text-lg">언제든지 연락주세요</p>
           </ScrollReveal>
         </div>
       </section>
@@ -41,7 +41,7 @@ export default function ContactPage() {
                       <item.icon size={20} />
                     </div>
                     <div>
-                      <p className="text-gray-400 text-sm">{item.label}</p>
+                      <p className="text-gray-600 text-sm">{item.label}</p>
                       <p className="text-gray-900 font-medium mt-0.5">{item.value}</p>
                     </div>
                   </div>

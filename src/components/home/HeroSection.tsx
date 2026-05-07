@@ -161,7 +161,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
-            className="text-gray-500 text-lg sm:text-xl leading-relaxed mb-10 max-w-xl"
+            className="text-gray-600 text-lg sm:text-xl leading-relaxed mb-10 max-w-xl"
           >
             정보통신 인프라 구축 기술을 기반으로<br className="hidden sm:block" />
             고객 맞춤형{" "}
@@ -209,7 +209,7 @@ export default function HeroSection() {
             ].map((s) => (
               <div key={s.label}>
                 <p className="text-2xl font-bold text-gray-900">{s.value}</p>
-                <p className="text-gray-400 text-xs mt-0.5">{s.label}</p>
+                <p className="text-gray-600 text-xs mt-0.5">{s.label}</p>
               </div>
             ))}
           </motion.div>
@@ -222,8 +222,8 @@ export default function HeroSection() {
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <span className="text-gray-400 text-xs tracking-widest uppercase">Scroll</span>
-        <ChevronDown size={20} className="text-gray-400" />
+        <span className="text-gray-600 text-xs tracking-widest uppercase">Scroll</span>
+        <ChevronDown size={20} className="text-gray-600" />
       </motion.div>
     </section>
   );
