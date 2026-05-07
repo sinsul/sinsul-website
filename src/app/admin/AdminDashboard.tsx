@@ -62,7 +62,7 @@ function ProjectForm({
       </Field>
       <label className="flex items-center gap-2 cursor-pointer">
         <input type="checkbox" checked={form.featured} onChange={(e) => setForm({ ...form, featured: e.target.checked })} className="w-4 h-4 accent-brand-accent" />
-        <span className="text-white/70 text-sm">홈 화면에 노출</span>
+        <span className="text-gray-600 text-sm">홈 화면에 노출</span>
       </label>
       <ModalButtons saving={saving} onClose={onClose} />
     </form>
@@ -120,7 +120,7 @@ function NewsForm({
       </Field>
       <label className="flex items-center gap-2 cursor-pointer">
         <input type="checkbox" checked={form.published} onChange={(e) => setForm({ ...form, published: e.target.checked })} className="w-4 h-4 accent-brand-accent" />
-        <span className="text-white/70 text-sm">게시 (체크 해제 시 비공개)</span>
+        <span className="text-gray-600 text-sm">게시 (체크 해제 시 비공개)</span>
       </label>
       <ModalButtons saving={saving} onClose={onClose} />
     </form>
@@ -130,13 +130,13 @@ function NewsForm({
 // ── 공통 UI 헬퍼 ─────────────────────────────────────────
 
 const inputCls =
-  "w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-brand-accent transition-colors text-sm";
+  "w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors text-sm";
 
 function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-white/50 text-xs mb-1.5">
-        {label}{required && <span className="text-red-400 ml-0.5">*</span>}
+      <label className="block text-gray-600 text-xs mb-1.5">
+        {label}{required && <span className="text-red-500 ml-0.5">*</span>}
       </label>
       {children}
     </div>
@@ -149,7 +149,7 @@ function ModalButtons({ saving, onClose }: { saving: boolean; onClose: () => voi
       <button type="submit" disabled={saving} className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-brand-accent text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50">
         <Check size={15} />{saving ? "저장 중..." : "저장"}
       </button>
-      <button type="button" onClick={onClose} className="px-4 py-2.5 border border-white/20 text-white/60 text-sm rounded-lg hover:bg-white/5 transition-colors">
+      <button type="button" onClick={onClose} className="px-4 py-2.5 border border-gray-300 text-gray-600 text-sm rounded-lg hover:bg-gray-50 transition-colors">
         취소
       </button>
     </div>
@@ -158,11 +158,11 @@ function ModalButtons({ saving, onClose }: { saving: boolean; onClose: () => voi
 
 function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: React.ReactNode }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <div className="w-full max-w-lg bg-brand-dark border border-white/10 rounded-2xl p-6 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+      <div className="w-full max-w-lg bg-white border border-gray-200 rounded-2xl p-6 max-h-[90vh] overflow-y-auto shadow-xl">
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-white font-semibold">{title}</h2>
-          <button onClick={onClose} className="text-white/40 hover:text-white transition-colors"><X size={20} /></button>
+          <h2 className="text-gray-900 font-semibold">{title}</h2>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-700 transition-colors"><X size={20} /></button>
         </div>
         {children}
       </div>
@@ -258,16 +258,16 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-brand-dark">
       {/* 헤더 */}
-      <header className="border-b border-white/10 bg-brand-darker px-6 py-4 flex items-center justify-between">
+      <header className="border-b border-gray-200 bg-white px-6 py-4 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-4">
           <SinsulLogo size="sm" />
-          <span className="text-white/40 text-sm border-l border-white/10 pl-4">관리자</span>
+          <span className="text-gray-400 text-sm border-l border-gray-200 pl-4">관리자</span>
         </div>
         <div className="flex items-center gap-3">
-          <a href="/" target="_blank" className="flex items-center gap-1.5 text-white/40 hover:text-white text-sm transition-colors">
+          <a href="/" target="_blank" className="flex items-center gap-1.5 text-gray-500 hover:text-gray-900 text-sm transition-colors">
             <ExternalLink size={14} /> 사이트 보기
           </a>
-          <button onClick={handleLogout} className="flex items-center gap-1.5 text-white/40 hover:text-red-400 text-sm transition-colors">
+          <button onClick={handleLogout} className="flex items-center gap-1.5 text-gray-500 hover:text-red-500 text-sm transition-colors">
             <LogOut size={14} /> 로그아웃
           </button>
         </div>
@@ -281,7 +281,7 @@ export default function AdminDashboard() {
               key={key}
               onClick={() => setTab(key)}
               className={`px-5 py-2 rounded-lg text-sm font-medium transition-colors ${
-                tab === key ? "bg-brand-accent text-white" : "text-white/50 hover:text-white hover:bg-white/10"
+                tab === key ? "bg-brand-accent text-white" : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
               }`}
             >
               {label}
@@ -305,13 +305,13 @@ export default function AdminDashboard() {
 
         {/* 테이블 */}
         {loading ? (
-          <div className="text-center py-20 text-white/30">불러오는 중...</div>
+          <div className="text-center py-20 text-gray-400">불러오는 중...</div>
         ) : (
-          <div className="rounded-2xl border border-white/10 overflow-hidden">
+          <div className="rounded-2xl border border-gray-200 overflow-hidden bg-white shadow-sm">
             {tab === "projects" ? (
               <table className="w-full">
                 <thead>
-                  <tr className="bg-white/5 border-b border-white/10 text-white/50 text-sm">
+                  <tr className="bg-gray-50 border-b border-gray-200 text-gray-600 text-sm">
                     <th className="px-5 py-3 text-left">연도</th>
                     <th className="px-5 py-3 text-left">기관명</th>
                     <th className="px-5 py-3 text-left hidden md:table-cell">사업내용</th>
@@ -321,28 +321,28 @@ export default function AdminDashboard() {
                 </thead>
                 <tbody>
                   {projects.map((p) => (
-                    <tr key={p.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    <tr key={p.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                       <td className="px-5 py-3 text-brand-accent font-semibold text-sm">{p.year}</td>
-                      <td className="px-5 py-3 text-white text-sm">{p.client}</td>
-                      <td className="px-5 py-3 text-white/60 text-sm hidden md:table-cell">{p.service}</td>
-                      <td className="px-5 py-3 text-white/60 text-sm hidden sm:table-cell">{p.count}</td>
+                      <td className="px-5 py-3 text-gray-900 text-sm">{p.client}</td>
+                      <td className="px-5 py-3 text-gray-600 text-sm hidden md:table-cell">{p.service}</td>
+                      <td className="px-5 py-3 text-gray-600 text-sm hidden sm:table-cell">{p.count}</td>
                       <td className="px-5 py-3">
                         <div className="flex items-center justify-center gap-2">
-                          <button onClick={() => setModal({ type: "projects", item: p })} className="text-white/40 hover:text-brand-accent transition-colors"><Pencil size={15} /></button>
-                          <button onClick={() => deleteProject(p.id)} className="text-white/40 hover:text-red-400 transition-colors"><Trash2 size={15} /></button>
+                          <button onClick={() => setModal({ type: "projects", item: p })} className="text-gray-400 hover:text-brand-accent transition-colors"><Pencil size={15} /></button>
+                          <button onClick={() => deleteProject(p.id)} className="text-gray-400 hover:text-red-500 transition-colors"><Trash2 size={15} /></button>
                         </div>
                       </td>
                     </tr>
                   ))}
                   {projects.length === 0 && (
-                    <tr><td colSpan={5} className="px-5 py-12 text-center text-white/30 text-sm">등록된 납품실적이 없습니다.</td></tr>
+                    <tr><td colSpan={5} className="px-5 py-12 text-center text-gray-400 text-sm">등록된 납품실적이 없습니다.</td></tr>
                   )}
                 </tbody>
               </table>
             ) : (
               <table className="w-full">
                 <thead>
-                  <tr className="bg-white/5 border-b border-white/10 text-white/50 text-sm">
+                  <tr className="bg-gray-50 border-b border-gray-200 text-gray-600 text-sm">
                     <th className="px-5 py-3 text-left">날짜</th>
                     <th className="px-5 py-3 text-left">제목</th>
                     <th className="px-5 py-3 text-center hidden sm:table-cell w-20">분류</th>
@@ -352,25 +352,25 @@ export default function AdminDashboard() {
                 </thead>
                 <tbody>
                   {news.map((n) => (
-                    <tr key={n.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                      <td className="px-5 py-3 text-white/60 text-sm whitespace-nowrap">{n.date}</td>
-                      <td className="px-5 py-3 text-white text-sm">{n.title}</td>
+                    <tr key={n.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                      <td className="px-5 py-3 text-gray-600 text-sm whitespace-nowrap">{n.date}</td>
+                      <td className="px-5 py-3 text-gray-900 text-sm">{n.title}</td>
                       <td className="px-5 py-3 text-center hidden sm:table-cell">
                         <span className="px-2 py-0.5 rounded-full text-xs bg-brand-accent/10 text-brand-accent">{n.category}</span>
                       </td>
                       <td className="px-5 py-3 text-center hidden sm:table-cell">
-                        <span className={`text-xs ${n.published ? "text-green-400" : "text-white/30"}`}>{n.published ? "공개" : "비공개"}</span>
+                        <span className={`text-xs ${n.published ? "text-green-600" : "text-gray-400"}`}>{n.published ? "공개" : "비공개"}</span>
                       </td>
                       <td className="px-5 py-3">
                         <div className="flex items-center justify-center gap-2">
-                          <button onClick={() => setModal({ type: "news", item: n })} className="text-white/40 hover:text-brand-accent transition-colors"><Pencil size={15} /></button>
-                          <button onClick={() => deleteNews(n.id)} className="text-white/40 hover:text-red-400 transition-colors"><Trash2 size={15} /></button>
+                          <button onClick={() => setModal({ type: "news", item: n })} className="text-gray-400 hover:text-brand-accent transition-colors"><Pencil size={15} /></button>
+                          <button onClick={() => deleteNews(n.id)} className="text-gray-400 hover:text-red-500 transition-colors"><Trash2 size={15} /></button>
                         </div>
                       </td>
                     </tr>
                   ))}
                   {news.length === 0 && (
-                    <tr><td colSpan={5} className="px-5 py-12 text-center text-white/30 text-sm">등록된 공지사항이 없습니다.</td></tr>
+                    <tr><td colSpan={5} className="px-5 py-12 text-center text-gray-400 text-sm">등록된 공지사항이 없습니다.</td></tr>
                   )}
                 </tbody>
               </table>

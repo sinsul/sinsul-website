@@ -35,24 +35,24 @@ export default function AdminLoginPage() {
         <div className="flex justify-center mb-8">
           <SinsulLogo size="md" />
         </div>
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
+        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-lg">
           <div className="flex items-center gap-2 mb-6">
             <Lock size={18} className="text-brand-accent" />
-            <h1 className="text-white font-semibold">관리자 로그인</h1>
+            <h1 className="text-gray-900 font-semibold">관리자 로그인</h1>
           </div>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-white/50 text-sm mb-2">비밀번호</label>
+              <label className="block text-gray-600 text-sm mb-2">비밀번호</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="관리자 비밀번호 입력"
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-brand-accent transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors"
                 autoFocus
               />
             </div>
-            {error && <p className="text-red-400 text-sm">{error}</p>}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
             <button
               type="submit"
               disabled={loading}
