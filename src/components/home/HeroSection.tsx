@@ -47,7 +47,7 @@ function NetworkCanvas() {
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 160) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(63, 174, 54, ${0.18 * (1 - dist / 160)})`;
+            ctx.strokeStyle = `rgba(26, 107, 58, ${0.22 * (1 - dist / 160)})`;
             ctx.lineWidth = 0.8;
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -60,13 +60,13 @@ function NetworkCanvas() {
       nodes.forEach((n) => {
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(63, 174, 54, 0.6)";
+        ctx.fillStyle = "rgba(26, 107, 58, 0.45)";
         ctx.fill();
 
         // 글로우
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r * 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(63, 174, 54, 0.08)";
+        ctx.fillStyle = "rgba(63, 174, 54, 0.07)";
         ctx.fill();
 
         n.x += n.vx;
@@ -85,16 +85,16 @@ function NetworkCanvas() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-60" />;
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-70" />;
 }
 
 const words = ["네트워크", "디바이스", "전기공사", "소프트웨어"];
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#0f2313]">
-      {/* 다층 배경 */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0a1a0d] via-[#0f2313] to-[#1a4a20]" />
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-brand-dark">
+      {/* 배경 그라디언트 */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#eaf5ea] via-brand-dark to-[#dff0df]" />
 
       {/* 네트워크 캔버스 */}
       <NetworkCanvas />
@@ -102,14 +102,14 @@ export default function HeroSection() {
       {/* 빛나는 원형 오브젝트 */}
       <motion.div
         className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(63,174,54,0.22) 0%, transparent 70%)" }}
-        animate={{ scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
+        style={{ background: "radial-gradient(circle, rgba(63,174,54,0.12) 0%, transparent 70%)" }}
+        animate={{ scale: [1, 1.15, 1], opacity: [0.5, 1, 0.5] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
         className="absolute bottom-1/4 left-1/6 w-[300px] h-[300px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(63,174,54,0.1) 0%, transparent 70%)" }}
-        animate={{ scale: [1.1, 1, 1.1], opacity: [0.4, 0.8, 0.4] }}
+        style={{ background: "radial-gradient(circle, rgba(63,174,54,0.08) 0%, transparent 70%)" }}
+        animate={{ scale: [1.1, 1, 1.1], opacity: [0.3, 0.7, 0.3] }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
       />
 
@@ -138,7 +138,7 @@ export default function HeroSection() {
               initial={{ y: 80, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-tight"
+              className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-tight"
             >
               신뢰할 수 있는
             </motion.h1>
@@ -150,7 +150,7 @@ export default function HeroSection() {
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight"
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-lime-400 to-green-300">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary via-brand-accent to-green-500">
                 통신 네트워크 파트너
               </span>
             </motion.h1>
@@ -161,7 +161,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
-            className="text-white/55 text-lg sm:text-xl leading-relaxed mb-10 max-w-xl"
+            className="text-gray-500 text-lg sm:text-xl leading-relaxed mb-10 max-w-xl"
           >
             정보통신 인프라 구축 기술을 기반으로<br className="hidden sm:block" />
             고객 맞춤형{" "}
@@ -179,18 +179,17 @@ export default function HeroSection() {
           >
             <Link
               href="/services"
-              className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-accent text-white font-semibold rounded-xl overflow-hidden transition-all hover:-translate-y-0.5"
+              className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-accent text-white font-semibold rounded-xl overflow-hidden transition-all hover:-translate-y-0.5 shadow-md shadow-brand-accent/30"
             >
-              <span className="absolute inset-0 bg-gradient-to-r from-brand-accent to-lime-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <span className="absolute inset-0 bg-gradient-to-r from-brand-accent to-green-500 opacity-0 group-hover:opacity-100 transition-opacity" />
               <span className="relative flex items-center gap-2">
                 사업분야 보기
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </span>
-              <span className="absolute inset-0 rounded-xl shadow-[0_0_30px_rgba(63,174,54,0.5)] opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
             <Link
               href="/contact"
-              className="group inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/20 text-white font-semibold rounded-xl hover:bg-white/10 hover:border-white/40 transition-all"
+              className="group inline-flex items-center justify-center gap-2 px-8 py-4 border border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-white hover:border-brand-accent hover:text-brand-accent transition-all shadow-sm"
             >
               문의하기
             </Link>
@@ -209,8 +208,8 @@ export default function HeroSection() {
               { value: "19.5억", label: "2024 매출" },
             ].map((s) => (
               <div key={s.label}>
-                <p className="text-2xl font-bold text-white">{s.value}</p>
-                <p className="text-white/40 text-xs mt-0.5">{s.label}</p>
+                <p className="text-2xl font-bold text-gray-900">{s.value}</p>
+                <p className="text-gray-400 text-xs mt-0.5">{s.label}</p>
               </div>
             ))}
           </motion.div>
@@ -223,8 +222,8 @@ export default function HeroSection() {
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <span className="text-white/20 text-xs tracking-widest uppercase">Scroll</span>
-        <ChevronDown size={20} className="text-white/30" />
+        <span className="text-gray-400 text-xs tracking-widest uppercase">Scroll</span>
+        <ChevronDown size={20} className="text-gray-400" />
       </motion.div>
     </section>
   );
