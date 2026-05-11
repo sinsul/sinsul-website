@@ -31,7 +31,7 @@ export default function Header() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-white/95 backdrop-blur-md shadow-sm shadow-brand-primary/10 border-b border-gray-200"
-          : "bg-transparent"
+          : "bg-white/80 backdrop-blur-sm border-b border-gray-200/60"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -50,9 +50,7 @@ export default function Header() {
                 className={`relative px-4 py-2 text-sm font-medium transition-colors rounded-lg ${
                   pathname === item.href
                     ? "text-brand-accent"
-                    : scrolled
-                    ? "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                    : "text-white/80 hover:text-white hover:bg-white/10"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
                 {item.label}
@@ -74,7 +72,7 @@ export default function Header() {
 
           {/* 모바일 메뉴 버튼 */}
           <button
-            className={`lg:hidden p-2 transition-colors ${scrolled ? "text-gray-700" : "text-white"}`}
+            className="lg:hidden p-2 transition-colors text-gray-700"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
