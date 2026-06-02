@@ -1,6 +1,3 @@
-import Link from "next/link";
-import { ArrowRight, Calendar } from "lucide-react";
-import ScrollReveal from "@/components/ui/ScrollReveal";
 import { supabase } from "@/lib/supabase";
 import type { NewsRow } from "@/lib/supabase";
 
@@ -10,7 +7,14 @@ const staticNews: NewsRow[] = [
   { id: 3, date: "2024-08-20", category: "공지", title: "2024 제주 교육 IT 박람회 참가 안내", excerpt: "오는 9월 제주 교육 IT 박람회에 참가합니다.", content: null, published: true, created_at: "" },
 ];
 
-async function getLatestNews(): Promise<NewsRow[]> {
+const categoryStyle: Record<string, string> = {
+  공지: "background: rgba(45,158,79,0.12); color: #1A5C30",
+  소식: "background: rgba(134,200,58,0.12); color: #4A6A10",
+  채용: "background: rgba(26,140,110,0.12); color: #1A6E5A",
+  이벤트: "background: rgba(26,110,140,0.12); color: #1A5A6E",
+};
+
+async function getNews(): Promise<NewsRow[]> {
   if (supabase) {
     try {
       const { data } = await supabase
@@ -25,80 +29,49 @@ async function getLatestNews(): Promise<NewsRow[]> {
   return staticNews;
 }
 
-const categoryColor: Record<string, string> = {
-  공지: "bg-green-100 text-green-700",
-  소식: "bg-lime-100 text-lime-700",
-  채용: "bg-emerald-100 text-emerald-700",
-  이벤트: "bg-teal-100 text-teal-700",
-};
-
 export default async function NewsSection() {
-  const news = await getLatestNews();
+  const news = await getNews();
 
   return (
-    <section className="py-24 bg-brand-darker relative overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-primary/20 to-transparent" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal>
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <span className="text-brand-accent text-sm font-semibold tracking-widest uppercase">News</span>
-              <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-gray-900">공지사항</h2>
-              <p className="mt-2 text-gray-600">최신 소식을 전달드립니다</p>
+    <section id="news" style={{ background: "#F2F9F4", padding: "100px 0" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 60px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 48 }}>
+          <div>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 16, color: "#2D9E4F", fontSize: 12, fontWeight: 500, letterSpacing: "3px", textTransform: "uppercase" }}>
+              <span style={{ width: 36, height: 1, background: "#2D9E4F", display: "inline-block" }} />
+              News
             </div>
-            <Link href="/news" className="hidden sm:flex items-center gap-1.5 text-brand-accent text-sm font-medium hover:gap-3 transition-all">
-              전체 보기 <ArrowRight size={15} />
-            </Link>
+            <h2 style={{ fontFamily: "var(--font-serif), serif", fontSize: "clamp(26px, 3vw, 40px)", fontWeight: 600, color: "#0A2010", lineHeight: 1.3, marginBottom: 8 }}>공지사항</h2>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: "#2F5C38" }}>최신 소식을 전달드립니다</p>
           </div>
-        </ScrollReveal>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {news.map((item, i) => (
-            <ScrollReveal key={item.id} delay={i * 0.12}>
-              <Link
-                href="/news"
-                className="group relative flex flex-col h-full p-7 rounded-2xl border border-gray-200 bg-white hover:border-brand-accent/40 hover:shadow-lg hover:shadow-brand-accent/8 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden"
-              >
-                {/* 상단 라인 강조 */}
-                <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-accent/0 via-brand-accent/60 to-brand-accent/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                {/* 메타 */}
-                <div className="flex items-center gap-2 mb-5">
-                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${categoryColor[item.category] ?? "bg-brand-accent/15 text-brand-accent"}`}>
-                    {item.category}
-                  </span>
-                  <span className="flex items-center gap-1 text-gray-600 text-xs">
-                    <Calendar size={11} />
-                    {item.date}
-                  </span>
-                </div>
-
-                {/* 제목 */}
-                <h3 className="text-gray-900 font-semibold text-base leading-snug mb-3 group-hover:text-brand-accent transition-colors duration-200 line-clamp-2 flex-1">
-                  {item.title}
-                </h3>
-
-                {/* 요약 */}
-                {item.excerpt && (
-                  <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-5">{item.excerpt}</p>
-                )}
-
-                <div className="flex items-center gap-1 text-brand-accent/50 text-xs group-hover:text-brand-accent transition-colors mt-auto">
-                  자세히 보기
-                  <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Link>
-            </ScrollReveal>
-          ))}
+          <a href="/news" style={{ display: "flex", alignItems: "center", gap: 6, color: "#2D9E4F", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>
+            전체 보기 →
+          </a>
         </div>
 
-        <div className="mt-8 text-center sm:hidden">
-          <Link href="/news" className="inline-flex items-center gap-1.5 text-brand-accent text-sm font-medium">
-            전체 보기 <ArrowRight size={15} />
-          </Link>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }} className="news-grid">
+          {news.map((item) => {
+            const catStyle = categoryStyle[item.category] ?? "background: #E8F5EC; color: #2F5C38";
+            const styleObj = Object.fromEntries(catStyle.split("; ").map(s => s.split(": ")));
+            return (
+              <a key={item.id} href="/news" className="news-card" style={{ display: "flex", flexDirection: "column", padding: 28, borderRadius: 20, background: "#fff", border: "1px solid #E8F5EC", textDecoration: "none", transition: "all 0.3s", position: "relative", overflow: "hidden" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, padding: "4px 10px", borderRadius: 20, ...styleObj }}>{item.category}</span>
+                  <span style={{ fontSize: 12, color: "#6A9E72" }}>📅 {item.date}</span>
+                </div>
+                <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0A2010", lineHeight: 1.5, marginBottom: 10, flex: 1 }}>{item.title}</h3>
+                {item.excerpt && <p style={{ fontSize: 13, color: "#6A9E72", lineHeight: 1.6, marginBottom: 16 }}>{item.excerpt}</p>}
+                <span style={{ fontSize: 12, color: "#2D9E4F", fontWeight: 500 }}>자세히 보기 →</span>
+              </a>
+            );
+          })}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 900px) { .news-grid { grid-template-columns: 1fr !important; } }
+        .news-card:hover { border-color: rgba(45,158,79,0.4) !important; transform: translateY(-4px); box-shadow: 0 16px 40px rgba(10,32,16,0.10); }
+      `}</style>
     </section>
   );
 }

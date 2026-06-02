@@ -1,40 +1,43 @@
 import type { Metadata } from "next";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import { DM_Sans, Noto_Sans_KR, Noto_Serif_KR } from "next/font/google";
+import ScrollObserver from "@/components/ui/ScrollObserver";
 import "./globals.css";
 
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  variable: "--font-dm",
+  display: "swap",
+});
+
+const notoSans = Noto_Sans_KR({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-noto",
+  display: "swap",
+});
+
+const notoSerif = Noto_Serif_KR({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-serif",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: {
-    default: "주식회사 신설 | 제주 교육 IT 전문기업",
-    template: "%s | 주식회사 신설",
-  },
+  title: "주식회사 신설 | 첨단 ICT 인프라 전문기업",
   description:
-    "제주도 학교 네트워크 구축, 교육용 디바이스 공급, IT 컨설팅 전문 기업 주식회사 신설입니다.",
-  keywords: ["제주 IT", "학교 네트워크", "교육용 디바이스", "신설", "제주 교육"],
-  openGraph: {
-    siteName: "주식회사 신설",
-    locale: "ko_KR",
-    type: "website",
-  },
+    "정보통신·소프트웨어·전기공사 및 ICT 인프라 구축·유지보수 전문기업 주식회사 신설",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
-  const messages = await getMessages();
-
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ko">
-      <body>
-        <NextIntlClientProvider messages={messages}>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </NextIntlClientProvider>
+    <html lang="ko" className={`${dmSans.variable} ${notoSans.variable} ${notoSerif.variable}`}>
+      <body style={{ fontFamily: "var(--font-dm), var(--font-noto), sans-serif" }}>
+        <ScrollObserver />
+        {children}
       </body>
     </html>
   );

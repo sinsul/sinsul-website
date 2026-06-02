@@ -6,12 +6,10 @@ const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
 
 export const isSupabaseConfigured = url.startsWith("https://") && anonKey.length > 10;
 
-// 공개 페이지용 (읽기 전용)
 export const supabase: SupabaseClient | null = isSupabaseConfigured
   ? createClient(url, anonKey)
   : null;
 
-// 관리자 API 전용 (서버에서만 사용)
 export const supabaseAdmin: SupabaseClient | null =
   isSupabaseConfigured && serviceKey.length > 10
     ? createClient(url, serviceKey)
@@ -26,6 +24,8 @@ export type ProjectRow = {
   category: string;
   featured: boolean;
   created_at: string;
+  tags?: string[];      // 사업 태그 (Supabase: text[])
+  amount?: string;      // 계약금액 (예: "1,361,209,000")
 };
 
 export type NewsRow = {

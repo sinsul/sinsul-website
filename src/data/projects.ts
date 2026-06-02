@@ -1,91 +1,94 @@
-// =====================================================
-// 납품실적 데이터
-// =====================================================
-// 새 실적 추가 방법:
-//   아래 배열 맨 위(또는 원하는 위치)에 항목을 추가하세요.
-//   저장하면 사이트에 자동 반영됩니다.
-//
-// 각 항목 설명:
-//   year     : 연도 (예: "2024")
-//   client   : 기관명 (예: "제주○○초등학교")
-//   service  : 사업 내용 (예: "무선 네트워크 구축")
-//   count    : 규모/수량 (예: "AP 40대")
-//   category : 분류 — "network" | "device" | "security" | "smart" | "consulting" | "기타"
-//   featured : true 이면 홈 화면 실적 요약에도 표시
-// =====================================================
-
-export type ProjectCategory =
-  | "network"
-  | "device"
-  | "security"
-  | "smart"
-  | "consulting"
-  | "기타";
-
-export interface Project {
-  year: string;
-  client: string;
-  service: string;
-  count: string;
-  category: ProjectCategory;
-  featured?: boolean;
-}
-
-export const categoryLabel: Record<ProjectCategory, string> = {
-  network:    "네트워크",
-  device:     "디바이스",
-  security:   "보안",
-  smart:      "스마트교실",
-  consulting: "컨설팅",
-  기타:       "기타",
+export const categoryLabel: Record<string, string> = {
+  network: "네트워크", device: "디바이스", security: "보안",
+  smart: "스마트교실", consulting: "컨설팅", 기타: "기타",
 };
 
-// ↓↓↓ 실적을 여기에 추가하세요 (최신순 권장) ↓↓↓
-export const projects: Project[] = [
+export const projects = [
   {
-    year: "2024",
-    client: "제주○○초등학교",
-    service: "학교 네트워크 구축 + 디바이스 공급",
-    count: "태블릿 200대",
-    category: "device",
-    featured: true,
-  },
-  {
-    year: "2024",
-    client: "제주○○중학교",
-    service: "무선 네트워크 전면 교체",
-    count: "AP 40대",
-    category: "network",
-    featured: true,
-  },
-  {
-    year: "2023",
-    client: "제주○○고등학교",
-    service: "스마트 교실 구축",
-    count: "15개 교실",
-    category: "smart",
-    featured: true,
-  },
-  {
-    year: "2023",
-    client: "제주○○초등학교",
-    service: "크롬북 공급 및 MDM 구축",
-    count: "크롬북 300대",
-    category: "device",
-  },
-  {
-    year: "2022",
+    id: 1,
+    icon: "🏫",
     client: "제주특별자치도교육청",
-    service: "관내 학교 네트워크 점검",
-    count: "30개교",
-    category: "consulting",
+    name: "테크원터 이용 용역사업",
+    detail: "2024년 제주교육청 테크원터 이용 용역, 디바이스임대 설치 및 네트워크 A/S 관리",
+    amount: "324,940,000원",
+    year: "2024",
+    gradient: "linear-gradient(135deg, #0A2010, #1A5228)",
   },
   {
-    year: "2022",
-    client: "제주○○중학교",
-    service: "보안 솔루션 구축",
-    count: "방화벽 2식",
-    category: "security",
+    id: 2,
+    icon: "📡",
+    client: "주식회사 엠지씨 플러스",
+    name: "LG U+ 개통공사",
+    detail: "2024년 LG U+ 개통공사. 유·무선 통신망 구축 및 디바이스 설치·유지보수",
+    amount: "1,361,209,000원",
+    year: "2024",
+    gradient: "linear-gradient(135deg, #133A1C, #0A2010)",
+  },
+  {
+    id: 3,
+    icon: "🏫",
+    client: "인천광역시교육청",
+    name: "테크원터 이용 용역",
+    detail: "인천광역시교육청 테크원터 이용 용역. 네트워크 장비 관리 및 기술 지원",
+    amount: "24,200,000원",
+    year: "2024",
+    gradient: "linear-gradient(135deg, #0F3D18, #1A6B30)",
+  },
+  {
+    id: 4,
+    icon: "📡",
+    client: "주식회사 엠지씨 플러스",
+    name: "LG U+ 개통공사",
+    detail: "2023년 LG U+ 개통공사. 유·무선 통신망 구축 및 인근 커버리지 설치",
+    amount: "1,240,268,000원",
+    year: "2023",
+    gradient: "linear-gradient(135deg, #1A5228, #2D9E4F)",
+  },
+  {
+    id: 5,
+    icon: "🔧",
+    client: "주식회사 엠지씨 플러스",
+    name: "유지보수 공사",
+    detail: "2021년 LG U+ 통신 인프라 유지보수 공사. 네트워크 장비 점검 및 장애 대응",
+    amount: "997,359,000원",
+    year: "2021",
+    gradient: "linear-gradient(135deg, #0A2010, #133A1C)",
+  },
+  {
+    id: 6,
+    icon: "🌐",
+    client: "주식회사 엠지씨 플러스",
+    name: "지역 구내 관로공사",
+    detail: "2021년 지역 구내 관로(관심점) 공사. 이고 인터넷 인프라 구축",
+    amount: "15,425,000원",
+    year: "2021",
+    gradient: "linear-gradient(135deg, #133A1C, #2D9E4F)",
   },
 ];
-// ↑↑↑ 여기까지 ↑↑↑
+
+export const orgChart = {
+  ceo: "CEO",
+  depts: [
+    {
+      name: "경영지원본부",
+      color: "#133A1C",
+      teams: ["경영지원팀"],
+    },
+    {
+      name: "네트워크 핵심 본부",
+      color: "#1A8C6E",
+      teams: ["사업관리팀", "네트워크팀", "디바이스팀", "연구개발전담부서"],
+    },
+    {
+      name: "CS 사업부",
+      color: "#1A8C6E",
+      teams: ["CS운영팀", "CS기술팀"],
+    },
+  ],
+  engineers: [
+    { grade: "고급 기술자", hw: "-", sw: "-", telecom: "1", etc: "-" },
+    { grade: "중급 기술자", hw: "-", sw: "-", telecom: "1", etc: "1" },
+    { grade: "초급 기술자", hw: "-", sw: "16", telecom: "5", etc: "2" },
+    { grade: "합계", hw: "0", sw: "16", telecom: "7", etc: "3" },
+  ],
+};

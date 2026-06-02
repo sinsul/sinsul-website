@@ -1,32 +1,44 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    @apply bg-brand-dark text-gray-900;
-    font-family: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont,
-      "Apple SD Gothic Neo", sans-serif;
-  }
-
-  /* 스크롤바 스타일 */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    @apply bg-brand-darker;
-  }
-  ::-webkit-scrollbar-thumb {
-    @apply bg-brand-primary rounded-full;
-  }
+@theme {
+  /* ── 다크 그린 테마 ── */
+  --color-g-dark:     #0A2010;
+  --color-g-mid:      #133A1C;
+  --color-g-main:     #2D9E4F;
+  --color-g-light:    #5CC67A;
+  --color-g-lime:     #86C83A;
+  --color-g-lime-lt:  #AEDE6A;
+  --color-g-off:      #F2F9F4;
+  --color-g-100:      #E8F5EC;
+  --color-g-200:      #C5DFC9;
+  --color-g-400:      #6A9E72;
+  --color-g-600:      #2F5C38;
+  --color-text-dark:  #0A1F10;
 }
 
-@layer utilities {
-  .text-gradient {
-    @apply text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-lime-400;
-  }
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-display: swap;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', 'Noto Sans KR', sans-serif;
+  color: var(--color-text-dark);
+  background: #fff;
+  overflow-x: hidden;
+}
+
+/* 스크롤 애니메이션 */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
 }

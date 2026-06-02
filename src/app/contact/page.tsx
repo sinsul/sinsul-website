@@ -1,102 +1,60 @@
-import type { Metadata } from "next";
-import ScrollReveal from "@/components/ui/ScrollReveal";
+import { Metadata } from "next";
+import PageLayout from "@/components/layout/PageLayout";
+import ContactForm from "./ContactForm";
 import { company } from "@/data/company";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "문의하기",
-  description: "주식회사 신설에 문의하세요.",
-};
+export const metadata: Metadata = { title: "문의하기 | 주식회사 신설" };
+
+const contactItems = [
+  { icon: "📞", label: "대표전화", value: company.phone, href: `tel:${company.phone}` },
+  { icon: "✉️", label: "이메일", value: company.email, href: `mailto:${company.email}` },
+  { icon: "📍", label: "주소", value: company.address },
+  { icon: "🕐", label: "운영시간", value: "월~금 09:00 ~ 18:00" },
+];
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-brand-dark pt-20">
-      <section className="py-20 bg-gradient-to-b from-brand-primary/10 to-brand-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <ScrollReveal>
-            <span className="text-brand-accent text-sm font-semibold tracking-widest uppercase">
-              Contact
-            </span>
-            <h1 className="mt-3 text-4xl sm:text-5xl font-bold text-gray-900">문의하기</h1>
-            <p className="mt-4 text-gray-600 text-lg">언제든지 연락주세요</p>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* 연락처 정보 */}
-            <ScrollReveal direction="left">
-              <div className="space-y-6">
-                <h2 className="text-2xl font-bold text-gray-900">연락처 정보</h2>
-                {[
-                  { icon: Phone, label: "대표전화", value: company.phone },
-                  { icon: Mail, label: "이메일", value: company.email },
-                  { icon: MapPin, label: "주소", value: company.address },
-                  { icon: Clock, label: "운영시간", value: "월~금 09:00 ~ 18:00" },
-                ].map((item) => (
-                  <div key={item.label} className="flex items-start gap-4">
-                    <div className="p-3 rounded-xl bg-brand-accent/10 text-brand-accent">
-                      <item.icon size={20} />
-                    </div>
-                    <div>
-                      <p className="text-gray-600 text-sm">{item.label}</p>
-                      <p className="text-gray-900 font-medium mt-0.5">{item.value}</p>
-                    </div>
-                  </div>
-                ))}
+    <PageLayout title="문의하기" subtitle="언제든지 연락주세요" eyebrow="Contact">
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "start" }} className="contact-grid">
+        {/* 연락처 정보 */}
+        <div>
+          <h2 style={{ fontSize: 22, fontWeight: 700, color: "#0A2010", marginBottom: 32 }}>연락처 정보</h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+            {contactItems.map((item) => (
+              <div key={item.label} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                <div style={{ width: 44, height: 44, background: "rgba(45,158,79,0.1)", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>
+                  {item.icon}
+                </div>
+                <div>
+                  <p style={{ fontSize: 12, color: "#6A9E72", marginBottom: 4 }}>{item.label}</p>
+                  {item.href ? (
+                    <a href={item.href} style={{ fontSize: 15, fontWeight: 600, color: "#0A2010", textDecoration: "none" }}>{item.value}</a>
+                  ) : (
+                    <p style={{ fontSize: 15, fontWeight: 600, color: "#0A2010" }}>{item.value}</p>
+                  )}
+                </div>
               </div>
-            </ScrollReveal>
+            ))}
+          </div>
 
-            {/* 문의 폼 */}
-            <ScrollReveal direction="right">
-              <form className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-gray-600 text-sm mb-2">이름</label>
-                    <input
-                      type="text"
-                      placeholder="홍길동"
-                      className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-300 focus:outline-none focus:border-brand-accent transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-gray-600 text-sm mb-2">기관명</label>
-                    <input
-                      type="text"
-                      placeholder="○○학교"
-                      className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-300 focus:outline-none focus:border-brand-accent transition-colors"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-gray-600 text-sm mb-2">연락처</label>
-                  <input
-                    type="tel"
-                    placeholder="010-0000-0000"
-                    className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-300 focus:outline-none focus:border-brand-accent transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-600 text-sm mb-2">문의 내용</label>
-                  <textarea
-                    rows={5}
-                    placeholder="문의하실 내용을 입력해 주세요."
-                    className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-300 focus:outline-none focus:border-brand-accent transition-colors resize-none"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full py-4 bg-brand-accent text-white font-semibold rounded-xl hover:bg-green-600 transition-colors shadow-sm"
-                >
-                  문의 보내기
-                </button>
-              </form>
-            </ScrollReveal>
+          {/* 사업분야 안내 */}
+          <div style={{ marginTop: 40, background: "#F2F9F4", borderRadius: 16, padding: 28 }}>
+            <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0A2010", marginBottom: 16 }}>문의 가능 분야</h3>
+            {["통신공사업 / 네트워크 구축", "소프트웨어 개발 / 플랫폼", "전기공사 / EV 충전기", "AI CCTV / BIS·BIT 구축", "IT 유지보수 / 컨설팅"].map((s) => (
+              <div key={s} style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 0", borderBottom: "1px solid #E8F5EC", fontSize: 14, color: "#2F5C38" }}>
+                <span style={{ color: "#2D9E4F" }}>✓</span> {s}
+              </div>
+            ))}
           </div>
         </div>
-      </section>
-    </div>
+
+        {/* 문의 폼 */}
+        <ContactForm />
+      </div>
+
+      <style>{`
+        @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
+    </PageLayout>
   );
 }

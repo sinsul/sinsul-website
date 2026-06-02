@@ -1,19 +1,31 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import ScrollReveal from "@/components/ui/ScrollReveal";
 import { supabase } from "@/lib/supabase";
-import { categoryLabel } from "@/data/projects";
-import { projects as staticProjects } from "@/data/projects";
 import type { ProjectRow } from "@/lib/supabase";
 
-const categoryColor: Record<string, string> = {
-  network:    "bg-green-100 text-green-700",
-  device:     "bg-lime-100 text-lime-700",
-  security:   "bg-emerald-100 text-emerald-700",
-  smart:      "bg-teal-100 text-teal-700",
-  consulting: "bg-green-50 text-green-700",
-  기타:       "bg-gray-100 text-gray-600",
+/* ── 카테고리별 스타일 ── */
+const catConfig: Record<string, { icon: string; gradient: string; badge: string; color: string }> = {
+  network:    { icon: "📡", gradient: "linear-gradient(135deg, #0A2010, #1A5228)", badge: "rgba(45,158,79,0.15)", color: "#86C83A" },
+  device:     { icon: "📱", gradient: "linear-gradient(135deg, #133A1C, #2D9E4F)", badge: "rgba(134,200,58,0.15)", color: "#AEDE6A" },
+  security:   { icon: "🔒", gradient: "linear-gradient(135deg, #0F3D18, #1A8C6E)", badge: "rgba(26,140,110,0.15)", color: "#5CC67A" },
+  smart:      { icon: "🖥️", gradient: "linear-gradient(135deg, #0A2010, #133A1C)", badge: "rgba(45,158,79,0.12)", color: "#86C83A" },
+  consulting: { icon: "📋", gradient: "linear-gradient(135deg, #1A5228, #2D9E4F)", badge: "rgba(134,200,58,0.12)", color: "#AEDE6A" },
+  기타:       { icon: "🌐", gradient: "linear-gradient(135deg, #0A2010, #0F3D18)", badge: "rgba(45,158,79,0.1)",  color: "#5CC67A" },
 };
+
+const catLabel: Record<string, string> = {
+  network: "네트워크", device: "디바이스", security: "보안",
+  smart: "스마트교실", consulting: "컨설팅", 기타: "기타",
+};
+
+/* ── Supabase 없을 때 기본 데이터 ── */
+const staticFeatured: ProjectRow[] = [
+  { id: 1, year: "2024", client: "제주특별자치도교육청", service: "테크원터 이용 용역사업", count: "디바이스임대 설치 및 네트워크 A/S 관리", category: "consulting", featured: true, created_at: "" },
+  { id: 2, year: "2024", client: "주식회사 엠지씨 플러스", service: "LG U+ 개통공사", count: "유·무선 통신망 구축 및 디바이스 설치", category: "network", featured: true, created_at: "" },
+  { id: 3, year: "2024", client: "인천광역시교육청", service: "테크원터 이용 용역", count: "네트워크 장비 관리 및 기술 지원", category: "consulting", featured: true, created_at: "" },
+  { id: 4, year: "2023", client: "주식회사 엠지씨 플러스", service: "LG U+ 개통공사", count: "유·무선 통신망 구축 및 커버리지 확장", category: "network", featured: true, created_at: "" },
+  { id: 5, year: "2021", client: "주식회사 엠지씨 플러스", service: "LG U+ 유지보수 공사", count: "네트워크 장비 점검 및 장애 대응", category: "network", featured: true, created_at: "" },
+  { id: 6, year: "2021", client: "주식회사 엠지씨 플러스", service: "지역 구내 관로공사", count: "인터넷 인프라 구축", category: "network", featured: true, created_at: "" },
+];
 
 async function getFeaturedProjects(): Promise<ProjectRow[]> {
   if (supabase) {
@@ -27,70 +39,134 @@ async function getFeaturedProjects(): Promise<ProjectRow[]> {
       if (data && data.length > 0) return data;
     } catch {}
   }
-  return staticProjects
-    .filter((p) => p.featured)
-    .slice(0, 6)
-    .map((p, i) => ({ ...p, id: i + 1, created_at: "", featured: p.featured ?? false }));
+  return staticFeatured;
+}
+
+function formatAmount(amount?: string): string {
+  if (!amount) return "";
+  const n = Number(amount);
+  if (isNaN(n) || n === 0) return "";
+  if (n >= 1_0000_0000) return `${(n / 1_0000_0000).toFixed(1)}억원`;
+  if (n >= 1_0000) return `${(n / 1_0000).toFixed(0)}만원`;
+  return `${n.toLocaleString("ko-KR")}원`;
 }
 
 export default async function ProjectsSection() {
   const projects = await getFeaturedProjects();
+  const totalAmount = projects.reduce((sum, p) => sum + (Number((p as typeof projects[0] & { amount?: string }).amount) || 0), 0);
 
   return (
-    <section className="py-24 bg-brand-dark">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" style={{ background: "#fff", padding: "100px 0" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 60px" }}>
+
         {/* 헤더 */}
-        <ScrollReveal>
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <span className="text-brand-accent text-sm font-semibold tracking-widest uppercase">Projects</span>
-              <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-gray-900">납품실적</h2>
-              <p className="mt-2 text-gray-600">신뢰할 수 있는 실적으로 증명합니다</p>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 48 }}>
+          <div>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 16, color: "#2D9E4F", fontSize: 12, fontWeight: 500, letterSpacing: "3px", textTransform: "uppercase" }}>
+              <span style={{ width: 36, height: 1, background: "#2D9E4F", display: "inline-block" }} />
+              주요실적
             </div>
-            <Link href="/projects" className="hidden sm:flex items-center gap-1.5 text-brand-accent text-sm font-medium hover:gap-2.5 transition-all">
-              전체 보기 <ArrowRight size={15} />
-            </Link>
+            <h2 style={{ fontFamily: "var(--font-serif), serif", fontSize: "clamp(26px, 3vw, 40px)", fontWeight: 600, color: "#0A2010", lineHeight: 1.3, marginBottom: 8 }}>
+              주요 시행사업
+            </h2>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: "#2F5C38" }}>
+              고객 맞춤형 기술 솔루션으로 지속 가능한 IT 인프라 생태계를 구축합니다.
+            </p>
           </div>
-        </ScrollReveal>
-
-        {/* 카드 리스트 */}
-        <div className="space-y-3">
-          {projects.map((p, i) => (
-            <ScrollReveal key={p.id} delay={i * 0.06}>
-              <div className="group flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 px-6 py-5 rounded-2xl border border-gray-200 bg-white hover:bg-brand-darker hover:border-brand-accent/30 transition-all">
-                {/* 연도 */}
-                <span className="text-brand-accent font-extrabold text-lg sm:text-xl w-16 shrink-0">
-                  {p.year}
-                </span>
-
-                {/* 기관명 + 사업내용 */}
-                <div className="flex-1 min-w-0">
-                  <p className="text-gray-900 font-semibold text-sm sm:text-base truncate">{p.client}</p>
-                  <p className="text-gray-600 text-xs sm:text-sm mt-0.5 truncate">{p.service}</p>
-                </div>
-
-                {/* 규모 + 분류 */}
-                <div className="flex items-center gap-2 shrink-0">
-                  <span className="px-3 py-1 rounded-lg bg-gray-100 text-gray-600 text-xs font-medium whitespace-nowrap">
-                    {p.count}
-                  </span>
-                  <span className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap ${categoryColor[p.category] ?? "bg-gray-100 text-gray-600"}`}>
-                    {categoryLabel[p.category as keyof typeof categoryLabel] ?? p.category}
-                  </span>
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
+          <Link href="/projects" style={{ display: "flex", alignItems: "center", gap: 6, color: "#2D9E4F", textDecoration: "none", fontSize: 14, fontWeight: 500, whiteSpace: "nowrap" }}>
+            전체 보기 →
+          </Link>
         </div>
 
-        <ScrollReveal delay={0.2}>
-          <div className="mt-8 text-center sm:hidden">
-            <Link href="/projects" className="inline-flex items-center gap-1.5 text-brand-accent text-sm font-medium">
-              전체 보기 <ArrowRight size={15} />
-            </Link>
+        {/* 합계 배너 */}
+        {totalAmount > 0 && (
+          <div style={{ display: "flex", gap: 32, padding: "20px 28px", background: "linear-gradient(135deg, #0A2010, #133A1C)", borderRadius: 14, marginBottom: 36, flexWrap: "wrap", alignItems: "center" }}>
+            <div>
+              <p style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", letterSpacing: "2px", textTransform: "uppercase", marginBottom: 4 }}>주요 수행사업 계약금액 합계</p>
+              <p style={{ fontSize: 26, fontWeight: 300, color: "#fff", lineHeight: 1 }}>
+                {(totalAmount / 1_0000_0000).toFixed(1)}<span style={{ fontSize: 16, color: "#86C83A", marginLeft: 4 }}>억원</span>
+              </p>
+            </div>
+            <div style={{ width: 1, height: 40, background: "rgba(255,255,255,0.15)" }} />
+            <div>
+              <p style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", letterSpacing: "2px", textTransform: "uppercase", marginBottom: 4 }}>표시 건수</p>
+              <p style={{ fontSize: 26, fontWeight: 300, color: "#fff", lineHeight: 1 }}>
+                {projects.length}<span style={{ fontSize: 16, color: "#86C83A", marginLeft: 4 }}>건</span>
+              </p>
+            </div>
           </div>
-        </ScrollReveal>
+        )}
+
+        {/* 카드 그리드 */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }} className="proj-grid">
+          {projects.map((p) => {
+            const cfg = catConfig[p.category] ?? catConfig["기타"];
+            return (
+              <Link key={p.id} href={`/projects/${p.id}`} className="proj-card"
+                style={{ background: "#fff", borderRadius: 14, overflow: "hidden", border: "1px solid #E8F5EC", textDecoration: "none", display: "block", transition: "all 0.3s ease" }}>
+
+                {/* 상단 비주얼 */}
+                <div style={{ height: 160, background: cfg.gradient, position: "relative", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 50% 50%, rgba(45,158,79,0.25) 0%, transparent 70%)" }} />
+                  <div style={{ width: 64, height: 64, border: "2px solid rgba(255,255,255,0.15)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, position: "relative", zIndex: 1 }}>
+                    {cfg.icon}
+                  </div>
+                </div>
+
+                {/* 본문 */}
+                <div style={{ padding: 24 }}>
+                  {/* 발주처 */}
+                  <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: "2px", textTransform: "uppercase", color: "#2D9E4F", marginBottom: 8 }}>
+                    {p.client}
+                  </div>
+                  {/* 사업명 */}
+                  <div style={{ fontSize: 15, fontWeight: 700, color: "#0A2010", lineHeight: 1.4, marginBottom: 8 }}>
+                    {p.service}
+                  </div>
+                  {/* 규모/내용 */}
+                  <div style={{ fontSize: 13, color: "#6A9E72", lineHeight: 1.6, marginBottom: 12 }}>
+                    {p.count}
+                  </div>
+                  {/* 태그 */}
+                  {(p.tags ?? []).length > 0 && (
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 14 }}>
+                      {(p.tags ?? []).slice(0, 3).map((tag) => (
+                        <span key={tag} style={{ fontSize: 10, fontWeight: 500, padding: "2px 8px", borderRadius: 20, background: "rgba(45,158,79,0.08)", color: "#2D9E4F", border: "1px solid rgba(45,158,79,0.2)" }}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  {/* 연도 + 금액 + 카테고리 */}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 6 }}>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: "#0A2010" }}>{p.year}년</span>
+                      {(p as typeof p & { amount?: string }).amount && (
+                        <span style={{ fontSize: 12, fontWeight: 600, color: "#2D9E4F" }}>
+                          {formatAmount((p as typeof p & { amount?: string }).amount)}
+                        </span>
+                      )}
+                    </div>
+                    <span style={{ fontSize: 11, fontWeight: 600, padding: "4px 10px", borderRadius: 20, background: cfg.badge, color: cfg.color }}>
+                      {catLabel[p.category] ?? p.category}
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </div>
+
+      <style>{`
+        .proj-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 20px 40px rgba(10,32,16,0.10);
+          border-color: rgba(45,158,79,0.2) !important;
+        }
+        @media (max-width: 900px) { .proj-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+        @media (max-width: 600px) { .proj-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
     </section>
   );
 }

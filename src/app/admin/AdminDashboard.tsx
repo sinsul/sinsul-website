@@ -6,27 +6,150 @@ import SinsulLogo from "@/components/ui/SinsulLogo";
 import { Plus, Pencil, Trash2, LogOut, X, Check, ExternalLink } from "lucide-react";
 import type { ProjectRow, NewsRow } from "@/lib/supabase";
 import { categoryLabel } from "@/data/projects";
+import { services } from "@/data/services";
+
+/* 서비스 태그 전체 목록 */
+const ALL_TAGS = Array.from(new Set(services.flatMap((s) => s.tags)));
 
 type Tab = "projects" | "news";
 
-// ── 모달 폼 ──────────────────────────────────────────────
+/* ── 색상 토큰 ── */
+const C = {
+  bg:        "#F2F9F4",
+  white:     "#ffffff",
+  dark:      "#0A2010",
+  mid:       "#133A1C",
+  main:      "#2D9E4F",
+  light:     "#5CC67A",
+  border:    "#C5DFC9",
+  muted:     "#6A9E72",
+  text:      "#0A2010",
+  textSub:   "#2F5C38",
+  inputBg:   "#F2F9F4",
+};
 
-function ProjectForm({
-  initial,
-  onSave,
-  onClose,
-}: {
-  initial?: Partial<ProjectRow>;
-  onSave: (data: Partial<ProjectRow>) => Promise<void>;
-  onClose: () => void;
-}) {
+/* ── 인풋 공통 스타일 ── */
+const inputSt: React.CSSProperties = {
+  width: "100%", padding: "10px 14px", borderRadius: 10,
+  background: C.inputBg, border: `1px solid ${C.border}`,
+  color: C.text, fontSize: 14, outline: "none", boxSizing: "border-box",
+};
+
+/* ── Field ── */
+function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      <label style={{ fontSize: 12, color: C.muted, fontWeight: 500 }}>
+        {label}{required && <span style={{ color: "#e53e3e", marginLeft: 2 }}>*</span>}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+/* ── Modal 버튼 ── */
+function ModalButtons({ saving, onClose }: { saving: boolean; onClose: () => void }) {
+  return (
+    <div style={{ display: "flex", gap: 10, paddingTop: 8 }}>
+      <button type="submit" disabled={saving}
+        style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "11px 0", background: C.main, color: "#fff", border: "none", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: saving ? "not-allowed" : "pointer", opacity: saving ? 0.6 : 1 }}>
+        <Check size={15} />{saving ? "저장 중..." : "저장"}
+      </button>
+      <button type="button" onClick={onClose}
+        style={{ padding: "11px 20px", border: `1px solid ${C.border}`, color: C.textSub, background: C.white, borderRadius: 10, fontSize: 14, cursor: "pointer" }}>
+        취소
+      </button>
+    </div>
+  );
+}
+
+/* ── Modal ── */
+function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: React.ReactNode }) {
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 50, display: "flex", alignItems: "center", justifyContent: "center", padding: 16, background: "rgba(0,0,0,0.4)", backdropFilter: "blur(4px)" }}>
+      <div style={{ width: "100%", maxWidth: 540, background: C.white, border: `1px solid ${C.border}`, borderRadius: 20, padding: 28, maxHeight: "90vh", overflowY: "auto", boxShadow: "0 20px 60px rgba(0,0,0,0.15)" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
+          <h2 style={{ fontSize: 17, fontWeight: 700, color: C.dark }}>{title}</h2>
+          <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: C.muted, padding: 4 }}>
+            <X size={20} />
+          </button>
+        </div>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/* ── TagSelector ── */
+function TagSelector({ selected, onChange }: { selected: string[]; onChange: (tags: string[]) => void }) {
+  const [custom, setCustom] = useState("");
+
+  const toggle = (tag: string) => {
+    onChange(selected.includes(tag) ? selected.filter((t) => t !== tag) : [...selected, tag]);
+  };
+
+  const addCustom = () => {
+    const t = custom.trim();
+    if (t && !selected.includes(t)) { onChange([...selected, t]); }
+    setCustom("");
+  };
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      {/* 선택된 태그 */}
+      {selected.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+          {selected.map((tag) => (
+            <span key={tag} style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "4px 10px", borderRadius: 20, background: C.main, color: "#fff", fontSize: 12, fontWeight: 500 }}>
+              {tag}
+              <button type="button" onClick={() => toggle(tag)} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.8)", padding: 0, lineHeight: 1, fontSize: 14 }}>×</button>
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* 사전 정의 태그 */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+        {ALL_TAGS.map((tag) => {
+          const active = selected.includes(tag);
+          return (
+            <button key={tag} type="button" onClick={() => toggle(tag)}
+              style={{ padding: "4px 10px", borderRadius: 20, fontSize: 12, fontWeight: 500, cursor: "pointer", transition: "all 0.15s",
+                background: active ? "rgba(45,158,79,0.15)" : C.bg,
+                color: active ? C.main : C.textSub,
+                border: active ? `1px solid ${C.main}` : `1px solid ${C.border}`,
+              }}>
+              {tag}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* 직접 입력 */}
+      <div style={{ display: "flex", gap: 8 }}>
+        <input value={custom} onChange={(e) => setCustom(e.target.value)}
+          onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addCustom(); } }}
+          placeholder="직접 입력 후 Enter" style={{ ...inputSt, flex: 1 }} />
+        <button type="button" onClick={addCustom}
+          style={{ padding: "0 16px", background: C.mid, color: "#fff", border: "none", borderRadius: 10, fontSize: 13, cursor: "pointer", whiteSpace: "nowrap" }}>
+          추가
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ── ProjectForm ── */
+function ProjectForm({ initial, onSave, onClose }: { initial?: Partial<ProjectRow>; onSave: (d: Partial<ProjectRow>) => Promise<void>; onClose: () => void }) {
   const [form, setForm] = useState({
     year: initial?.year ?? new Date().getFullYear().toString(),
     client: initial?.client ?? "",
     service: initial?.service ?? "",
     count: initial?.count ?? "",
+    amount: initial?.amount ?? "",
     category: initial?.category ?? "network",
     featured: initial?.featured ?? false,
+    tags: initial?.tags ?? [] as string[],
   });
   const [saving, setSaving] = useState(false);
 
@@ -38,46 +161,57 @@ function ProjectForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-2 gap-3">
+    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         <Field label="연도" required>
-          <input value={form.year} onChange={(e) => setForm({ ...form, year: e.target.value })} placeholder="2025" className={inputCls} required />
+          <input value={form.year} onChange={(e) => setForm({ ...form, year: e.target.value })} placeholder="2025" style={inputSt} required />
         </Field>
         <Field label="분류" required>
-          <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className={inputCls}>
-            {Object.entries(categoryLabel).map(([k, v]) => (
-              <option key={k} value={k}>{v}</option>
-            ))}
+          <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} style={inputSt}>
+            {Object.entries(categoryLabel).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
           </select>
         </Field>
       </div>
       <Field label="기관명" required>
-        <input value={form.client} onChange={(e) => setForm({ ...form, client: e.target.value })} placeholder="제주○○학교" className={inputCls} required />
+        <input value={form.client} onChange={(e) => setForm({ ...form, client: e.target.value })} placeholder="제주○○학교" style={inputSt} required />
       </Field>
       <Field label="사업 내용" required>
-        <input value={form.service} onChange={(e) => setForm({ ...form, service: e.target.value })} placeholder="무선 네트워크 구축" className={inputCls} required />
+        <input value={form.service} onChange={(e) => setForm({ ...form, service: e.target.value })} placeholder="무선 네트워크 구축" style={inputSt} required />
       </Field>
-      <Field label="규모/수량" required>
-        <input value={form.count} onChange={(e) => setForm({ ...form, count: e.target.value })} placeholder="AP 30대" className={inputCls} required />
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+        <Field label="규모/수량" required>
+          <input value={form.count} onChange={(e) => setForm({ ...form, count: e.target.value })} placeholder="AP 30대" style={inputSt} required />
+        </Field>
+        <Field label="계약금액 (숫자만)">
+          <div style={{ position: "relative" }}>
+            <input value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value.replace(/[^0-9]/g, "") })}
+              placeholder="1361209000" style={{ ...inputSt, paddingRight: 36 }} />
+            <span style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", fontSize: 12, color: C.muted }}>원</span>
+          </div>
+          {form.amount && (
+            <span style={{ fontSize: 11, color: C.muted, marginTop: 4 }}>
+              {Number(form.amount).toLocaleString("ko-KR")}원
+            </span>
+          )}
+        </Field>
+      </div>
+
+      {/* 태그 */}
+      <Field label="사업 태그">
+        <TagSelector selected={form.tags} onChange={(tags) => setForm({ ...form, tags })} />
       </Field>
-      <label className="flex items-center gap-2 cursor-pointer">
-        <input type="checkbox" checked={form.featured} onChange={(e) => setForm({ ...form, featured: e.target.checked })} className="w-4 h-4 accent-brand-accent" />
-        <span className="text-gray-600 text-sm">홈 화면에 노출</span>
+
+      <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+        <input type="checkbox" checked={form.featured} onChange={(e) => setForm({ ...form, featured: e.target.checked })} style={{ width: 16, height: 16, accentColor: C.main }} />
+        <span style={{ fontSize: 14, color: C.textSub }}>주요실적 홈 화면에 노출</span>
       </label>
       <ModalButtons saving={saving} onClose={onClose} />
     </form>
   );
 }
 
-function NewsForm({
-  initial,
-  onSave,
-  onClose,
-}: {
-  initial?: Partial<NewsRow>;
-  onSave: (data: Partial<NewsRow>) => Promise<void>;
-  onClose: () => void;
-}) {
+/* ── NewsForm ── */
+function NewsForm({ initial, onSave, onClose }: { initial?: Partial<NewsRow>; onSave: (d: Partial<NewsRow>) => Promise<void>; onClose: () => void }) {
   const [form, setForm] = useState({
     date: initial?.date ?? new Date().toISOString().slice(0, 10),
     category: initial?.category ?? "공지",
@@ -96,82 +230,38 @@ function NewsForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-2 gap-3">
+    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         <Field label="날짜" required>
-          <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className={inputCls} required />
+          <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} style={inputSt} required />
         </Field>
         <Field label="분류" required>
-          <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className={inputCls}>
-            {["공지", "소식", "채용", "이벤트"].map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
+          <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} style={inputSt}>
+            {["공지", "소식", "채용", "이벤트"].map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
         </Field>
       </div>
       <Field label="제목" required>
-        <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="공지사항 제목" className={inputCls} required />
+        <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="공지사항 제목" style={inputSt} required />
       </Field>
       <Field label="요약 (목록에 표시)">
-        <input value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} placeholder="짧은 설명" className={inputCls} />
+        <input value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} placeholder="짧은 설명" style={inputSt} />
       </Field>
       <Field label="내용">
-        <textarea value={form.content ?? ""} onChange={(e) => setForm({ ...form, content: e.target.value })} rows={5} placeholder="상세 내용 입력" className={inputCls + " resize-none"} />
+        <textarea value={form.content ?? ""} onChange={(e) => setForm({ ...form, content: e.target.value })} rows={5} placeholder="상세 내용 입력" style={{ ...inputSt, resize: "none" }} />
       </Field>
-      <label className="flex items-center gap-2 cursor-pointer">
-        <input type="checkbox" checked={form.published} onChange={(e) => setForm({ ...form, published: e.target.checked })} className="w-4 h-4 accent-brand-accent" />
-        <span className="text-gray-600 text-sm">게시 (체크 해제 시 비공개)</span>
+      <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+        <input type="checkbox" checked={form.published} onChange={(e) => setForm({ ...form, published: e.target.checked })} style={{ width: 16, height: 16, accentColor: C.main }} />
+        <span style={{ fontSize: 14, color: C.textSub }}>게시 (체크 해제 시 비공개)</span>
       </label>
       <ModalButtons saving={saving} onClose={onClose} />
     </form>
   );
 }
 
-// ── 공통 UI 헬퍼 ─────────────────────────────────────────
-
-const inputCls =
-  "w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors text-sm";
-
-function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
-  return (
-    <div>
-      <label className="block text-gray-600 text-xs mb-1.5">
-        {label}{required && <span className="text-red-500 ml-0.5">*</span>}
-      </label>
-      {children}
-    </div>
-  );
-}
-
-function ModalButtons({ saving, onClose }: { saving: boolean; onClose: () => void }) {
-  return (
-    <div className="flex gap-2 pt-2">
-      <button type="submit" disabled={saving} className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-brand-accent text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50">
-        <Check size={15} />{saving ? "저장 중..." : "저장"}
-      </button>
-      <button type="button" onClick={onClose} className="px-4 py-2.5 border border-gray-300 text-gray-600 text-sm rounded-lg hover:bg-gray-50 transition-colors">
-        취소
-      </button>
-    </div>
-  );
-}
-
-function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: React.ReactNode }) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
-      <div className="w-full max-w-lg bg-white border border-gray-200 rounded-2xl p-6 max-h-[90vh] overflow-y-auto shadow-xl">
-        <div className="flex items-center justify-between mb-5">
-          <h2 className="text-gray-900 font-semibold">{title}</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-700 transition-colors"><X size={20} /></button>
-        </div>
-        {children}
-      </div>
-    </div>
-  );
-}
-
-// ── 메인 대시보드 ─────────────────────────────────────────
-
+/* ══════════════════════════════════════
+   메인 대시보드
+══════════════════════════════════════ */
 export default function AdminDashboard() {
   const router = useRouter();
   const [tab, setTab] = useState<Tab>("projects");
@@ -180,10 +270,12 @@ export default function AdminDashboard() {
   const [modal, setModal] = useState<{ type: Tab; item?: ProjectRow | NewsRow } | null>(null);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState("");
+  const [toastType, setToastType] = useState<"ok" | "warn" | "err">("ok");
+  const [sqlBanner, setSqlBanner] = useState(false);
 
-  const showToast = (msg: string) => {
-    setToast(msg);
-    setTimeout(() => setToast(""), 2500);
+  const showToast = (msg: string, type: "ok" | "warn" | "err" = "ok") => {
+    setToast(msg); setToastType(type);
+    setTimeout(() => setToast(""), 3500);
   };
 
   const loadProjects = useCallback(async () => {
@@ -207,97 +299,103 @@ export default function AdminDashboard() {
 
   async function saveProject(data: Partial<ProjectRow>) {
     const method = data.id ? "PUT" : "POST";
-    const res = await fetch("/api/admin/projects", {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+    const res = await fetch("/api/admin/projects", { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+    const json = await res.json();
     if (res.ok) {
       await loadProjects();
       setModal(null);
-      showToast(data.id ? "수정되었습니다." : "등록되었습니다.");
+      if (json._fallback) {
+        setSqlBanner(true);
+        showToast("기본 정보로 저장됐습니다. tags/amount는 SQL 추가 후 사용 가능합니다.", "warn");
+      } else {
+        showToast(data.id ? "수정되었습니다." : "등록되었습니다.", "ok");
+      }
+    } else {
+      showToast(`저장 실패: ${json.error ?? "알 수 없는 오류"}`, "err");
     }
   }
 
   async function deleteProject(id: number) {
     if (!confirm("삭제하시겠습니까?")) return;
-    await fetch("/api/admin/projects", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
-    await loadProjects();
-    showToast("삭제되었습니다.");
+    await fetch("/api/admin/projects", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) });
+    await loadProjects(); showToast("삭제되었습니다.");
   }
 
   async function saveNews(data: Partial<NewsRow>) {
     const method = data.id ? "PUT" : "POST";
-    const res = await fetch("/api/admin/news", {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    if (res.ok) {
-      await loadNews();
-      setModal(null);
-      showToast(data.id ? "수정되었습니다." : "등록되었습니다.");
-    }
+    const res = await fetch("/api/admin/news", { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+    if (res.ok) { await loadNews(); setModal(null); showToast(data.id ? "수정되었습니다." : "등록되었습니다."); }
   }
 
   async function deleteNews(id: number) {
     if (!confirm("삭제하시겠습니까?")) return;
-    await fetch("/api/admin/news", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
-    await loadNews();
-    showToast("삭제되었습니다.");
+    await fetch("/api/admin/news", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) });
+    await loadNews(); showToast("삭제되었습니다.");
   }
 
   return (
-    <div className="min-h-screen bg-brand-dark">
-      {/* 헤더 */}
-      <header className="border-b border-gray-200 bg-white px-6 py-4 flex items-center justify-between shadow-sm">
-        <div className="flex items-center gap-4">
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "var(--font-dm), var(--font-noto), sans-serif" }}>
+
+      {/* ── 헤더 ── */}
+      <header style={{ background: C.white, borderBottom: `1px solid ${C.border}`, padding: "0 32px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 1px 8px rgba(10,32,16,0.06)", position: "sticky", top: 0, zIndex: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <SinsulLogo size="sm" />
-          <span className="text-gray-400 text-sm border-l border-gray-200 pl-4">관리자</span>
+          <span style={{ fontSize: 13, color: C.muted, borderLeft: `1px solid ${C.border}`, paddingLeft: 16 }}>관리자</span>
         </div>
-        <div className="flex items-center gap-3">
-          <a href="/" target="_blank" className="flex items-center gap-1.5 text-gray-500 hover:text-gray-900 text-sm transition-colors">
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <a href="/" target="_blank" style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: C.muted, textDecoration: "none" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = C.dark)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
             <ExternalLink size={14} /> 사이트 보기
           </a>
-          <button onClick={handleLogout} className="flex items-center gap-1.5 text-gray-500 hover:text-red-500 text-sm transition-colors">
+          <button onClick={handleLogout} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: C.muted, background: "none", border: "none", cursor: "pointer" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#e53e3e")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
             <LogOut size={14} /> 로그아웃
           </button>
         </div>
       </header>
 
-      <div className="max-w-5xl mx-auto px-4 py-8">
+      {/* ── SQL 안내 배너 ── */}
+      {sqlBanner && (
+        <div style={{ background: "#FFF8E1", borderBottom: "2px solid #F6C90E", padding: "14px 32px", display: "flex", alignItems: "flex-start", gap: 12, fontSize: 13 }}>
+          <span style={{ fontSize: 18 }}>⚠️</span>
+          <div>
+            <strong style={{ color: "#7B5800", display: "block", marginBottom: 4 }}>tags / amount 컬럼이 Supabase에 없습니다</strong>
+            <span style={{ color: "#7B5800" }}>Supabase 대시보드 → SQL Editor 에서 아래 SQL을 실행하면 태그·금액 기능이 활성화됩니다.</span>
+            <code style={{ display: "block", marginTop: 8, padding: "8px 12px", background: "#FFF3CD", borderRadius: 6, fontFamily: "monospace", fontSize: 12, color: "#5A3E00", whiteSpace: "pre-wrap" }}>
+              {`ALTER TABLE projects ADD COLUMN IF NOT EXISTS tags text[] DEFAULT '{}';\nALTER TABLE projects ADD COLUMN IF NOT EXISTS amount text DEFAULT '';`}
+            </code>
+          </div>
+          <button onClick={() => setSqlBanner(false)} style={{ marginLeft: "auto", background: "none", border: "none", cursor: "pointer", color: "#7B5800", fontSize: 18, flexShrink: 0 }}>×</button>
+        </div>
+      )}
+
+      {/* ── 본문 ── */}
+      <div style={{ maxWidth: 1000, margin: "0 auto", padding: "36px 24px" }}>
+
         {/* 탭 */}
-        <div className="flex gap-2 mb-6">
+        <div style={{ display: "flex", gap: 8, marginBottom: 24 }}>
           {([["projects", "납품실적"], ["news", "공지사항"]] as [Tab, string][]).map(([key, label]) => (
-            <button
-              key={key}
-              onClick={() => setTab(key)}
-              className={`px-5 py-2 rounded-lg text-sm font-medium transition-colors ${
-                tab === key ? "bg-brand-accent text-white" : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-              }`}
-            >
+            <button key={key} onClick={() => setTab(key)}
+              style={{ padding: "9px 20px", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer", transition: "all 0.2s",
+                background: tab === key ? C.main : C.white,
+                color: tab === key ? "#fff" : C.textSub,
+                boxShadow: tab === key ? "0 4px 12px rgba(45,158,79,0.25)" : "none",
+                border: tab === key ? `1px solid ${C.main}` : `1px solid ${C.border}`,
+              }}>
               {label}
-              <span className="ml-2 text-xs opacity-70">
+              <span style={{ marginLeft: 6, fontSize: 12, opacity: 0.7 }}>
                 {key === "projects" ? projects.length : news.length}
               </span>
             </button>
           ))}
-        </div>
 
-        {/* 추가 버튼 */}
-        <div className="flex justify-end mb-4">
-          <button
-            onClick={() => setModal({ type: tab })}
-            className="flex items-center gap-2 px-4 py-2 bg-brand-accent text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors"
-          >
+          {/* 추가 버튼 (우측) */}
+          <button onClick={() => setModal({ type: tab })}
+            style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 6, padding: "9px 18px", background: C.dark, color: "#fff", border: "none", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer" }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = C.mid)}
+            onMouseLeave={(e) => (e.currentTarget.style.background = C.dark)}>
             <Plus size={16} />
             {tab === "projects" ? "납품실적 추가" : "공지사항 작성"}
           </button>
@@ -305,72 +403,122 @@ export default function AdminDashboard() {
 
         {/* 테이블 */}
         {loading ? (
-          <div className="text-center py-20 text-gray-400">불러오는 중...</div>
+          <div style={{ textAlign: "center", padding: "80px 0", color: C.muted, fontSize: 15 }}>불러오는 중...</div>
         ) : (
-          <div className="rounded-2xl border border-gray-200 overflow-hidden bg-white shadow-sm">
+          <div style={{ background: C.white, borderRadius: 16, border: `1px solid ${C.border}`, overflow: "hidden", boxShadow: "0 2px 12px rgba(10,32,16,0.06)" }}>
             {tab === "projects" ? (
-              <table className="w-full">
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
-                  <tr className="bg-gray-50 border-b border-gray-200 text-gray-600 text-sm">
-                    <th className="px-5 py-3 text-left">연도</th>
-                    <th className="px-5 py-3 text-left">기관명</th>
-                    <th className="px-5 py-3 text-left hidden md:table-cell">사업내용</th>
-                    <th className="px-5 py-3 text-left hidden sm:table-cell">규모</th>
-                    <th className="px-5 py-3 text-center w-24">관리</th>
+                  <tr style={{ background: C.bg, borderBottom: `1px solid ${C.border}` }}>
+                    {["연도", "기관명", "사업내용", "규모/수량", "계약금액", "태그", "관리"].map((h, i) => (
+                      <th key={h} style={{ padding: "13px 20px", textAlign: i === 6 ? "center" : "left", fontSize: 13, fontWeight: 600, color: C.textSub, whiteSpace: "nowrap" }}>{h}</th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
                   {projects.map((p) => (
-                    <tr key={p.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                      <td className="px-5 py-3 text-brand-accent font-semibold text-sm">{p.year}</td>
-                      <td className="px-5 py-3 text-gray-900 text-sm">{p.client}</td>
-                      <td className="px-5 py-3 text-gray-600 text-sm hidden md:table-cell">{p.service}</td>
-                      <td className="px-5 py-3 text-gray-600 text-sm hidden sm:table-cell">{p.count}</td>
-                      <td className="px-5 py-3">
-                        <div className="flex items-center justify-center gap-2">
-                          <button onClick={() => setModal({ type: "projects", item: p })} className="text-gray-400 hover:text-brand-accent transition-colors"><Pencil size={15} /></button>
-                          <button onClick={() => deleteProject(p.id)} className="text-gray-400 hover:text-red-500 transition-colors"><Trash2 size={15} /></button>
+                    <tr key={p.id} style={{ borderBottom: `1px solid ${C.bg}` }}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = C.bg)}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}>
+                      <td style={{ padding: "13px 20px", color: C.main, fontWeight: 700, fontSize: 14 }}>{p.year}</td>
+                      <td style={{ padding: "13px 20px", color: C.dark, fontSize: 14, fontWeight: 500 }}>{p.client}</td>
+                      <td style={{ padding: "13px 20px", color: C.textSub, fontSize: 13 }}>{p.service}</td>
+                      <td style={{ padding: "13px 20px", color: C.textSub, fontSize: 13 }}>{p.count}</td>
+                      <td style={{ padding: "13px 20px", color: C.dark, fontSize: 13, fontWeight: 500, whiteSpace: "nowrap" }}>
+                        {p.amount ? `${Number(p.amount).toLocaleString("ko-KR")}원` : "-"}
+                      </td>
+                      <td style={{ padding: "13px 20px" }}>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 4, maxWidth: 200 }}>
+                          {(p.tags ?? []).slice(0, 3).map((tag) => (
+                            <span key={tag} style={{ fontSize: 11, padding: "2px 8px", borderRadius: 20, background: "rgba(45,158,79,0.1)", color: C.main, whiteSpace: "nowrap" }}>
+                              {tag}
+                            </span>
+                          ))}
+                          {(p.tags ?? []).length > 3 && (
+                            <span style={{ fontSize: 11, color: C.muted }}>+{(p.tags ?? []).length - 3}</span>
+                          )}
+                        </div>
+                      </td>
+                      <td style={{ padding: "13px 20px" }}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
+                          <button onClick={() => setModal({ type: "projects", item: p })}
+                            style={{ background: "none", border: "none", cursor: "pointer", color: C.muted, padding: 4, borderRadius: 6 }}
+                            onMouseEnter={(e) => (e.currentTarget.style.color = C.main)}
+                            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+                            <Pencil size={15} />
+                          </button>
+                          <button onClick={() => deleteProject(p.id)}
+                            style={{ background: "none", border: "none", cursor: "pointer", color: C.muted, padding: 4, borderRadius: 6 }}
+                            onMouseEnter={(e) => (e.currentTarget.style.color = "#e53e3e")}
+                            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+                            <Trash2 size={15} />
+                          </button>
                         </div>
                       </td>
                     </tr>
                   ))}
+                  {/* 합계 행 */}
+                  {projects.length > 0 && (() => {
+                    const total = projects.reduce((sum, p) => sum + (Number(p.amount) || 0), 0);
+                    return total > 0 ? (
+                      <tr style={{ background: "#0A2010" }}>
+                        <td colSpan={4} style={{ padding: "13px 20px", color: "rgba(255,255,255,0.6)", fontSize: 13, textAlign: "right" }}>
+                          전체 계약금액 합계
+                        </td>
+                        <td style={{ padding: "13px 20px", color: "#86C83A", fontSize: 14, fontWeight: 700, whiteSpace: "nowrap" }}>
+                          {total.toLocaleString("ko-KR")}원
+                        </td>
+                        <td colSpan={2} />
+                      </tr>
+                    ) : null;
+                  })()}
                   {projects.length === 0 && (
-                    <tr><td colSpan={5} className="px-5 py-12 text-center text-gray-400 text-sm">등록된 납품실적이 없습니다.</td></tr>
+                    <tr><td colSpan={7} style={{ padding: "60px 20px", textAlign: "center", color: C.muted, fontSize: 14 }}>등록된 납품실적이 없습니다.</td></tr>
                   )}
                 </tbody>
               </table>
             ) : (
-              <table className="w-full">
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
-                  <tr className="bg-gray-50 border-b border-gray-200 text-gray-600 text-sm">
-                    <th className="px-5 py-3 text-left">날짜</th>
-                    <th className="px-5 py-3 text-left">제목</th>
-                    <th className="px-5 py-3 text-center hidden sm:table-cell w-20">분류</th>
-                    <th className="px-5 py-3 text-center hidden sm:table-cell w-20">공개</th>
-                    <th className="px-5 py-3 text-center w-24">관리</th>
+                  <tr style={{ background: C.bg, borderBottom: `1px solid ${C.border}` }}>
+                    {["날짜", "제목", "분류", "공개", "관리"].map((h, i) => (
+                      <th key={h} style={{ padding: "13px 20px", textAlign: i >= 2 ? "center" : "left", fontSize: 13, fontWeight: 600, color: C.textSub, whiteSpace: "nowrap" }}>{h}</th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
                   {news.map((n) => (
-                    <tr key={n.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                      <td className="px-5 py-3 text-gray-600 text-sm whitespace-nowrap">{n.date}</td>
-                      <td className="px-5 py-3 text-gray-900 text-sm">{n.title}</td>
-                      <td className="px-5 py-3 text-center hidden sm:table-cell">
-                        <span className="px-2 py-0.5 rounded-full text-xs bg-brand-accent/10 text-brand-accent">{n.category}</span>
+                    <tr key={n.id} style={{ borderBottom: `1px solid ${C.bg}` }}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = C.bg)}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}>
+                      <td style={{ padding: "13px 20px", color: C.textSub, fontSize: 13, whiteSpace: "nowrap" }}>{n.date}</td>
+                      <td style={{ padding: "13px 20px", color: C.dark, fontSize: 14, fontWeight: 500 }}>{n.title}</td>
+                      <td style={{ padding: "13px 20px", textAlign: "center" }}>
+                        <span style={{ fontSize: 11, fontWeight: 600, padding: "3px 10px", borderRadius: 20, background: "rgba(45,158,79,0.1)", color: C.main }}>{n.category}</span>
                       </td>
-                      <td className="px-5 py-3 text-center hidden sm:table-cell">
-                        <span className={`text-xs ${n.published ? "text-green-600" : "text-gray-400"}`}>{n.published ? "공개" : "비공개"}</span>
+                      <td style={{ padding: "13px 20px", textAlign: "center" }}>
+                        <span style={{ fontSize: 12, fontWeight: 600, color: n.published ? "#16a34a" : C.muted }}>{n.published ? "공개" : "비공개"}</span>
                       </td>
-                      <td className="px-5 py-3">
-                        <div className="flex items-center justify-center gap-2">
-                          <button onClick={() => setModal({ type: "news", item: n })} className="text-gray-400 hover:text-brand-accent transition-colors"><Pencil size={15} /></button>
-                          <button onClick={() => deleteNews(n.id)} className="text-gray-400 hover:text-red-500 transition-colors"><Trash2 size={15} /></button>
+                      <td style={{ padding: "13px 20px" }}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
+                          <button onClick={() => setModal({ type: "news", item: n })}
+                            style={{ background: "none", border: "none", cursor: "pointer", color: C.muted, padding: 4 }}
+                            onMouseEnter={(e) => (e.currentTarget.style.color = C.main)}
+                            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+                            <Pencil size={15} />
+                          </button>
+                          <button onClick={() => deleteNews(n.id)}
+                            style={{ background: "none", border: "none", cursor: "pointer", color: C.muted, padding: 4 }}
+                            onMouseEnter={(e) => (e.currentTarget.style.color = "#e53e3e")}
+                            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+                            <Trash2 size={15} />
+                          </button>
                         </div>
                       </td>
                     </tr>
                   ))}
                   {news.length === 0 && (
-                    <tr><td colSpan={5} className="px-5 py-12 text-center text-gray-400 text-sm">등록된 공지사항이 없습니다.</td></tr>
+                    <tr><td colSpan={5} style={{ padding: "60px 20px", textAlign: "center", color: C.muted, fontSize: 14 }}>등록된 공지사항이 없습니다.</td></tr>
                   )}
                 </tbody>
               </table>
@@ -379,28 +527,29 @@ export default function AdminDashboard() {
         )}
       </div>
 
-      {/* 모달 */}
+      {/* ── 모달 ── */}
       {modal && (
         <Modal
-          title={
-            modal.type === "projects"
-              ? (modal.item ? "납품실적 수정" : "납품실적 추가")
-              : (modal.item ? "공지사항 수정" : "공지사항 작성")
-          }
+          title={modal.type === "projects" ? (modal.item ? "납품실적 수정" : "납품실적 추가") : (modal.item ? "공지사항 수정" : "공지사항 작성")}
           onClose={() => setModal(null)}
         >
-          {modal.type === "projects" ? (
-            <ProjectForm initial={modal.item as ProjectRow} onSave={saveProject} onClose={() => setModal(null)} />
-          ) : (
-            <NewsForm initial={modal.item as NewsRow} onSave={saveNews} onClose={() => setModal(null)} />
-          )}
+          {modal.type === "projects"
+            ? <ProjectForm initial={modal.item as ProjectRow} onSave={saveProject} onClose={() => setModal(null)} />
+            : <NewsForm initial={modal.item as NewsRow} onSave={saveNews} onClose={() => setModal(null)} />
+          }
         </Modal>
       )}
 
-      {/* 토스트 */}
+      {/* ── 토스트 ── */}
       {toast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-2.5 bg-brand-accent text-white text-sm rounded-full shadow-lg">
-          {toast}
+        <div style={{
+          position: "fixed", bottom: 28, left: "50%", transform: "translateX(-50%)",
+          padding: "12px 24px", fontSize: 14, fontWeight: 500, borderRadius: 100,
+          boxShadow: "0 8px 24px rgba(0,0,0,0.2)", zIndex: 100, maxWidth: "90vw", textAlign: "center",
+          background: toastType === "ok" ? C.main : toastType === "warn" ? "#D97706" : "#DC2626",
+          color: "#fff",
+        }}>
+          {toastType === "ok" ? "✓ " : toastType === "warn" ? "⚠ " : "✕ "}{toast}
         </div>
       )}
     </div>

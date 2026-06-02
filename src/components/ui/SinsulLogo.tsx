@@ -1,26 +1,18 @@
 import Image from "next/image";
 
-interface SinsulLogoProps {
-  className?: string;
-  size?: "sm" | "md" | "lg";
-}
+type Size = "sm" | "md" | "lg";
+const sizes: Record<Size, number> = { sm: 100, md: 130, lg: 160 };
 
-const sizes = {
-  sm: { width: 112, height: 36 },
-  md: { width: 141, height: 45 },
-  lg: { width: 197, height: 63 },
-};
-
-export default function SinsulLogo({ className = "", size = "md" }: SinsulLogoProps) {
-  const { width, height } = sizes[size];
+export default function SinsulLogo({ size = "md" }: { size?: Size }) {
+  const w = sizes[size];
   return (
     <Image
-      src="/images/logo.svg"
-      alt="주식회사 신설 로고"
-      width={width}
-      height={height}
-      className={className}
+      src="/logo.svg"
+      alt="신설 로고"
+      width={w}
+      height={Math.round(w * 0.42)}
       priority
+      style={{ display: "block" }}
     />
   );
 }

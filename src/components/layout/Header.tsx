@@ -1,120 +1,88 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import SinsulLogo from "@/components/ui/SinsulLogo";
 
 const navItems = [
-  { href: "/", label: "홈" },
-  { href: "/about", label: "회사소개" },
-  { href: "/services", label: "사업분야" },
-  { href: "/projects", label: "납품실적" },
-  { href: "/news", label: "공지사항" },
+  { href: "#about",    label: "회사소개" },
+  { href: "#business", label: "사업영역" },
+  { href: "#history",  label: "연혁" },
+  { href: "#org",      label: "조직도" },
+  { href: "#projects", label: "주요실적" },
+  { href: "#news",     label: "공지사항" },
 ];
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const close = () => setOpen(false);
+
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm shadow-brand-primary/10 border-b border-gray-200"
-          : "bg-white/80 backdrop-blur-sm border-b border-gray-200/60"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          {/* 로고 */}
-          <Link href="/" className="flex items-center group">
-            <SinsulLogo size="md" />
-          </Link>
+    <>
+      <nav style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "0 60px", height: 72,
+        background: "rgba(255,255,255,0.98)", backdropFilter: "blur(12px)",
+        borderBottom: "1px solid rgba(45,158,79,0.15)",
+        boxShadow: scrolled ? "0 4px 32px rgba(10,32,16,0.12)" : "0 2px 16px rgba(10,32,16,0.08)",
+        transition: "box-shadow 0.3s ease",
+      }}>
+        <a href="#top" style={{ textDecoration: "none" }}>
+          <SinsulLogo size="sm" />
+        </a>
 
-          {/* 데스크탑 네비게이션 */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors rounded-lg ${
-                  pathname === item.href
-                    ? "text-brand-accent"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                }`}
-              >
-                {item.label}
-                {pathname === item.href && (
-                  <motion.div
-                    layoutId="activeNav"
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-brand-accent"
-                  />
-                )}
-              </Link>
-            ))}
-            <Link
-              href="/contact"
-              className="ml-4 px-5 py-2 bg-brand-accent text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-colors shadow-sm"
-            >
-              문의하기
-            </Link>
-          </nav>
+        {/* 데스크탑 메뉴 */}
+        <ul style={{ display: "flex", gap: 28, listStyle: "none", margin: 0, padding: 0, alignItems: "center" }} className="nav-desktop">
+          {navItems.map((item) => (
+            <li key={item.href}>
+              <a href={item.href} style={{ color: "#2A4A30", textDecoration: "none", fontSize: "13.5px", fontWeight: 500, letterSpacing: "0.3px", transition: "color 0.2s", position: "relative" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#2D9E4F")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "#2A4A30")}
+              >{item.label}</a>
+            </li>
+          ))}
+          <li>
+            <a href="/contact" style={{ background: "#2D9E4F", color: "white", padding: "8px 20px", borderRadius: 6, textDecoration: "none", fontSize: "13.5px", fontWeight: 500, transition: "background 0.2s" }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#5CC67A")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#2D9E4F")}
+            >문의하기</a>
+          </li>
+        </ul>
 
-          {/* 모바일 메뉴 버튼 */}
-          <button
-            className="lg:hidden p-2 transition-colors text-gray-700"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+        {/* 모바일 햄버거 */}
+        <button onClick={() => setOpen(!open)} style={{ background: "none", border: "none", cursor: "pointer", padding: 4, color: "#0A2010" }} className="nav-mobile" aria-label="메뉴">
+          {open ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </nav>
+
+      {/* 모바일 드로어 */}
+      {open && (
+        <div style={{ position: "fixed", top: 72, left: 0, right: 0, bottom: 0, background: "rgba(255,255,255,0.98)", backdropFilter: "blur(12px)", zIndex: 999, display: "flex", flexDirection: "column", padding: "32px 24px", overflowY: "auto" }}>
+          {navItems.map((item) => (
+            <a key={item.href} href={item.href} onClick={close} style={{ display: "block", padding: "16px 0", fontSize: 17, fontWeight: 500, color: "#2A4A30", textDecoration: "none", borderBottom: "1px solid #E8F5EC" }}>
+              {item.label}
+            </a>
+          ))}
+          <a href="/contact" onClick={close} style={{ marginTop: 20, background: "#2D9E4F", color: "white", borderRadius: 10, padding: 16, textAlign: "center", textDecoration: "none", fontSize: 15, fontWeight: 600 }}>
+            문의하기
+          </a>
         </div>
-      </div>
+      )}
 
-      {/* 모바일 메뉴 */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white/98 backdrop-blur-md border-t border-gray-200"
-          >
-            <nav className="px-4 py-4 flex flex-col gap-1">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                    pathname === item.href
-                      ? "bg-brand-accent/10 text-brand-accent"
-                      : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <Link
-                href="/contact"
-                onClick={() => setMobileOpen(false)}
-                className="mt-2 px-4 py-3 bg-brand-accent text-white rounded-lg text-sm font-semibold text-center"
-              >
-                문의하기
-              </Link>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+      <style>{`
+        @media (max-width: 900px) { .nav-desktop { display: none !important; } }
+        @media (min-width: 901px) { .nav-mobile { display: none !important; } }
+        @media (max-width: 600px) { nav { padding: 0 16px !important; } }
+      `}</style>
+    </>
   );
 }
