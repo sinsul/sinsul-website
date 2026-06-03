@@ -23,8 +23,14 @@ export default function BusinessSection() {
       </div>
 
       <style>{`
-        @media (max-width: 900px) { .biz-grid { grid-template-columns: repeat(2, 1fr) !important; } }
-        @media (max-width: 600px) { .biz-grid { grid-template-columns: 1fr !important; } }
+        @media (max-width: 900px) {
+          .biz-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 600px) {
+          .biz-grid { grid-template-columns: 1fr !important; }
+          /* 모바일에서 wide 카드 span 2 해제 */
+          .biz-card-wide { grid-column: 1 !important; }
+        }
       `}</style>
     </section>
   );
@@ -41,7 +47,7 @@ function BizCard({ service }: { service: typeof services[0] }) {
         transition: "all 0.3s ease", textDecoration: "none",
         gridColumn: service.wide ? "span 2" : undefined,
       }}
-      className="biz-card"
+      className={`biz-card${service.wide ? " biz-card-wide" : ""}`}
       onMouseEnter={(e) => {
         const el = e.currentTarget;
         el.style.background = "#0A2010";
