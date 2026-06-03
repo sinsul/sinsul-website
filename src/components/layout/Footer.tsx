@@ -7,7 +7,7 @@ import { company } from "@/data/company";
 export default function Footer() {
   return (
     <footer style={{ background: "#fff", borderTop: "1px solid rgba(45,158,79,0.15)", boxShadow: "0 -2px 16px rgba(10,32,16,0.06)", padding: "60px 0 40px" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 60px" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 var(--px)" }}>
         <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, paddingBottom: 48, borderBottom: "1px solid rgba(45,158,79,0.12)", marginBottom: 32 }} className="footer-grid">
 
           {/* 브랜드 */}

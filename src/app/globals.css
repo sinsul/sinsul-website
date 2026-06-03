@@ -16,6 +16,29 @@
   --color-text-dark:  #0A1F10;
 }
 
+/* ── 반응형 간격 변수 ── */
+:root {
+  --px: 60px;       /* 좌우 패딩 */
+  --py: 100px;      /* 섹션 상하 패딩 */
+  --nav-h: 72px;    /* 헤더 높이 */
+}
+
+@media (max-width: 900px) {
+  :root {
+    --px: 32px;
+    --py: 72px;
+    --nav-h: 64px;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --px: 16px;
+    --py: 52px;
+    --nav-h: 60px;
+  }
+}
+
 @font-face {
   font-family: 'Noto Sans KR';
   font-display: swap;
@@ -32,7 +55,7 @@ body {
   overflow-x: hidden;
 }
 
-/* 스크롤 애니메이션 */
+/* ── 스크롤 애니메이션 ── */
 .fade-up {
   opacity: 0;
   transform: translateY(24px);
@@ -41,4 +64,10 @@ body {
 .fade-up.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ── 공통 반응형 유틸 ── */
+.resp-hide-mobile { display: block; }
+@media (max-width: 600px) {
+  .resp-hide-mobile { display: none !important; }
 }

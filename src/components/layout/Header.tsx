@@ -30,7 +30,7 @@ export default function Header() {
       <nav style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
         display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "0 60px", height: 72,
+        padding: "0 var(--px)", height: "var(--nav-h)",
         background: "rgba(255,255,255,0.98)", backdropFilter: "blur(12px)",
         borderBottom: "1px solid rgba(45,158,79,0.15)",
         boxShadow: scrolled ? "0 4px 32px rgba(10,32,16,0.12)" : "0 2px 16px rgba(10,32,16,0.08)",
@@ -66,7 +66,7 @@ export default function Header() {
 
       {/* 모바일 드로어 */}
       {open && (
-        <div style={{ position: "fixed", top: 72, left: 0, right: 0, bottom: 0, background: "rgba(255,255,255,0.98)", backdropFilter: "blur(12px)", zIndex: 999, display: "flex", flexDirection: "column", padding: "32px 24px", overflowY: "auto" }}>
+        <div style={{ position: "fixed", top: "var(--nav-h)", left: 0, right: 0, bottom: 0, background: "rgba(255,255,255,0.98)", backdropFilter: "blur(12px)", zIndex: 999, display: "flex", flexDirection: "column", padding: "32px var(--px)", overflowY: "auto" }}>
           {navItems.map((item) => (
             <a key={item.href} href={item.href} onClick={close} style={{ display: "block", padding: "16px 0", fontSize: 17, fontWeight: 500, color: "#2A4A30", textDecoration: "none", borderBottom: "1px solid #E8F5EC" }}>
               {item.label}
@@ -81,7 +81,6 @@ export default function Header() {
       <style>{`
         @media (max-width: 900px) { .nav-desktop { display: none !important; } }
         @media (min-width: 901px) { .nav-mobile { display: none !important; } }
-        @media (max-width: 600px) { nav { padding: 0 16px !important; } }
       `}</style>
     </>
   );

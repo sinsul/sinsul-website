@@ -56,8 +56,8 @@ export default async function ProjectsSection() {
   const totalAmount = projects.reduce((sum, p) => sum + (Number((p as typeof projects[0] & { amount?: string }).amount) || 0), 0);
 
   return (
-    <section id="projects" style={{ background: "#fff", padding: "100px 0" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 60px" }}>
+    <section id="projects" style={{ background: "#fff", padding: "var(--py) 0" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 var(--px)" }}>
 
         {/* 헤더 */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 48 }}>

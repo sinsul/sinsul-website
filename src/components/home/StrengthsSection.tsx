@@ -4,9 +4,9 @@ import { strengths } from "@/data/company";
 
 export default function StrengthsSection() {
   return (
-    <section style={{ background: "#0A2010", position: "relative", overflow: "hidden", padding: "100px 0" }}>
+    <section style={{ background: "#0A2010", position: "relative", overflow: "hidden", padding: "var(--py) 0" }}>
       <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 80% at 80% 50%, rgba(45,158,79,0.15) 0%, transparent 60%)" }} />
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 60px", position: "relative" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 var(--px)", position: "relative" }}>
         <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 20, color: "#86C83A", fontSize: 12, fontWeight: 500, letterSpacing: "3px", textTransform: "uppercase" }}>
           <span style={{ width: 36, height: 1, background: "#86C83A", display: "inline-block" }} />
           핵심역량

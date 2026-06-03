@@ -4,8 +4,8 @@ import { company } from "@/data/company";
 
 export default function CtaSection() {
   return (
-    <section id="contact" style={{ background: "#fff", padding: "100px 0", borderTop: "1px solid #E8F5EC" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 60px" }}>
+    <section id="contact" style={{ background: "#fff", padding: "var(--py) 0", borderTop: "1px solid #E8F5EC" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 var(--px)" }}>
         <div style={{ textAlign: "center" }}>
           <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 20, color: "#2D9E4F", fontSize: 12, fontWeight: 500, letterSpacing: "3px", textTransform: "uppercase" }}>
             <span style={{ width: 36, height: 1, background: "#2D9E4F", display: "inline-block" }} />
@@ -18,7 +18,7 @@ export default function CtaSection() {
           </p>
 
           {/* 버튼 */}
-          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+          <div className="cta-btns" style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <a
               href="/contact"
               style={{ background: "#0A2010", color: "white", padding: "14px 32px", borderRadius: 8, textDecoration: "none", fontSize: 14, fontWeight: 500, transition: "all 0.2s" }}
@@ -52,6 +52,12 @@ export default function CtaSection() {
           </div>
         </div>
       </div>
+      <style>{`
+        @media (max-width: 600px) {
+          .cta-btns { flex-direction: column; align-items: center; }
+          .cta-btns a { width: 100%; max-width: 320px; text-align: center; }
+        }
+      `}</style>
     </section>
   );
 }

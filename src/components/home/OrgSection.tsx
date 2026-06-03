@@ -2,8 +2,8 @@ import { orgChart } from "@/data/projects";
 
 export default function OrgSection() {
   return (
-    <section id="org" style={{ background: "#fff", padding: "100px 0" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 60px" }}>
+    <section id="org" style={{ background: "#fff", padding: "var(--py) 0" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 var(--px)" }}>
         <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 20, color: "#2D9E4F", fontSize: 12, fontWeight: 500, letterSpacing: "3px", textTransform: "uppercase" }}>
           <span style={{ width: 36, height: 1, background: "#2D9E4F", display: "inline-block" }} />
           조직구성
@@ -20,7 +20,7 @@ export default function OrgSection() {
           <div style={{ width: 2, height: 36, background: "#C5DFC9" }} />
 
           {/* 3본부 행 — 가로선 + 각 본부 */}
-          <div style={{ width: "100%", display: "flex", position: "relative" }}>
+          <div className="org-row" style={{ width: "100%", display: "flex", position: "relative" }}>
             {/* 가로선 */}
             <div style={{ position: "absolute", top: 0, left: "16%", right: "16%", height: 2, background: "#C5DFC9" }} />
 
@@ -61,7 +61,7 @@ export default function OrgSection() {
         </div>
 
         {/* 엔지니어 현황 테이블 */}
-        <div style={{ marginTop: 80, overflowX: "auto" }}>
+        <div style={{ marginTop: 64, overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
           <table style={{ width: "100%", maxWidth: 700, margin: "0 auto", borderCollapse: "collapse", fontSize: 14 }}>
             <thead>
               <tr>
@@ -93,6 +93,21 @@ export default function OrgSection() {
           </table>
         </div>
       </div>
+
+      <style>{`
+        /* 모바일: 조직도 세로 스택 */
+        @media (max-width: 600px) {
+          .org-row {
+            flex-direction: column !important;
+            align-items: center;
+            gap: 16px;
+          }
+          .org-row > div {
+            width: 100%;
+            max-width: 280px;
+          }
+        }
+      `}</style>
     </section>
   );
 }

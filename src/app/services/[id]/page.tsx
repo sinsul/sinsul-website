@@ -46,10 +46,10 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
   return (
     <>
       <Header />
-      <main style={{ paddingTop: 72, minHeight: "100vh" }}>
+      <main style={{ paddingTop: "var(--nav-h)", minHeight: "100vh" }}>
         {/* 헤더 배너 */}
         <div style={{ background: "linear-gradient(135deg, #0A2010, #133A1C)", padding: "80px 0 60px" }}>
-          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 60px" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 var(--px)" }}>
             <Link href="/#business" style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "#86C83A", textDecoration: "none", fontSize: 13, marginBottom: 32 }}>
               <ArrowLeft size={16} /> 사업영역 목록
             </Link>
@@ -68,7 +68,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         </div>
 
         {/* 본문 */}
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "80px 60px" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "80px var(--px)" }}>
           <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 60, alignItems: "start" }} className="detail-grid">
             {/* 설명 */}
             <div>

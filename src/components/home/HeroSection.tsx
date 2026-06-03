@@ -70,7 +70,7 @@ export default function HeroSection() {
       style={{
         minHeight: "100vh", background: "#0A2010",
         position: "relative", display: "flex", alignItems: "center",
-        overflow: "hidden", paddingTop: 72,
+        overflow: "hidden", paddingTop: "var(--nav-h)",
       }}
     >
       {/* 배경 그라디언트 */}
@@ -89,7 +89,7 @@ export default function HeroSection() {
       <NetworkCanvas />
 
       {/* 콘텐츠 */}
-      <div style={{ position: "relative", maxWidth: 1200, margin: "0 auto", padding: "0 60px", width: "100%" }}>
+      <div style={{ position: "relative", maxWidth: 1200, margin: "0 auto", padding: "0 var(--px)", width: "100%" }}>
         {/* eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -150,19 +150,18 @@ export default function HeroSection() {
           </a>
         </motion.div>
 
-        {/* 통계 */}
+        {/* 통계 — 데스크탑: 우측 하단 절대 위치, 모바일: 인라인 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6 }}
-          style={{ position: "absolute", right: 60, bottom: -60, display: "flex", gap: 48 }}
           className="hero-stats"
         >
           {[
             { num: "10", unit: "년+", label: "사업 경력" },
             { num: "40", unit: "명", label: "전문 엔지니어" },
           ].map((s) => (
-            <div key={s.label} style={{ textAlign: "right" }}>
+            <div key={s.label} className="hero-stat-item">
               <p style={{ fontFamily: "var(--font-dm), 'DM Sans', sans-serif", fontSize: 36, fontWeight: 300, color: "#ffffff", lineHeight: 1, marginBottom: 6 }}>
                 {s.num}<span style={{ fontSize: 20, color: "#86C83A" }}>{s.unit}</span>
               </p>
@@ -173,13 +172,39 @@ export default function HeroSection() {
       </div>
 
       {/* 스크롤 유도 */}
-      <div style={{ position: "absolute", bottom: 40, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, color: "rgba(255,255,255,0.3)", fontSize: 11, letterSpacing: "2px", textTransform: "uppercase" }}>
+      <div className="hero-scroll-hint" style={{ position: "absolute", bottom: 40, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, color: "rgba(255,255,255,0.3)", fontSize: 11, letterSpacing: "2px", textTransform: "uppercase" }}>
         <motion.div animate={{ height: [48, 32, 48], opacity: [0.3, 0.7, 0.3] }} transition={{ duration: 2, repeat: Infinity }}
           style={{ width: 1, background: "linear-gradient(to bottom, rgba(255,255,255,0.3), transparent)" }} />
       </div>
 
       <style>{`
-        @media (max-width: 600px) { .hero-stats { position: static !important; margin-top: 36px; flex-direction: row; flex-wrap: wrap; gap: 20px; } }
+        /* 통계 — 기본(데스크탑): 우측 절대 위치 */
+        .hero-stats {
+          position: absolute;
+          right: var(--px);
+          bottom: -60px;
+          display: flex;
+          gap: 48px;
+        }
+        .hero-stat-item { text-align: right; }
+
+        /* 태블릿 */
+        @media (max-width: 900px) {
+          .hero-stats { bottom: -40px; gap: 32px; }
+        }
+
+        /* 모바일: 인라인으로 전환 */
+        @media (max-width: 600px) {
+          .hero-stats {
+            position: static !important;
+            margin-top: 32px;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 24px;
+          }
+          .hero-stat-item { text-align: left; }
+          .hero-scroll-hint { display: none; }
+        }
       `}</style>
     </section>
   );

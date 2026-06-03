@@ -76,12 +76,12 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   return (
     <>
       <Header />
-      <main style={{ paddingTop: 72, minHeight: "100vh" }}>
+      <main style={{ paddingTop: "var(--nav-h)", minHeight: "100vh" }}>
 
         {/* ─── 배너 ─── */}
         <div style={{ background: cfg.gradient, padding: "80px 0 60px", position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 80% at 70% 50%, rgba(45,158,79,0.2) 0%, transparent 60%)" }} />
-          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 60px", position: "relative" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 var(--px)", position: "relative" }}>
             <Link href="/projects" style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "#86C83A", textDecoration: "none", fontSize: 13, marginBottom: 32 }}>
               <ArrowLeft size={16} /> 납품실적 전체보기
             </Link>
@@ -108,7 +108,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         </div>
 
         {/* ─── 본문 ─── */}
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "80px 60px" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "80px var(--px)" }}>
           <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 60, alignItems: "start" }} className="proj-detail-grid">
 
             {/* 사업 상세 */}

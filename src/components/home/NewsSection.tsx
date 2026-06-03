@@ -33,8 +33,8 @@ export default async function NewsSection() {
   const news = await getNews();
 
   return (
-    <section id="news" style={{ background: "#F2F9F4", padding: "100px 0" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 60px" }}>
+    <section id="news" style={{ background: "#F2F9F4", padding: "var(--py) 0" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 var(--px)" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 48 }}>
           <div>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 16, color: "#2D9E4F", fontSize: 12, fontWeight: 500, letterSpacing: "3px", textTransform: "uppercase" }}>

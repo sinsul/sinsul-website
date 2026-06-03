@@ -9,8 +9,8 @@ const values = [
 
 export default function IntroSection() {
   return (
-    <section id="about" style={{ background: "#F2F9F4", padding: "100px 0" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 60px" }}>
+    <section id="about" style={{ background: "#F2F9F4", padding: "var(--py) 0" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 var(--px)" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start" }} className="intro-grid">
 
           {/* 텍스트 */}
