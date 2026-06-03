@@ -1,11 +1,5 @@
 import { orgChart } from "@/data/projects";
 
-/* 팀 수 N개일 때 수평선 left/right 계산 */
-function teamLineOffset(count: number) {
-  if (count <= 1) return null;
-  const pct = (100 / (2 * count)).toFixed(1) + "%";
-  return { left: pct, right: pct };
-}
 
 export default function OrgSection() {
   return (
@@ -49,9 +43,7 @@ export default function OrgSection() {
                 height: 2, background: "#C5DFC9",
               }} />
 
-              {orgChart.depts.map((dept) => {
-                const lineOffset = teamLineOffset(dept.teams.length);
-                return (
+              {orgChart.depts.map((dept) => (
                   <div key={dept.name} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
 
                     {/* 본부 수직선 */}
@@ -69,43 +61,41 @@ export default function OrgSection() {
                     {/* 본부 → 팀 수직선 */}
                     <div style={{ width: 2, height: 28, background: "#C5DFC9" }} />
 
-                    {/* 팀 섹션 */}
-                    <div style={{ position: "relative", width: "100%" }}>
-                      {/* 팀 수평 연결선 */}
-                      {lineOffset && (
-                        <div style={{
-                          position: "absolute", top: 0,
-                          left: lineOffset.left, right: lineOffset.right,
-                          height: 2, background: "#C5DFC9",
-                        }} />
-                      )}
-
-                      {/* 팀 목록 — nowrap으로 한 줄 유지 */}
-                      <div style={{
-                        display: "flex", justifyContent: "center",
-                        alignItems: "flex-start", gap: 6, flexWrap: "nowrap",
-                      }}>
-                        {dept.teams.map((team) => (
-                          <div key={team} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                    {/* 팀 목록 — 각 아이템이 직접 좌/우 절반씩 수평선을 그림 */}
+                    <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", gap: 0, flexWrap: "nowrap" }}>
+                      {dept.teams.map((team, idx, arr) => {
+                        const isFirst = idx === 0;
+                        const isLast = idx === arr.length - 1;
+                        const isResearch = team.includes("연구");
+                        return (
+                          <div key={team} style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative", padding: "0 4px" }}>
+                            {/* 수평선: 첫 아이템은 오른쪽 절반만, 마지막은 왼쪽 절반만, 중간은 양쪽 모두 */}
+                            {!isFirst && (
+                              <div style={{ position: "absolute", top: 0, left: 0, right: "50%", height: 2, background: "#C5DFC9" }} />
+                            )}
+                            {!isLast && (
+                              <div style={{ position: "absolute", top: 0, left: "50%", right: 0, height: 2, background: "#C5DFC9" }} />
+                            )}
+                            {/* 수직선 */}
                             <div style={{ width: 2, height: 22, background: "#C5DFC9" }} />
+                            {/* 팀 박스 */}
                             <div style={{
-                              background: team.includes("연구") ? "rgba(134,200,58,0.12)" : "#F2F9F4",
-                              color: team.includes("연구") ? "#2A4A10" : "#0A2010",
+                              background: isResearch ? "rgba(134,200,58,0.12)" : "#F2F9F4",
+                              color: isResearch ? "#2A4A10" : "#0A2010",
                               borderRadius: 8, padding: "7px 10px",
                               fontSize: 11, fontWeight: 600,
-                              border: team.includes("연구") ? "1px solid rgba(134,200,58,0.4)" : "1px solid #C5DFC9",
+                              border: isResearch ? "1px solid rgba(134,200,58,0.4)" : "1px solid #C5DFC9",
                               textAlign: "center", whiteSpace: "nowrap",
                             }}>
                               {team}
                             </div>
                           </div>
-                        ))}
-                      </div>
+                        );
+                      })}
                     </div>
 
                   </div>
-                );
-              })}
+            ))}
             </div>
           </div>
         </div>
