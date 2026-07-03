@@ -20,20 +20,20 @@ export default function CtaSection() {
           {/* 버튼 */}
           <div className="cta-btns" style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <a
-              href="/contact"
+              href={`tel:${company.phone}`}
               style={{ background: "#0A2010", color: "white", padding: "14px 32px", borderRadius: 8, textDecoration: "none", fontSize: 14, fontWeight: 500, transition: "all 0.2s" }}
               onMouseEnter={(e) => { e.currentTarget.style.background = "#133A1C"; e.currentTarget.style.transform = "translateY(-1px)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.background = "#0A2010"; e.currentTarget.style.transform = "translateY(0)"; }}
             >
-              📝 문의하기
+              ☎ {company.phone}
             </a>
             <a
-              href={`tel:${company.phone}`}
+              href="/contact"
               style={{ color: "#0A2010", padding: "14px 32px", borderRadius: 8, textDecoration: "none", fontSize: 14, fontWeight: 400, border: "1px solid #C5DFC9", transition: "all 0.2s" }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#2D9E4F"; e.currentTarget.style.color = "#2D9E4F"; e.currentTarget.style.background = "rgba(45,158,79,0.04)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#C5DFC9"; e.currentTarget.style.color = "#0A2010"; e.currentTarget.style.background = "transparent"; }}
             >
-              ☎ {company.phone}
+              이메일 문의
             </a>
           </div>
 

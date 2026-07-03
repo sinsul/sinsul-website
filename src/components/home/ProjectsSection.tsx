@@ -19,12 +19,12 @@ const catLabel: Record<string, string> = {
 
 /* ── Supabase 없을 때 기본 데이터 ── */
 const staticFeatured: ProjectRow[] = [
-  { id: 1, year: "2024", client: "제주특별자치도교육청", service: "테크원터 이용 용역사업", count: "디바이스임대 설치 및 네트워크 A/S 관리", category: "consulting", featured: true, created_at: "" },
-  { id: 2, year: "2024", client: "주식회사 엠지씨 플러스", service: "LG U+ 개통공사", count: "유·무선 통신망 구축 및 디바이스 설치", category: "network", featured: true, created_at: "" },
-  { id: 3, year: "2024", client: "인천광역시교육청", service: "테크원터 이용 용역", count: "네트워크 장비 관리 및 기술 지원", category: "consulting", featured: true, created_at: "" },
-  { id: 4, year: "2023", client: "주식회사 엠지씨 플러스", service: "LG U+ 개통공사", count: "유·무선 통신망 구축 및 커버리지 확장", category: "network", featured: true, created_at: "" },
-  { id: 5, year: "2021", client: "주식회사 엠지씨 플러스", service: "LG U+ 유지보수 공사", count: "네트워크 장비 점검 및 장애 대응", category: "network", featured: true, created_at: "" },
-  { id: 6, year: "2021", client: "주식회사 엠지씨 플러스", service: "지역 구내 관로공사", count: "인터넷 인프라 구축", category: "network", featured: true, created_at: "" },
+  { id: 1, year: "2025", client: "(주)엘지유플러스", service: "2025년 LG유플러스 개통공사", count: "제주도내 전체지역 대상, 정보화기기 설치·유지보수, 네트워크 설치·유지보수, 디바이스 설치·유지보수, 콜센터 운영", category: "network", featured: true, created_at: "" },
+  { id: 2, year: "2024", client: "(주)엘지유플러스", service: "2024년 LG유플러스 개통공사", count: "제주도내 전체지역 대상, 정보화기기(PC·태블릿·노트북) 유지관리, 네트워크·CCTV·IoT 디바이스 A/S 및 유지보수, 개통 구축", category: "network", featured: true, created_at: "" },
+  { id: 3, year: "2024", client: "울산광역시교육청", service: "2024년 울산광역시교육청 테크센터 운영용역", count: "울산역시 전체학교 대상, 통신설비구축, 정보통신공사, 유지보수, 네트워크 유지관리 콜센터 운영, 디바이스 A/S 및 유지보수", category: "consulting", featured: true, created_at: "" },
+  { id: 4, year: "2023", client: "주식회사 엘지유플러스", service: "2023년 LG U+ 개통공사", count: "제주도내 전체지역 대상, 네트워크 유지관리 콜센터 운영, 태블릿·인터넷·IPTV·WiFi·IoT 디바이스 A/S 및 유지보수, 개통 구축", category: "network", featured: true, created_at: "" },
+  { id: 5, year: "2022", client: "주식회사 엘지유플러스", service: "2022년 LG U+ 개통공사", count: "제주도내 전체지역 대상, 네트워크 유지관리 콜센터 운영, 태블릿·인터넷·IPTV·WiFi·IoT 디바이스 A/S 및 유지보수, 개통 구축", category: "network", featured: true, created_at: "" },
+  { id: 6, year: "2021", client: "(주)엘지유플러스", service: "'21년 유지보수공사", count: "제주도내 전체지역 대상, 네트워크 유지관리 콜센터 운영, 태블릿·인터넷·IPTV·WiFi·IoT 디바이스 A/S 및 유지보수, 개통 구축", category: "network", featured: true, created_at: "" },
 ];
 
 async function getFeaturedProjects(): Promise<ProjectRow[]> {
@@ -67,7 +67,7 @@ export default async function ProjectsSection() {
               주요실적
             </div>
             <h2 style={{ fontFamily: "var(--font-serif), serif", fontSize: "clamp(26px, 3vw, 40px)", fontWeight: 600, color: "#0A2010", lineHeight: 1.3, marginBottom: 8 }}>
-              주요 시행사업
+              주요 수행사업
             </h2>
             <p style={{ fontSize: 15, lineHeight: 1.8, color: "#2F5C38" }}>
               고객 맞춤형 기술 솔루션으로 지속 가능한 IT 인프라 생태계를 구축합니다.

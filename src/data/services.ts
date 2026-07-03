@@ -48,6 +48,14 @@ export const services = [
     tags: ["BIS", "BIT", "대중교통", "정보시스템"],
   },
   {
+    id: "5g",
+    num: "07",
+    icon: "📶",
+    title: "5G 특화망 사업",
+    desc: "5G 특화망(Private 5G)의 기획·컨설팅부터 구축, 운영, 유지보수까지 One-Stop 서비스를 제공합니다. 축적된 정보통신 기술력을 바탕으로 안정적이고 미래지향적인 네트워크 인프라를 제공합니다.",
+    tags: ["Private 5G", "특화망 컨설팅", "구축·운영"],
+  },
+  {
     id: "platform",
     num: "+",
     icon: "📱",

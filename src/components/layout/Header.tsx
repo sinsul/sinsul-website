@@ -8,9 +8,8 @@ const navItems = [
   { href: "#about",    label: "회사소개" },
   { href: "#business", label: "사업영역" },
   { href: "#history",  label: "연혁" },
-  { href: "#org",      label: "조직도" },
   { href: "#projects", label: "주요실적" },
-  { href: "#news",     label: "공지사항" },
+  { href: "#org",      label: "조직도" },
 ];
 
 export default function Header() {

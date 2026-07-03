@@ -44,12 +44,12 @@ export default function Footer() {
             <h4 style={{ fontSize: 12, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", color: "#2D9E4F", marginBottom: 20 }}>회사소개</h4>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
               {[
-                { href: "/#about", label: "기업소개" },
+                { href: "/#about", label: "기업 소개" },
                 { href: "/#history", label: "회사 연혁" },
                 { href: "/#org", label: "조직도" },
                 { href: "/#projects", label: "주요 실적" },
                 { href: "/#certs", label: "인증·자격" },
-                { href: "/#news", label: "공지사항" },
+                { href: "/#finance", label: "재무현황" },
               ].map(({ href, label }) => (
                 <li key={label}><a href={href} style={{ fontSize: 13, color: "#2A4A30", textDecoration: "none" }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = "#2D9E4F")}

@@ -12,7 +12,7 @@ export default function BusinessSection() {
           <span style={{ width: 36, height: 1, background: "#2D9E4F", display: "inline-block" }} />
           사업영역
         </div>
-        <h2 style={{ fontFamily: "var(--font-serif), serif", fontSize: "clamp(26px, 3vw, 40px)", fontWeight: 600, color: "#0A2010", lineHeight: 1.3, marginBottom: 8 }}>6대 핵심 사업분야</h2>
+        <h2 style={{ fontFamily: "var(--font-serif), serif", fontSize: "clamp(26px, 3vw, 40px)", fontWeight: 600, color: "#0A2010", lineHeight: 1.3, marginBottom: 8 }}>7대 핵심 사업분야</h2>
         <p style={{ fontSize: 15, lineHeight: 1.8, color: "#2F5C38", marginBottom: 64 }}>정보통신공사부터 소프트웨어, 전기공사, CCTV, BIS/BIT까지 ICT 인프라의 전 주기를 책임집니다.</p>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2, background: "#C5DFC9", borderRadius: 16, overflow: "hidden" }} className="biz-grid">

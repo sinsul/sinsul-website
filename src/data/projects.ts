@@ -75,14 +75,14 @@ export const orgChart = {
       teams: ["경영지원팀"],
     },
     {
-      name: "네트워크혁신본부",
+      name: "네트워크 혁신 본부",
       color: "#1A8C6E",
-      teams: ["사업관리팀", "네트워크팀", "디바이스팀", "연구개발전담부서"],
+      teams: ["사업관리팀", "네트워크팀", "디바이스팀", "연구개발전담"],
     },
     {
       name: "CS 사업부",
       color: "#1A8C6E",
-      teams: ["CS운영팀", "CS기술팀"],
+      teams: ["CS영업팀", "CS기술팀"],
     },
   ],
   engineers: [
