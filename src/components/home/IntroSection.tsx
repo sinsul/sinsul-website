@@ -41,7 +41,7 @@ export default function IntroSection() {
           {/* 건물 사진 */}
           <div className="intro-visual" style={{ position: "relative" }}>
             <img
-              src="/images/building.jpg"
+              src="/images/building.png"
               alt="주식회사 신설 사옥"
               style={{
                 width: "100%", height: 480, objectFit: "cover",
