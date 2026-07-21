@@ -14,8 +14,9 @@ export async function GET(req: NextRequest) {
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
 
-  const checks = {
-    supabase_url: url.startsWith("https://") ? "ok" : "missing",
+  const checks: Record<string, unknown> = {
+    supabase_url: url.startsWith("https://") ? "ok" : `missing_or_wrong: "${url.slice(0, 20)}"`,
+    supabase_url_value: url.slice(0, 40) + (url.length > 40 ? "..." : ""),
     anon_key: anonKey.length > 10 ? "ok" : "missing",
     service_role_key: serviceKey.length > 10 ? "ok" : "missing",
     admin_password: process.env.ADMIN_PASSWORD ? "ok" : "missing",
@@ -23,16 +24,36 @@ export async function GET(req: NextRequest) {
     supabase_admin_ready: supabaseAdmin !== null,
   };
 
-  // DB 연결 테스트
+  // 1) 원시 fetch로 Supabase REST endpoint 직접 테스트
+  try {
+    const rawRes = await fetch(`${url}/rest/v1/projects?select=id&limit=1`, {
+      headers: {
+        apikey: serviceKey,
+        Authorization: `Bearer ${serviceKey}`,
+      },
+    });
+    checks.raw_fetch_status = rawRes.status;
+    checks.raw_fetch = rawRes.ok ? "ok" : `http_${rawRes.status}`;
+    if (!rawRes.ok) {
+      const body = await rawRes.text();
+      checks.raw_fetch_body = body.slice(0, 200);
+    }
+  } catch (e: unknown) {
+    checks.raw_fetch = `exception: ${(e as Error).message}`;
+  }
+
+  // 2) supabaseAdmin 클라이언트로 테스트
   let db_test = "skipped";
   if (supabaseAdmin) {
     try {
-      const { error } = await supabaseAdmin.from("projects").select("id").limit(1);
-      db_test = error ? `error: ${error.message}` : "ok";
-    } catch (e) {
+      const { data, error } = await supabaseAdmin.from("projects").select("id").limit(1);
+      if (error) db_test = `error: ${error.message}`;
+      else db_test = `ok (rows: ${data?.length ?? 0})`;
+    } catch (e: unknown) {
       db_test = `exception: ${(e as Error).message}`;
     }
   }
+  checks.db_test = db_test;
 
-  return NextResponse.json({ ...checks, db_test });
+  return NextResponse.json(checks);
 }
