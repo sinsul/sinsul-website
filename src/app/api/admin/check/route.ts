@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseAdmin, isSupabaseConfigured } from "@/lib/supabase";
+import { supabase, supabaseAdmin, isSupabaseConfigured } from "@/lib/supabase";
 
 function isAuthed(req: NextRequest) {
   const token = req.cookies.get("admin-token")?.value;
@@ -54,6 +54,20 @@ export async function GET(req: NextRequest) {
     }
   }
   checks.db_test = db_test;
+
+  // 3) anon 키로 읽기 테스트 (홈페이지가 실제로 읽는 방식)
+  let anon_read = "skipped";
+  if (supabase) {
+    try {
+      const { data, error } = await supabase.from("projects").select("id").limit(1);
+      if (error) anon_read = `error: ${error.message}`;
+      else anon_read = `ok (rows: ${data?.length ?? 0})`;
+    } catch (e: unknown) {
+      anon_read = `exception: ${(e as Error).message}`;
+    }
+  }
+  checks.anon_read = anon_read;
+  checks.anon_read_note = "홈페이지는 이 키로 읽음. 'ok (rows: 0)'이면 RLS 정책 미설정";
 
   return NextResponse.json(checks);
 }
