@@ -5,11 +5,11 @@ import { Menu, X } from "lucide-react";
 import SinsulLogo from "@/components/ui/SinsulLogo";
 
 const navItems = [
-  { href: "#about",    label: "회사소개" },
-  { href: "#business", label: "사업영역" },
-  { href: "#history",  label: "연혁" },
-  { href: "#projects", label: "주요실적" },
-  { href: "#org",      label: "조직도" },
+  { href: "/#about",    label: "회사소개" },
+  { href: "/#business", label: "사업영역" },
+  { href: "/#history",  label: "연혁" },
+  { href: "/#projects", label: "주요실적" },
+  { href: "/#org",      label: "조직도" },
 ];
 
 export default function Header() {
@@ -35,7 +35,7 @@ export default function Header() {
         boxShadow: scrolled ? "0 4px 32px rgba(10,32,16,0.12)" : "0 2px 16px rgba(10,32,16,0.08)",
         transition: "box-shadow 0.3s ease",
       }}>
-        <a href="#top" style={{ textDecoration: "none" }}>
+        <a href="/" style={{ textDecoration: "none" }}>
           <SinsulLogo size="sm" />
         </a>
 

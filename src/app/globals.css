@@ -55,6 +55,12 @@ body {
   overflow-x: hidden;
 }
 
+/* 한국어 단어 단위 줄바꿈 */
+p, h1, h2, h3, h4, h5, h6, li, td, th, span, div {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 /* ── 스크롤 애니메이션 ── */
 .fade-up {
   opacity: 0;

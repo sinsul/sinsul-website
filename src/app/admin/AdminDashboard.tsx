@@ -5,13 +5,23 @@ import { useRouter } from "next/navigation";
 import SinsulLogo from "@/components/ui/SinsulLogo";
 import { Plus, Pencil, Trash2, LogOut, X, Check, ExternalLink } from "lucide-react";
 import type { ProjectRow, NewsRow } from "@/lib/supabase";
+
+type InquiryRow = {
+  id: number;
+  name: string;
+  org: string | null;
+  phone: string;
+  email: string | null;
+  content: string;
+  created_at: string;
+};
 import { categoryLabel } from "@/data/projects";
 import { services } from "@/data/services";
 
 /* 서비스 태그 전체 목록 */
 const ALL_TAGS = Array.from(new Set(services.flatMap((s) => s.tags)));
 
-type Tab = "projects" | "news";
+type Tab = "projects" | "news" | "inquiries";
 
 /* ── 색상 토큰 ── */
 const C = {
@@ -267,6 +277,7 @@ export default function AdminDashboard() {
   const [tab, setTab] = useState<Tab>("projects");
   const [projects, setProjects] = useState<ProjectRow[]>([]);
   const [news, setNews] = useState<NewsRow[]>([]);
+  const [inquiries, setInquiries] = useState<InquiryRow[]>([]);
   const [modal, setModal] = useState<{ type: Tab; item?: ProjectRow | NewsRow } | null>(null);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState("");
@@ -288,9 +299,14 @@ export default function AdminDashboard() {
     if (res.ok) setNews(await res.json());
   }, []);
 
+  const loadInquiries = useCallback(async () => {
+    const res = await fetch("/api/admin/inquiries");
+    if (res.ok) setInquiries(await res.json());
+  }, []);
+
   useEffect(() => {
-    Promise.all([loadProjects(), loadNews()]).finally(() => setLoading(false));
-  }, [loadProjects, loadNews]);
+    Promise.all([loadProjects(), loadNews(), loadInquiries()]).finally(() => setLoading(false));
+  }, [loadProjects, loadNews, loadInquiries]);
 
   async function handleLogout() {
     await fetch("/api/admin/logout", { method: "POST" });
@@ -324,7 +340,15 @@ export default function AdminDashboard() {
   async function saveNews(data: Partial<NewsRow>) {
     const method = data.id ? "PUT" : "POST";
     const res = await fetch("/api/admin/news", { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+    const json = await res.json();
     if (res.ok) { await loadNews(); setModal(null); showToast(data.id ? "수정되었습니다." : "등록되었습니다."); }
+    else { showToast(`저장 실패: ${json.error ?? "알 수 없는 오류"}`, "err"); }
+  }
+
+  async function deleteInquiry(id: number) {
+    if (!confirm("문의를 삭제하시겠습니까?")) return;
+    await fetch("/api/admin/inquiries", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) });
+    await loadInquiries(); showToast("삭제되었습니다.");
   }
 
   async function deleteNews(id: number) {
@@ -376,7 +400,7 @@ export default function AdminDashboard() {
 
         {/* 탭 */}
         <div style={{ display: "flex", gap: 8, marginBottom: 24 }}>
-          {([["projects", "납품실적"], ["news", "공지사항"]] as [Tab, string][]).map(([key, label]) => (
+          {([["projects", "납품실적"], ["news", "공지사항"], ["inquiries", "문의내역"]] as [Tab, string][]).map(([key, label]) => (
             <button key={key} onClick={() => setTab(key)}
               style={{ padding: "9px 20px", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer", transition: "all 0.2s",
                 background: tab === key ? C.main : C.white,
@@ -386,19 +410,21 @@ export default function AdminDashboard() {
               }}>
               {label}
               <span style={{ marginLeft: 6, fontSize: 12, opacity: 0.7 }}>
-                {key === "projects" ? projects.length : news.length}
+                {key === "projects" ? projects.length : key === "news" ? news.length : inquiries.length}
               </span>
             </button>
           ))}
 
-          {/* 추가 버튼 (우측) */}
-          <button onClick={() => setModal({ type: tab })}
-            style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 6, padding: "9px 18px", background: C.dark, color: "#fff", border: "none", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer" }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = C.mid)}
-            onMouseLeave={(e) => (e.currentTarget.style.background = C.dark)}>
-            <Plus size={16} />
-            {tab === "projects" ? "납품실적 추가" : "공지사항 작성"}
-          </button>
+          {/* 추가 버튼 (우측) — 문의내역 탭에선 숨김 */}
+          {tab !== "inquiries" && (
+            <button onClick={() => setModal({ type: tab })}
+              style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 6, padding: "9px 18px", background: C.dark, color: "#fff", border: "none", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer" }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = C.mid)}
+              onMouseLeave={(e) => (e.currentTarget.style.background = C.dark)}>
+              <Plus size={16} />
+              {tab === "projects" ? "납품실적 추가" : "공지사항 작성"}
+            </button>
+          )}
         </div>
 
         {/* 테이블 */}
@@ -406,7 +432,46 @@ export default function AdminDashboard() {
           <div style={{ textAlign: "center", padding: "80px 0", color: C.muted, fontSize: 15 }}>불러오는 중...</div>
         ) : (
           <div style={{ background: C.white, borderRadius: 16, border: `1px solid ${C.border}`, overflow: "hidden", boxShadow: "0 2px 12px rgba(10,32,16,0.06)" }}>
-            {tab === "projects" ? (
+            {tab === "inquiries" ? (
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead>
+                  <tr style={{ background: C.bg, borderBottom: `1px solid ${C.border}` }}>
+                    {["접수일시", "이름", "회사/기관", "연락처", "이메일", "문의내용", "삭제"].map((h, i) => (
+                      <th key={h} style={{ padding: "13px 20px", textAlign: i === 6 ? "center" : "left", fontSize: 13, fontWeight: 600, color: C.textSub, whiteSpace: "nowrap" }}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {inquiries.map((q) => (
+                    <tr key={q.id} style={{ borderBottom: `1px solid ${C.bg}` }}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = C.bg)}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}>
+                      <td style={{ padding: "13px 20px", color: C.textSub, fontSize: 12, whiteSpace: "nowrap" }}>
+                        {new Date(q.created_at).toLocaleString("ko-KR", { year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" })}
+                      </td>
+                      <td style={{ padding: "13px 20px", color: C.dark, fontSize: 14, fontWeight: 600 }}>{q.name}</td>
+                      <td style={{ padding: "13px 20px", color: C.textSub, fontSize: 13 }}>{q.org ?? "-"}</td>
+                      <td style={{ padding: "13px 20px", color: C.textSub, fontSize: 13, whiteSpace: "nowrap" }}>{q.phone}</td>
+                      <td style={{ padding: "13px 20px", color: C.textSub, fontSize: 13 }}>{q.email ?? "-"}</td>
+                      <td style={{ padding: "13px 20px", color: C.textSub, fontSize: 13, maxWidth: 240 }}>
+                        <div style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={q.content}>{q.content}</div>
+                      </td>
+                      <td style={{ padding: "13px 20px", textAlign: "center" }}>
+                        <button onClick={() => deleteInquiry(q.id)}
+                          style={{ background: "none", border: "none", cursor: "pointer", color: C.muted, padding: 4, borderRadius: 6 }}
+                          onMouseEnter={(e) => (e.currentTarget.style.color = "#e53e3e")}
+                          onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+                          <Trash2 size={15} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                  {inquiries.length === 0 && (
+                    <tr><td colSpan={7} style={{ padding: "60px 20px", textAlign: "center", color: C.muted, fontSize: 14 }}>접수된 문의가 없습니다.</td></tr>
+                  )}
+                </tbody>
+              </table>
+            ) : tab === "projects" ? (
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
                   <tr style={{ background: C.bg, borderBottom: `1px solid ${C.border}` }}>

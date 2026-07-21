@@ -44,7 +44,7 @@ export default async function NewsSection() {
             <h2 style={{ fontFamily: "var(--font-serif), serif", fontSize: "clamp(26px, 3vw, 40px)", fontWeight: 600, color: "#0A2010", lineHeight: 1.3, marginBottom: 8 }}>공지사항</h2>
             <p style={{ fontSize: 15, lineHeight: 1.8, color: "#2F5C38" }}>최신 소식을 전달드립니다</p>
           </div>
-          <a href="/news" style={{ display: "flex", alignItems: "center", gap: 6, color: "#2D9E4F", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>
+          <a href="/#news" style={{ display: "flex", alignItems: "center", gap: 6, color: "#2D9E4F", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>
             전체 보기 →
           </a>
         </div>
@@ -54,7 +54,7 @@ export default async function NewsSection() {
             const catStyle = categoryStyle[item.category] ?? "background: #E8F5EC; color: #2F5C38";
             const styleObj = Object.fromEntries(catStyle.split("; ").map(s => s.split(": ")));
             return (
-              <a key={item.id} href="/news" className="news-card" style={{ display: "flex", flexDirection: "column", padding: 28, borderRadius: 20, background: "#fff", border: "1px solid #E8F5EC", textDecoration: "none", transition: "all 0.3s", position: "relative", overflow: "hidden" }}>
+              <a key={item.id} href="/#news" className="news-card" style={{ display: "flex", flexDirection: "column", padding: 28, borderRadius: 20, background: "#fff", border: "1px solid #E8F5EC", textDecoration: "none", transition: "all 0.3s", position: "relative", overflow: "hidden" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                   <span style={{ fontSize: 11, fontWeight: 700, padding: "4px 10px", borderRadius: 20, ...styleObj }}>{item.category}</span>
                   <span style={{ fontSize: 12, color: "#6A9E72" }}>📅 {item.date}</span>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 export default function ContactForm() {
-  const [form, setForm] = useState({ name: "", org: "", phone: "", content: "" });
+  const [form, setForm] = useState({ name: "", org: "", phone: "", email: "", content: "" });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
@@ -28,7 +28,7 @@ export default function ContactForm() {
         <div style={{ fontSize: 48, marginBottom: 20 }}>✅</div>
         <h3 style={{ fontSize: 20, fontWeight: 700, color: "#0A2010", marginBottom: 12 }}>문의가 접수되었습니다</h3>
         <p style={{ fontSize: 14, color: "#6A9E72", lineHeight: 1.7 }}>빠른 시일 내에 연락드리겠습니다.<br />감사합니다.</p>
-        <button onClick={() => { setStatus("idle"); setForm({ name: "", org: "", phone: "", content: "" }); }}
+        <button onClick={() => { setStatus("idle"); setForm({ name: "", org: "", phone: "", email: "", content: "" }); }}
           style={{ marginTop: 24, padding: "12px 28px", background: "#2D9E4F", color: "#fff", border: "none", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
           다시 문의하기
         </button>
@@ -45,13 +45,19 @@ export default function ContactForm() {
           <input value={form.name} onChange={set("name")} placeholder="홍길동" required style={inputStyle} />
         </div>
         <div>
-          <label style={{ display: "block", fontSize: 13, color: "#6A9E72", marginBottom: 8 }}>기관명</label>
-          <input value={form.org} onChange={set("org")} placeholder="○○학교" style={inputStyle} />
+          <label style={{ display: "block", fontSize: 13, color: "#6A9E72", marginBottom: 8 }}>회사명 / 기관명</label>
+          <input value={form.org} onChange={set("org")} placeholder="○○회사 / ○○학교" style={inputStyle} />
         </div>
       </div>
-      <div>
-        <label style={{ display: "block", fontSize: 13, color: "#6A9E72", marginBottom: 8 }}>연락처 <span style={{ color: "#e53e3e" }}>*</span></label>
-        <input value={form.phone} onChange={set("phone")} placeholder="010-0000-0000" required style={inputStyle} />
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+        <div>
+          <label style={{ display: "block", fontSize: 13, color: "#6A9E72", marginBottom: 8 }}>연락처 <span style={{ color: "#e53e3e" }}>*</span></label>
+          <input value={form.phone} onChange={set("phone")} placeholder="010-0000-0000" required style={inputStyle} />
+        </div>
+        <div>
+          <label style={{ display: "block", fontSize: 13, color: "#6A9E72", marginBottom: 8 }}>이메일</label>
+          <input type="email" value={form.email} onChange={set("email")} placeholder="example@company.com" style={inputStyle} />
+        </div>
       </div>
       <div>
         <label style={{ display: "block", fontSize: 13, color: "#6A9E72", marginBottom: 8 }}>문의 내용 <span style={{ color: "#e53e3e" }}>*</span></label>

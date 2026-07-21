@@ -43,8 +43,9 @@ export default function IntroSection() {
             <img
               src="/images/building.png"
               alt="주식회사 신설 사옥"
+              className="building-img"
               style={{
-                width: "100%", height: 480, objectFit: "cover",
+                width: "100%", objectFit: "cover",
                 borderRadius: 20, display: "block",
                 background: "#C5DFC9",
               }}
@@ -54,8 +55,14 @@ export default function IntroSection() {
       </div>
 
       <style>{`
-        @media (max-width: 900px) { .intro-grid { grid-template-columns: 1fr !important; gap: 40px !important; } }
-        @media (max-width: 600px) { .intro-visual { display: none !important; } }
+        .building-img { height: 480px; }
+        @media (max-width: 900px) {
+          .intro-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .building-img { height: 320px; }
+        }
+        @media (max-width: 600px) {
+          .building-img { height: 220px; }
+        }
       `}</style>
     </section>
   );
