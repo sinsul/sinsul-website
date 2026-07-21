@@ -73,7 +73,7 @@ export default async function ProjectsSection() {
               고객 맞춤형 기술 솔루션으로 지속 가능한 IT 인프라 생태계를 구축합니다.
             </p>
           </div>
-          <Link href="/projects" style={{ display: "flex", alignItems: "center", gap: 6, color: "#2D9E4F", textDecoration: "none", fontSize: 14, fontWeight: 500, whiteSpace: "nowrap" }}>
+          <Link href="/#projects" style={{ display: "flex", alignItems: "center", gap: 6, color: "#2D9E4F", textDecoration: "none", fontSize: 14, fontWeight: 500, whiteSpace: "nowrap" }}>
             전체 보기 →
           </Link>
         </div>
@@ -102,7 +102,7 @@ export default async function ProjectsSection() {
           {projects.map((p) => {
             const cfg = catConfig[p.category] ?? catConfig["기타"];
             return (
-              <Link key={p.id} href={`/projects/${p.id}`} className="proj-card"
+              <Link key={p.id} href="/#projects" className="proj-card"
                 style={{ background: "#fff", borderRadius: 14, overflow: "hidden", border: "1px solid #E8F5EC", textDecoration: "none", display: "block", transition: "all 0.3s ease" }}>
 
                 {/* 상단 비주얼 */}

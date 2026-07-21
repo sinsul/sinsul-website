@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import type { NewsRow } from "@/lib/supabase";
 
@@ -44,9 +45,9 @@ export default async function NewsSection() {
             <h2 style={{ fontFamily: "var(--font-serif), serif", fontSize: "clamp(26px, 3vw, 40px)", fontWeight: 600, color: "#0A2010", lineHeight: 1.3, marginBottom: 8 }}>공지사항</h2>
             <p style={{ fontSize: 15, lineHeight: 1.8, color: "#2F5C38" }}>최신 소식을 전달드립니다</p>
           </div>
-          <a href="/#news" style={{ display: "flex", alignItems: "center", gap: 6, color: "#2D9E4F", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>
+          <Link href="/news" style={{ display: "flex", alignItems: "center", gap: 6, color: "#2D9E4F", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>
             전체 보기 →
-          </a>
+          </Link>
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }} className="news-grid">
@@ -54,7 +55,7 @@ export default async function NewsSection() {
             const catStyle = categoryStyle[item.category] ?? "background: #E8F5EC; color: #2F5C38";
             const styleObj = Object.fromEntries(catStyle.split("; ").map(s => s.split(": ")));
             return (
-              <a key={item.id} href="/#news" className="news-card" style={{ display: "flex", flexDirection: "column", padding: 28, borderRadius: 20, background: "#fff", border: "1px solid #E8F5EC", textDecoration: "none", transition: "all 0.3s", position: "relative", overflow: "hidden" }}>
+              <Link key={item.id} href={`/news/${item.id}`} className="news-card" style={{ display: "flex", flexDirection: "column", padding: 28, borderRadius: 20, background: "#fff", border: "1px solid #E8F5EC", textDecoration: "none", transition: "all 0.3s", position: "relative", overflow: "hidden" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                   <span style={{ fontSize: 11, fontWeight: 700, padding: "4px 10px", borderRadius: 20, ...styleObj }}>{item.category}</span>
                   <span style={{ fontSize: 12, color: "#6A9E72" }}>📅 {item.date}</span>
@@ -62,7 +63,7 @@ export default async function NewsSection() {
                 <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0A2010", lineHeight: 1.5, marginBottom: 10, flex: 1 }}>{item.title}</h3>
                 {item.excerpt && <p style={{ fontSize: 13, color: "#6A9E72", lineHeight: 1.6, marginBottom: 16 }}>{item.excerpt}</p>}
                 <span style={{ fontSize: 12, color: "#2D9E4F", fontWeight: 500 }}>자세히 보기 →</span>
-              </a>
+              </Link>
             );
           })}
         </div>

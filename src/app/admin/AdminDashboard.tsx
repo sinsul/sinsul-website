@@ -158,7 +158,7 @@ function ProjectForm({ initial, onSave, onClose }: { initial?: Partial<ProjectRo
     count: initial?.count ?? "",
     amount: initial?.amount ?? "",
     category: initial?.category ?? "network",
-    featured: initial?.featured ?? false,
+    featured: initial?.featured ?? true,
     tags: initial?.tags ?? [] as string[],
   });
   const [saving, setSaving] = useState(false);

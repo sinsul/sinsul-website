@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase";
 
 function isAuthed(req: NextRequest) {
@@ -59,10 +60,12 @@ export async function POST(req: NextRequest) {
       // tags/amount 컬럼 없음 → 기본 필드만 재시도
       const { data: d2, error: e2 } = await db().from("projects").insert(baseOnly(cleaned)).select().single();
       if (e2) return NextResponse.json({ error: e2.message, hint: "기본 저장은 완료됩니다. tags/amount 컬럼은 Supabase SQL로 추가하세요." }, { status: 500 });
+      revalidatePath("/");
       return NextResponse.json({ ...d2, _fallback: true });
     }
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+  revalidatePath("/");
   return NextResponse.json(data);
 }
 
@@ -83,10 +86,12 @@ export async function PUT(req: NextRequest) {
     if (isMissingCol(error.message)) {
       const { data: d2, error: e2 } = await db().from("projects").update(baseOnly(cleaned)).eq("id", id).select().single();
       if (e2) return NextResponse.json({ error: e2.message }, { status: 500 });
+      revalidatePath("/");
       return NextResponse.json({ ...d2, _fallback: true });
     }
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+  revalidatePath("/");
   return NextResponse.json(data);
 }
 
@@ -95,5 +100,6 @@ export async function DELETE(req: NextRequest) {
   const { id } = await req.json();
   const { error } = await db().from("projects").delete().eq("id", id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  revalidatePath("/");
   return NextResponse.json({ ok: true });
 }
