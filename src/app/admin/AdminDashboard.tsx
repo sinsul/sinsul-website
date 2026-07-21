@@ -283,6 +283,7 @@ export default function AdminDashboard() {
   const [toast, setToast] = useState("");
   const [toastType, setToastType] = useState<"ok" | "warn" | "err">("ok");
   const [sqlBanner, setSqlBanner] = useState(false);
+  const [dbError, setDbError] = useState<string | null>(null);
 
   const showToast = (msg: string, type: "ok" | "warn" | "err" = "ok") => {
     setToast(msg); setToastType(type);
@@ -291,17 +292,20 @@ export default function AdminDashboard() {
 
   const loadProjects = useCallback(async () => {
     const res = await fetch("/api/admin/projects");
-    if (res.ok) setProjects(await res.json());
+    if (res.ok) { setProjects(await res.json()); }
+    else { const j = await res.json().catch(() => ({})); setDbError(j.error ?? `납품실적 로드 실패 (${res.status})`); }
   }, []);
 
   const loadNews = useCallback(async () => {
     const res = await fetch("/api/admin/news");
-    if (res.ok) setNews(await res.json());
+    if (res.ok) { setNews(await res.json()); }
+    else { const j = await res.json().catch(() => ({})); setDbError(j.error ?? `공지사항 로드 실패 (${res.status})`); }
   }, []);
 
   const loadInquiries = useCallback(async () => {
     const res = await fetch("/api/admin/inquiries");
-    if (res.ok) setInquiries(await res.json());
+    if (res.ok) { setInquiries(await res.json()); }
+    // 문의내역은 테이블 미생성일 수 있으므로 조용히 처리
   }, []);
 
   useEffect(() => {
@@ -379,6 +383,24 @@ export default function AdminDashboard() {
           </button>
         </div>
       </header>
+
+      {/* ── DB 오류 배너 ── */}
+      {dbError && (
+        <div style={{ background: "#FEE2E2", borderBottom: "2px solid #DC2626", padding: "14px 32px", display: "flex", alignItems: "flex-start", gap: 12, fontSize: 13 }}>
+          <span style={{ fontSize: 18 }}>🔴</span>
+          <div>
+            <strong style={{ color: "#7F1D1D", display: "block", marginBottom: 4 }}>데이터베이스 연결 오류</strong>
+            <span style={{ color: "#991B1B" }}>{dbError}</span>
+            <br />
+            <span style={{ color: "#991B1B" }}>Vercel 환경변수에 <code style={{ background: "#FCA5A5", padding: "1px 6px", borderRadius: 4 }}>SUPABASE_SERVICE_ROLE_KEY</code>가 설정되어 있는지 확인하세요.</span>
+            <br />
+            <a href="/api/admin/check" target="_blank" style={{ color: "#B91C1C", fontSize: 12, textDecoration: "underline", marginTop: 4, display: "inline-block" }}>
+              진단 페이지 열기 →
+            </a>
+          </div>
+          <button onClick={() => setDbError(null)} style={{ marginLeft: "auto", background: "none", border: "none", cursor: "pointer", color: "#7F1D1D", fontSize: 18, flexShrink: 0 }}>×</button>
+        </div>
+      )}
 
       {/* ── SQL 안내 배너 ── */}
       {sqlBanner && (

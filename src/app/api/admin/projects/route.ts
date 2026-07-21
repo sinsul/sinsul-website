@@ -27,13 +27,17 @@ function baseOnly(body: Record<string, unknown>) {
 
 export async function GET(req: NextRequest) {
   if (!isAuthed(req)) return NextResponse.json({ error: "인증 필요" }, { status: 401 });
-  const { data, error } = await db()
-    .from("projects")
-    .select("*")
-    .order("year", { ascending: false })
-    .order("created_at", { ascending: false });
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json(data);
+  try {
+    const { data, error } = await db()
+      .from("projects")
+      .select("*")
+      .order("year", { ascending: false })
+      .order("created_at", { ascending: false });
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(data);
+  } catch (e: unknown) {
+    return NextResponse.json({ error: (e as Error).message }, { status: 500 });
+  }
 }
 
 export async function POST(req: NextRequest) {
