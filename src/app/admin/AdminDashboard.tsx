@@ -371,6 +371,15 @@ export default function AdminDashboard() {
           <span style={{ fontSize: 13, color: C.muted, borderLeft: `1px solid ${C.border}`, paddingLeft: 16 }}>관리자</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <button onClick={async () => {
+            const res = await fetch("/api/admin/revalidate", { method: "POST" });
+            if (res.ok) showToast("홈페이지 캐시를 새로고침했습니다.", "ok");
+            else showToast("새로고침 실패", "err");
+          }} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: C.muted, background: "none", border: "none", cursor: "pointer" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = C.main)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+            ↻ 홈페이지 새로고침
+          </button>
           <a href="/" target="_blank" style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: C.muted, textDecoration: "none" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = C.dark)}
             onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
