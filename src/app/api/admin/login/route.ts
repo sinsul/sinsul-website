@@ -7,6 +7,6 @@ export async function POST(req: NextRequest) {
   }
   const token = Buffer.from(`sinsul:${process.env.ADMIN_PASSWORD}`).toString("base64");
   const res = NextResponse.json({ ok: true });
-  res.cookies.set("admin-token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", maxAge: 60 * 60 * 24 * 7, path: "/" });
+  res.cookies.set("admin-token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", maxAge: 60 * 60 * 24 * 30, path: "/" });
   return res;
 }
