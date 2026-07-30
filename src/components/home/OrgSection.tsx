@@ -11,7 +11,7 @@ export default function OrgSection() {
           조직구성
         </div>
         <h2 style={{ fontFamily: "var(--font-serif), serif", fontSize: "clamp(26px, 3vw, 40px)", fontWeight: 600, color: "#0A2010", lineHeight: 1.3, marginBottom: 8 }}>
-          조직도 및 엔지니어 현황
+          조직도 현황
         </h2>
         <p style={{ fontSize: 15, lineHeight: 1.8, color: "#2F5C38", marginBottom: 56 }}>
           전문성을 갖춘 각 본부와 팀이 유기적으로 협력하여 최고의 ICT 서비스를 제공합니다.
@@ -100,38 +100,6 @@ export default function OrgSection() {
           </div>
         </div>
 
-        {/* 엔지니어 현황 테이블 */}
-        <div style={{ marginTop: 60, overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
-          <table style={{ width: "100%", maxWidth: 680, margin: "0 auto", borderCollapse: "collapse", fontSize: 14 }}>
-            <thead>
-              <tr>
-                {["구분", "H/W 분야", "S/W 분야", "통신 분야", "기타 분야"].map((h, i) => (
-                  <th key={h} style={{
-                    background: i === 0 ? "#0A2010" : "#2D9E4F",
-                    color: "white", padding: "12px 16px", fontWeight: 600,
-                    textAlign: "center", whiteSpace: "nowrap",
-                    borderRadius: i === 0 ? "8px 0 0 0" : i === 4 ? "0 8px 0 0" : undefined,
-                  }}>
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {orgChart.engineers.map((row, i) => {
-                const isTotal = i === orgChart.engineers.length - 1;
-                return (
-                  <tr key={i} style={{ background: isTotal ? "#0A2010" : i % 2 === 0 ? "#fff" : "#F9FDF9" }}>
-                    <td style={{ padding: "12px 16px", textAlign: "center", borderBottom: "1px solid #E8F5EC", color: isTotal ? "white" : "#0A2010", fontWeight: isTotal ? 700 : 600 }}>{row.grade}</td>
-                    {[row.hw, row.sw, row.telecom, row.etc].map((v, j) => (
-                      <td key={j} style={{ padding: "12px 16px", textAlign: "center", borderBottom: "1px solid #E8F5EC", color: isTotal ? "white" : "#2F5C38", fontWeight: isTotal ? 700 : 400 }}>{v}</td>
-                    ))}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
       </div>
     </section>
   );
